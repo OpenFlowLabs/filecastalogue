@@ -1,0 +1,40 @@
+[
+	{
+		"name": "pass0",
+		"changes": []
+	},
+	{
+		"name": "pass1",
+		"changes": [
+			{
+				"type": "added_file",
+				"path": "/etc/resolv.conf",
+				"hash": "1153f9b2f29b9547bb19743a601c52b11bf3ebf575755b4a862187a5865a094e"
+			},
+			{
+				"type": "added_index",
+				"hash": "15e02bd68954adff8159187358523098616094b8d78d196efa06340a64a74c22"
+			}
+		]
+	},
+	{
+		"name": "pass2",
+		"changes": [
+			{
+				"type": "changed_file_contents",
+				"path": "/etc/crontab",
+				"hash": "8970ec4b3a6ea2bc7428dd679edcfd012fb0db23a17af829ff24129cc9f1ba9e",
+				"comment": "Commented out the 'monthly' line."
+			},
+			{
+				"type": "changed_file_status",
+				"status": "doesnt_exist",
+				"path": "/etc/resolv.conf"
+			},
+			{
+				"type": "added_index",
+				"hash": "c84b4992c0b1e68779c4d002b192c3367819bf41854096ae7c3706f03b4c3fd0"
+			}
+		]
+	}
+]

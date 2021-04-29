@@ -1,0 +1,6 @@
+[workspace]
+members = [
+  "filecastalogue",
+  "filecastalogue_tests",
+  "ops",
+]

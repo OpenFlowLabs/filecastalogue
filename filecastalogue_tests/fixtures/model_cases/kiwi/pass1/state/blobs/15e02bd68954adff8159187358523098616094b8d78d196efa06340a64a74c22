@@ -1,0 +1,30 @@
+{
+    "/etc/crontab": {
+        "exists": {
+            "hash": "blake3:cb9a1f5d6f803611b117bbbe39fb2c6a697dd295ac0c1d9c4ff377cede1c7d88",
+            "attributes": {
+                "posix_user": "root",
+                "posix_group": "root"
+        	}
+        }
+    },
+    "/etc/nginx/nginx.conf": {
+        "exists": {
+            "hash": "blake3:48c3c2f67bc0245370f7891c0ae536cc06af39c1592b82f91c6d2fea758e14e3",
+            "attributes": {
+                "posix_user": "nginx",
+                "posix_group": "nginx",
+                "posix_mode": "0644"
+        	}
+        }
+    }
+    "/etc/resolv.conf": {
+        "exists": {
+            "hash": "blake3:1153f9b2f29b9547bb19743a601c52b11bf3ebf575755b4a862187a5865a094e",
+            "attributes": {
+                "posix_user": "nginx",
+                "posix_group": "nginx",
+        	}
+        }
+    }
+  }
