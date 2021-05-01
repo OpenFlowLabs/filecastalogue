@@ -1,0 +1,20 @@
+[package]
+name = "filecastalogue_mess"
+description = "A prototyping playground for filecastalogue."
+version = "0.1.0"
+authors = ["Aziroshin <aziroshin@gmx.net>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+serde = {version = "1.0", features = ["derive"]}
+serde_json = "1.0"
+
+[[bin]]
+name = "mess_wild_json"
+path = "src/mess_wild_json.rs"
+
+[[bin]]
+name = "mess_typed_json"
+path = "src/mess_typed_json.rs"
