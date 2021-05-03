@@ -1,0 +1,12 @@
+{
+    "files": {
+        "/etc/nginx/nginx.conf": {
+            "kind": "file",
+            "hash": "",
+            "attributes": {
+                "posix_user": "",
+                "posix_group": ""
+            }
+        }
+    }
+}
