@@ -1,114 +1,45 @@
-use std::{collections::HashMap, io::Read};
-use std::fs::File;
-use serde::{Serialize, Deserialize};
-// use serde_json::{Result, Value};
+
+use std::fs::{write, read_to_string};
+use std::path::Path;
+use std::io::Error;
+mod index_json;
+mod state_json;
+mod state;
 
 // Reference: https://docs.serde.rs/serde_json
 
-#[derive(Serialize, Deserialize, Debug)]
-struct Attributes {
-    posix_user: String,
-    posix_group: String
-}
+fn main() -> Result<(), Error> {
+    let state_path = "./filecastalogue_mess/state.json";
+    let version_index_path = "./filecastalogue_mess/index.json";
+    let state_target_dir = "./filecastalogue_mess/.tmp/state";
+    let state_target_path = Path::new(state_target_dir).join("state.json");
+    let version_index_target_path = Path::new(state_target_dir).join("index.json");
 
-#[derive(Serialize, Deserialize, Debug)]
-struct NonExistingFileKind {}
-
-#[derive(Serialize, Deserialize, Debug)]
-struct DirectoryFileKind {
-    attributes: Attributes
-}
-
-#[derive(Serialize, Deserialize, Debug)]
-struct FileFileKind {
-    hash: String,
-    attributes: Attributes
-}
-
-#[derive(Serialize, Deserialize, Debug)]
-struct SymlinkFileKind {
-    linked_to: String
-}
-
-// struct HardlinkFileKind {
-
-// }
-
-#[derive(Serialize, Deserialize, Debug)]
-#[serde(
-    tag = "kind",
-    rename_all(
-        serialize = "snake_case",
-        deserialize = "snake_case"
-    )
-)]
-
-enum FileAspects {
-    NonExisting(NonExistingFileKind),
-    Directory(DirectoryFileKind),
-    File(FileFileKind),
-    Symlink(SymlinkFileKind)
-}
-
-#[derive(Serialize, Deserialize, Debug)]
-struct VersionIndex {
-    files: HashMap<String, FileAspects>
-}
-
-#[derive(Serialize, Deserialize, Debug)]
-struct StateVersionEntry {
-    index: String
-}
-
-#[derive(Serialize, Deserialize, Debug)]
-struct State {
-    versions: HashMap<String, StateVersionEntry>
-}
-
-fn main() {
-    // Open state file.
-    let mut state_file = match File::open("./filecastalogue_mess/state.json") {
-        Ok(file) => file,
-        Err(e) => panic!("{:?}", e)
-    };
     // Read state file.
-    let mut state_file_contents = String::new();
-    match state_file.read_to_string(&mut state_file_contents) {
-        Ok(_) => (),
-        Err(e) => panic!("{:?}", e)
-    };
+    let state_file_contents = read_to_string(state_path)?;
     // Get state struct from state file JSON.
-    let state: State = match serde_json::from_str(&state_file_contents) {
-        Ok(x) => x,
-        Err(e) => panic!("{:?}", e)
-    };
-    // Open index file.
-    let mut version_file = match File::open("./filecastalogue_mess/index.json") {
-        Ok(file) => file,
-        Err(e) => panic!("{:?}", e)
-    };
+    let state: state_json::State = serde_json::from_str(&state_file_contents)?;
     // Read index file.
-    let mut json_input = String::new();
-    match version_file.read_to_string(&mut json_input) {
-        Ok(_) => (),
-        Err(e) => panic!("{:?}", e)
-    };
+    let json_input = read_to_string(version_index_path)?;
     // Get index struct from index file JSON.
-    let index: VersionIndex = match serde_json::from_str(&json_input) {
-        Ok(x) => x,
-        Err(e) => panic!("{:?}", e)
-        
-    };
-    // println!("{:?}", index);
+    let index: index_json::Index = serde_json::from_str(&json_input)?;
+
     let nginx_aspects = &index.files["/etc/nginx/nginx.conf"];
     println!("{:?}", nginx_aspects);
     let nginx_aspects_details = match nginx_aspects {
-        FileAspects::File(aspects) => aspects,
+        index_json::FileAspects::File(aspects) => aspects,
         _ => panic!("Not a FileFileKind")
     };
     
+    // Test reads, so we can see this is doing anything sensible at all.
     println!("\nnginx entry aspects:");
     println!("{:?}", nginx_aspects_details);
     println!("\nstate.json:");
     println!("{:?}", state);
+
+    // Test writes
+    write(state_target_path, b"TEST for state")?;
+    write(version_index_target_path, b"TEST for index")?;
+
+    Ok(())
 }
