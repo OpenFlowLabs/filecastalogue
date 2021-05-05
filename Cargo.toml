@@ -1,7 +1,5 @@
 [workspace]
 members = [
   "filecastalogue",
-  "filecastalogue_tests",
-  "filecastalogue_mess",
   "ops",
 ]
