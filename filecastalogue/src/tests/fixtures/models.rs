@@ -12,7 +12,12 @@ r#"{
 }"#;
 pub(in crate::tests) fn create_minimal_state_struct() -> State {
     let mut mock_versions: HashMap<String, Version> = HashMap::new();
-    mock_versions.insert(String::from("1"), Version {index: String::from("MOCKHASH")});
+    mock_versions.insert(
+        String::from("1"), 
+        Version {
+            index: String::from("MOCKHASH")
+        }
+    );
     State {
         versions: mock_versions
     }
