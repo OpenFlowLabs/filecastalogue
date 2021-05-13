@@ -1,13 +1,15 @@
-use std::fmt;
+use std::{fmt};
+//use std::collections::hash_map::{Entry, OccupiedEntry};
 use crate::meta::state::model::{State, Version};
 
-struct VersionEntryAlreadyExistsError {
+
+pub struct VersionEntryAlreadyExistsError {
     context_description: String,
     version_id: String,
     version_struct: Version
 }
 
-impl fmt::Debug for VersionEntryAlreadyExistsError {
+impl<'err> fmt::Debug for VersionEntryAlreadyExistsError {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(
             f,
@@ -19,7 +21,7 @@ impl fmt::Debug for VersionEntryAlreadyExistsError {
     }
 }
 
-impl fmt::Display for VersionEntryAlreadyExistsError {
+impl<'err> fmt::Display for VersionEntryAlreadyExistsError {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(
             f,
@@ -30,7 +32,7 @@ impl fmt::Display for VersionEntryAlreadyExistsError {
     }
 }
 
-struct VersionEntryDoesNotExistError {
+pub struct VersionEntryDoesNotExistError {
     context_description: String,
     version_id: String,
 }
@@ -57,65 +59,82 @@ impl fmt::Display for VersionEntryDoesNotExistError {
     }
 }
 
-pub enum Error {
-    VersionEntryAlreadyExistsError
-}
-pub trait Accessor {
-    fn has_version(self: &mut Self, id: String)
+pub trait Accessor<'acc> {
+    fn has_version<'f>(self: &mut Self, id: &'f str)
     -> Result<&mut Self, VersionEntryDoesNotExistError>;
-    fn get_version(self: &mut Self, id: String) -> Result<Version, VersionEntryDoesNotExistError>;
-    fn put_version(self: &mut Self, id: String, index: String) -> &mut Self;
-    fn add_version(self: &mut Self, id: String, index: String)
+    fn get_version(self: &mut Self, id: &str)
+    -> Result<&Version, VersionEntryDoesNotExistError>;
+    // fn get_version_entry(self: &'acc mut Self, id: &'acc str)
+    // -> Result<OccupiedEntry<'acc, String, Version>, VersionEntryDoesNotExistError<'acc>>;
+    fn put_version<'f>(self: &mut Self, id: &'f str, index: &'f str) -> &mut Self;
+    fn add_version(self: &mut Self, id: &str, index: &str)
     -> Result<&mut Self, VersionEntryAlreadyExistsError>;
-    fn del_version(self: &mut Self, id: String) -> &mut Self;
+    fn del_version<'f>(self: &mut Self, id: &'f str) -> &mut Self;
 }
 
-impl Accessor for State {
-    fn has_version(&mut self, id: String)
+impl<'acc> Accessor<'acc> for State {
+    fn has_version<'f>(&mut self, id: &'f str)
     -> Result<&mut Self, VersionEntryDoesNotExistError> {
-        if self.versions.contains_key(&id) {
+        if self.versions.contains_key(id) {
             Ok(self)
         }
         else {
             Err(VersionEntryDoesNotExistError {
-                version_id: id,
-                context_description: String::from(
-                    "Checking if there's an entry for that version."
-                )
+                version_id: id.to_owned(),
+                context_description: "Checking if there's an entry for that version.".to_owned()
             })
         }
     }
 
-    fn get_version(self: &mut Self, id: String)
-    -> Result<Version, VersionEntryDoesNotExistError> {
+    // Experiment trying to have lifetime annotated entries.
+    // Ran into other problems with entries related to mutable reference ownership and whatnot, though.
+    // Leaving it here for the moment, as other experiments pertaining to hash-content access are ongoing.
+    // fn get_version_entry(self: &'acc mut Self, id: &'acc str)
+    // -> Result<OccupiedEntry<'acc, String, Version>, VersionEntryDoesNotExistError<'acc>> {
+    //     let entry = self.versions.entry(id.to_owned());
+    //     match entry {
+    //         Entry::Occupied(version_entry)
+    //         => Ok(version_entry),
+    //         Entry::Vacant(version_entry)
+    //         => Err(VersionEntryDoesNotExistError {
+    //             version_id: id,
+    //             context_description: "Adding a version entry."
+    //         })
+    //     }
+    // }
+
+    fn get_version(self: &mut Self, id: &str)
+    -> Result<&Version, VersionEntryDoesNotExistError> {
         match self.versions.get(id) {
             Some(version) => Ok(version),
             None => Err(VersionEntryDoesNotExistError {
-                version_id: id,
-                context_description: String::from("Getting entry for that version.")
+                version_id: id.to_owned(),
+                context_description: "Getting entry for that version.".to_owned()
             })
         }
     }
 
-    fn put_version(&mut self, id: String, index: String) -> &mut Self {
-        self.versions.insert(id,Version {
-            index: String::from("TODO")
+    fn put_version<'f>(&mut self, id: &'f str, index: &'f str) -> &mut Self {
+        self.versions.insert(id.to_owned(),Version {
+            index: String::from(index)
         });
         self
     }
 
-    fn add_version(self: &mut Self, id: String, index: String)
+    fn add_version(self: &mut Self, id: &str, index: &str)
     -> Result<&mut Self, VersionEntryAlreadyExistsError> {
-        match self.has_version(id) {
-            Ok(_) => Err(VersionEntryAlreadyExistsError {
-                version_id: id,
-                // TODO: Actually implement.
-                version_struct: Version {index: String::from("TODO")},
-                context_description: String::from(
-                    "Adding a version entry."
-                )
+        match self.get_version(id) {
+            Ok(version) => Err(VersionEntryAlreadyExistsError {
+                version_id: id.to_owned(),
+                version_struct: version.to_owned(),
+                context_description: "Adding a version entry.".to_owned()
             }),
-            Err(_) => Ok(self)
+            Err(_) => Ok(self.put_version(id, index))
         }
+    }
+
+    fn del_version(self: &mut Self, id: &str) -> &mut Self {
+        self.versions.remove_entry(id);
+        self
     }
 }

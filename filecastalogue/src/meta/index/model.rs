@@ -1,27 +1,27 @@
 use serde::{Serialize, Deserialize};
 use std::{collections::HashMap};
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Attributes {
     pub posix_user: String,
     pub posix_group: String
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct NonExistingFileKind {}
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct DirectoryFileKind {
     pub attributes: Attributes
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct FileFileKind {
     pub hash: String,
     pub attributes: Attributes
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct SymlinkFileKind {
     pub linked_to: String
 }
@@ -30,7 +30,7 @@ pub struct SymlinkFileKind {
 
 // }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 #[serde(
     tag = "kind",
     rename_all(
@@ -45,7 +45,7 @@ pub enum FileAspects {
     Symlink(SymlinkFileKind)
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Index {
     pub files: HashMap<String, FileAspects>
 }
