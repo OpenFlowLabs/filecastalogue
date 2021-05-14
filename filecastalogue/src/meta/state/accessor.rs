@@ -4,9 +4,9 @@ use crate::meta::state::model::{State, Version};
 
 
 pub struct VersionEntryAlreadyExistsError {
-    context_description: String,
-    version_id: String,
-    version_struct: Version
+    pub context_description: String,
+    pub version_id: String,
+    pub version_struct: Version
 }
 
 impl<'err> fmt::Debug for VersionEntryAlreadyExistsError {
@@ -33,8 +33,8 @@ impl<'err> fmt::Display for VersionEntryAlreadyExistsError {
 }
 
 pub struct VersionEntryDoesNotExistError {
-    context_description: String,
-    version_id: String,
+    pub context_description: String,
+    pub version_id: String,
 }
 
 impl fmt::Debug for VersionEntryDoesNotExistError {
@@ -60,10 +60,9 @@ impl fmt::Display for VersionEntryDoesNotExistError {
 }
 
 pub trait Accessor<'acc> {
-    fn has_version<'f>(self: &mut Self, id: &'f str)
-    -> Result<&mut Self, VersionEntryDoesNotExistError>;
+    fn has_version(self: &mut Self, id: &str) -> bool;
     fn get_version(self: &mut Self, id: &str)
-    -> Result<&Version, VersionEntryDoesNotExistError>;
+    -> Result<Version, VersionEntryDoesNotExistError>;
     // fn get_version_entry(self: &'acc mut Self, id: &'acc str)
     // -> Result<OccupiedEntry<'acc, String, Version>, VersionEntryDoesNotExistError<'acc>>;
     fn put_version<'f>(self: &mut Self, id: &'f str, index: &'f str) -> &mut Self;
@@ -73,16 +72,25 @@ pub trait Accessor<'acc> {
 }
 
 impl<'acc> Accessor<'acc> for State {
-    fn has_version<'f>(&mut self, id: &'f str)
-    -> Result<&mut Self, VersionEntryDoesNotExistError> {
+//     fn has_version(&mut self, id: &str)
+//     -> Result<&mut Self, VersionEntryDoesNotExistError> {
+//         if self.versions.contains_key(id) {
+//             Ok(self)
+//         }
+//         else {
+//             Err(VersionEntryDoesNotExistError {
+//                 version_id: id.to_owned(),
+//                 context_description: "Checking if there's an entry for that version.".to_owned()
+//             })
+//         }
+//     }
+
+    fn has_version(self: &mut Self, id: &str) -> bool {
         if self.versions.contains_key(id) {
-            Ok(self)
+            true
         }
         else {
-            Err(VersionEntryDoesNotExistError {
-                version_id: id.to_owned(),
-                context_description: "Checking if there's an entry for that version.".to_owned()
-            })
+            false
         }
     }
 
@@ -104,9 +112,9 @@ impl<'acc> Accessor<'acc> for State {
     // }
 
     fn get_version(self: &mut Self, id: &str)
-    -> Result<&Version, VersionEntryDoesNotExistError> {
+    -> Result<Version, VersionEntryDoesNotExistError> {
         match self.versions.get(id) {
-            Some(version) => Ok(version),
+            Some(version) => Ok(version.to_owned()),
             None => Err(VersionEntryDoesNotExistError {
                 version_id: id.to_owned(),
                 context_description: "Getting entry for that version.".to_owned()
@@ -134,7 +142,7 @@ impl<'acc> Accessor<'acc> for State {
     }
 
     fn del_version(self: &mut Self, id: &str) -> &mut Self {
-        self.versions.remove_entry(id);
+        self.versions.remove_entry("id");
         self
     }
 }
