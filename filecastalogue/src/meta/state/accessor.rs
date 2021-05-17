@@ -68,7 +68,8 @@ pub trait Accessor<'acc> {
     fn put_version<'f>(self: &mut Self, id: &'f str, index: &'f str) -> &mut Self;
     fn add_version(self: &mut Self, id: &str, index: &str)
     -> Result<&mut Self, VersionEntryAlreadyExistsError>;
-    fn del_version<'f>(self: &mut Self, id: &'f str) -> &mut Self;
+    fn del_version(self: &mut Self, id: &str)
+    -> Result<&mut Self, VersionEntryDoesNotExistError>;
 }
 
 impl<'acc> Accessor<'acc> for State {
@@ -124,7 +125,7 @@ impl<'acc> Accessor<'acc> for State {
 
     fn put_version<'f>(&mut self, id: &'f str, index: &'f str) -> &mut Self {
         self.versions.insert(id.to_owned(),Version {
-            index: String::from(index)
+            index: index.to_owned()
         });
         self
     }
@@ -141,8 +142,14 @@ impl<'acc> Accessor<'acc> for State {
         }
     }
 
-    fn del_version(self: &mut Self, id: &str) -> &mut Self {
-        self.versions.remove_entry("id");
-        self
+    fn del_version(self: &mut Self, id: &str)
+    -> Result<&mut Self, VersionEntryDoesNotExistError> {
+        match self.versions.remove_entry(id) {
+            Some((K, V)) => Ok(self),
+            None => Err(VersionEntryDoesNotExistError { 
+                version_id: id.to_owned(),
+                context_description: "Deleting a version entry.".to_owned(),
+            })
+        }
     }
 }

@@ -73,7 +73,9 @@ fn add_version() -> () {
         "Preparation failed: State shouldn't have the version ({}) we're about to insert yet.",
         new_id
     );
-    let result = state.add_version(new_id, new_hash);
+    let result = state.add_version(
+        new_id, new_hash
+    );
     assert_ne!(result.is_err(), true, 
         "Preparation failed: .has_version() shouldn't return an error here. Version ID: {}",
         new_id
@@ -88,6 +90,12 @@ fn del_version() -> () {
         "Preparation failed: .has_version() should return true here for ID: {}",
         MINIMAL_STATE_VERSION_ID
     );
-    state.del_version(MINIMAL_STATE_VERSION_ID);
+    let result = state.del_version(
+        MINIMAL_STATE_VERSION_ID
+    );
+    assert_ne!(result.is_err(), true,
+    "Preparation failed: .del_version() shouldn't return an error here. Version ID: {}",
+    MINIMAL_STATE_VERSION_ID
+);
     assert_ne!(state.has_version(MINIMAL_STATE_VERSION_ID), true);
 }
