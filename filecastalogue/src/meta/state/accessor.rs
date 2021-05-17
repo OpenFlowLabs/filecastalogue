@@ -25,9 +25,8 @@ impl<'err> fmt::Display for VersionEntryAlreadyExistsError {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(
             f,
-            "Error: An entry for version \"{}\" already exists. Context: {}",
+            "Error: An entry for version \"{}\" already exists.",
             self.version_id,
-            self.context_description,
         )
     }
 }
@@ -52,9 +51,8 @@ impl fmt::Display for VersionEntryDoesNotExistError {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(
             f,
-            "Error: There's no entry for version \"{}\". Context: {}",
-            self.version_id,
-            self.context_description,
+            "Error: There's no entry for version \"{}\".",
+            self.version_id
         )
     }
 }
