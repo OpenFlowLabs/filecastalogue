@@ -1,12 +1,12 @@
-use std::{fmt};
+use std::fmt;
 //use std::collections::hash_map::{Entry, OccupiedEntry};
 use crate::meta::state::model::{State, Version};
 
 
 pub struct VersionEntryAlreadyExistsError {
-    pub context_description: String,
     pub version_id: String,
-    pub version_struct: Version
+    pub version_struct: Version,
+    pub context_description: String,
 }
 
 impl<'err> fmt::Debug for VersionEntryAlreadyExistsError {
@@ -33,8 +33,8 @@ impl<'err> fmt::Display for VersionEntryAlreadyExistsError {
 }
 
 pub struct VersionEntryDoesNotExistError {
-    pub context_description: String,
     pub version_id: String,
+    pub context_description: String,
 }
 
 impl fmt::Debug for VersionEntryDoesNotExistError {
@@ -145,7 +145,7 @@ impl<'acc> Accessor<'acc> for State {
     fn del_version(self: &mut Self, id: &str)
     -> Result<&mut Self, VersionEntryDoesNotExistError> {
         match self.versions.remove_entry(id) {
-            Some((K, V)) => Ok(self),
+            Some(_) => Ok(self),
             None => Err(VersionEntryDoesNotExistError { 
                 version_id: id.to_owned(),
                 context_description: "Deleting a version entry.".to_owned(),

@@ -15,9 +15,11 @@ r#"{
         }
     }
 }"#;
+#[allow(dead_code)]
 pub(crate) const VERSION_ENTRY_ALREADY_EXISTS_ERROR_CONTEXT_DESCRIPTION: &str =
 "This is a mock of the error for the case when a version entry already exists.";
 
+#[allow(dead_code)]
 pub(crate) const VERSION_ENTRY_DOES_NOT_EXIST_ERROR_DESCRIPTION: &str = 
 "This is a mock of the error for the case where a version entry doesn't exist.";
 
@@ -34,6 +36,7 @@ pub(in crate::tests) fn create_minimal_state_struct() -> State {
     }
 }
 
+#[allow(dead_code, non_snake_case)]
 pub(in crate::tests) fn create_minimal_state_VersionEntryAlreadyExistsError()
 -> VersionEntryAlreadyExistsError {
     VersionEntryAlreadyExistsError {
@@ -47,6 +50,7 @@ pub(in crate::tests) fn create_minimal_state_VersionEntryAlreadyExistsError()
     }
 }
 
+#[allow(dead_code, non_snake_case)]
 pub(in crate::tests) fn create_minimal_state_VersionEntryDoesNotExistError() 
 -> VersionEntryDoesNotExistError {
     VersionEntryDoesNotExistError {

@@ -1,8 +1,11 @@
-use crate::{meta::state, meta::state::{accessor::{
-        Accessor,
-        VersionEntryAlreadyExistsError,
-        VersionEntryDoesNotExistError
-    }, model::Version}, tests::fixtures::{self, models::{NON_EXISTENT_VERSION_ID, VERSION_ENTRY_DOES_NOT_EXIST_ERROR_DESCRIPTION}}};
+use crate::{
+    meta::state,
+    meta::state::accessor::Accessor,
+    tests::fixtures::{
+        self,
+        models::{NON_EXISTENT_VERSION_ID}
+    }
+};
 
 use super::fixtures::models::MINIMAL_STATE_VERSION_ID;
 
@@ -40,7 +43,7 @@ fn get_version_returns_version() -> () {
 #[test]
 fn get_version_returns_error_when_state_does_not_have_version() -> () {
     let mut state = fixtures::models::create_minimal_state_struct();
-    let result: Result<Version, VersionEntryDoesNotExistError> = state.get_version(
+    let result = state.get_version(
         NON_EXISTENT_VERSION_ID
     );
     let is_err = result.is_err();
