@@ -116,7 +116,7 @@ impl<'acc> Accessor<'acc> for State {
             Some(version) => Ok(version.to_owned()),
             None => Err(VersionEntryDoesNotExistError {
                 version_id: id.to_owned(),
-                context_description: "Getting entry for that version.".to_owned()
+                context_description: String::from("Getting entry for that version.")
             })
         }
     }
@@ -134,7 +134,7 @@ impl<'acc> Accessor<'acc> for State {
             Ok(version) => Err(VersionEntryAlreadyExistsError {
                 version_id: id.to_owned(),
                 version_struct: version.to_owned(),
-                context_description: "Adding a version entry.".to_owned()
+                context_description: String::from("Adding a version entry.")
             }),
             Err(_) => Ok(self.put_version(id, index))
         }
@@ -146,7 +146,7 @@ impl<'acc> Accessor<'acc> for State {
             Some(_) => Ok(self),
             None => Err(VersionEntryDoesNotExistError { 
                 version_id: id.to_owned(),
-                context_description: "Deleting a version entry.".to_owned(),
+                context_description: String::from("Deleting a version entry.")
             })
         }
     }
