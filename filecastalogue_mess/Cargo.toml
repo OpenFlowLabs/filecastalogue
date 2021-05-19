@@ -10,6 +10,7 @@ edition = "2018"
 [dependencies]
 serde = {version = "1.0", features = ["derive"]}
 serde_json = "1.0"
+filecastalogue = { path = "../filecastalogue" }
 
 [[bin]]
 name = "mess_wild_json"

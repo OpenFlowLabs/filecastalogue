@@ -1,10 +1,8 @@
-
 use std::fs::{write, read_to_string};
 use std::path::Path;
 use std::io::Error;
-mod index_json;
-mod state_json;
-mod state;
+use filecastalogue::state_model;
+use crate::filecastalogue::{models, state_model, index_model, State};
 
 // Reference: https://docs.serde.rs/serde_json
 
@@ -18,16 +16,16 @@ fn main() -> Result<(), Error> {
     // Read state file.
     let state_file_contents = read_to_string(state_path)?;
     // Get state struct from state file JSON.
-    let state: state_json::State = serde_json::from_str(&state_file_contents)?;
+    let state: state_model::State = serde_json::from_str(&state_file_contents)?;
     // Read index file.
     let json_input = read_to_string(version_index_path)?;
     // Get index struct from index file JSON.
-    let index: index_json::Index = serde_json::from_str(&json_input)?;
+    let index: index_model::Index = serde_json::from_str(&json_input)?;
 
     let nginx_aspects = &index.files["/etc/nginx/nginx.conf"];
     println!("{:?}", nginx_aspects);
     let nginx_aspects_details = match nginx_aspects {
-        index_json::FileAspects::File(aspects) => aspects,
+        index_model::FileAspects::File(aspects) => aspects,
         _ => panic!("Not a FileFileKind")
     };
     
