@@ -1,7 +1,12 @@
 use clap::{App, Arg, Error, SubCommand, 
     crate_authors, crate_description, crate_name, crate_version
 };
-use std::env::{current_dir};
+use std::{env::current_dir};
+use filecastalogue::{files::{blobs::drivers::local::LocalBlobFileCollection,
+    indexes::{drivers::local::LocalIndexFileCollection},
+    state::drivers::local::LocalStateFile}, journal::drivers::local::LocalJournal,
+    repo::Repo
+};
 
 const ABOUT_REPO: &str =
 "Path to the repo directory. Defaults to the current directory.";
@@ -32,9 +37,17 @@ fn main () -> Result<(), Error> {
         .get_matches();
 
     match matches.subcommand_matches("version") {
-        Some(x) =>
-            match x.subcommand_matches("add") {
-                Some(_) => todo!(),
+        Some(version_subcommand) =>
+            match version_subcommand.subcommand_matches("add") {
+                Some(_) => {
+                    Repo::new(
+                        LocalStateFile::new(),
+                        LocalIndexFileCollection::new(),
+                        LocalBlobFileCollection::new(),
+                        LocalJournal::new()
+                    );
+                    Ok(())
+                },
                 None => Ok(())
             },
         None => Ok(())

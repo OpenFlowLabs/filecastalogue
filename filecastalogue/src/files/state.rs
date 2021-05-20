@@ -1,3 +1,3 @@
-mod drivers {
-    mod local;
+pub mod drivers {
+    pub mod local;
 }
