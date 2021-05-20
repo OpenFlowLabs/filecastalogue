@@ -1,5 +1,5 @@
 use serde::{Serialize, Deserialize};
-use std::{collections::HashMap};
+use std::{collections::HashMap, ffi::OsString};
 
 #[derive(Serialize, Deserialize, Debug, Eq, PartialEq, Clone)]
 pub struct Attributes {
@@ -47,5 +47,5 @@ pub enum FileAspects {
 
 #[derive(Serialize, Deserialize, Debug, Eq, PartialEq, Clone)]
 pub struct Index {
-    pub files: HashMap<String, FileAspects>
+    pub files: HashMap<OsString, FileAspects>
 }

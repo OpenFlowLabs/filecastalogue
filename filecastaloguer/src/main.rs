@@ -1,7 +1,7 @@
-use clap::{App, Arg, Error, SubCommand, 
+use clap::{App, Arg, SubCommand, 
     crate_authors, crate_description, crate_name, crate_version
 };
-use std::{env::current_dir};
+use std::{env::current_dir, io};
 use filecastalogue::{files::{blobs::drivers::local::LocalBlobFileCollection,
     indexes::{drivers::local::LocalIndexFileCollection},
     state::drivers::local::LocalStateFile}, journal::drivers::local::LocalJournal,
@@ -15,7 +15,7 @@ const ABOUT_VERSION: &str =
 const ABOUT_ADD_VERSION: &str =
 "Add a new version with the specified ID to the state.";
 
-fn main () -> Result<(), Error> {
+fn main () -> Result<(), io::Error> {
 
     let default_repo_path  = current_dir().unwrap().as_os_str().to_owned();
 
@@ -39,9 +39,12 @@ fn main () -> Result<(), Error> {
     match matches.subcommand_matches("version") {
         Some(version_subcommand) =>
             match version_subcommand.subcommand_matches("add") {
-                Some(_) => {
+                Some(version_id) => {
+                    // The repo path is supposed to have a default. If this panics,
+                    // that means we've run into a bug that made setting the default fail.
+                    let repo_path = matches.value_of_os("repo").unwrap();
                     Repo::new(
-                        LocalStateFile::new(),
+                        LocalStateFile::new(repo_path)?,
                         LocalIndexFileCollection::new(),
                         LocalBlobFileCollection::new(),
                         LocalJournal::new()
