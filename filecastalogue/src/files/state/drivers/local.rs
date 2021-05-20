@@ -1,29 +1,28 @@
-use std::{ffi::{OsStr, OsString}, fs::File, io::{self, BufReader}, path::Path};
-use crate::{files::RepoFile, meta::state::model::State};
+use std::{fs::File, io::{self, BufReader}, path::Path};
+use crate::{files::RepoFile, finite_stream_handlers::FiniteStreamHandler, meta::state::model::State};
 
 pub fn file_reader<PathRef: AsRef<Path>>(path: PathRef)
 -> Result<BufReader<File>, io::Error> {
-    let file = File::open(path)?;
-    Ok(BufReader::new(file))
+    // let file = File::open(path)?;
+    Ok(BufReader::new(File::open(path)?))
 }
 
-pub struct LocalStateFile {
-    path: OsString,
-    state: State
+pub struct LocalStateFile<Handler: FiniteStreamHandler> {
+    pub handler: Handler,
+    pub state: State
 }
 
-impl LocalStateFile {
-    pub fn new(path: &OsStr) -> Result<Self, io::Error> {
-        let reader = file_reader(path)?;
-        let state_struct = serde_json::from_reader(reader)?;
+impl<Handler: FiniteStreamHandler> LocalStateFile<Handler> {
+    pub fn new(handler: Handler) -> Result<Self, io::Error> {
+        let mut mut_handler = handler;
         Ok(Self {
-            path: path.to_owned(),
-            state: state_struct
+            state: mut_handler.read_all()?,
+            handler: mut_handler,
         })
     }
 }
 
-impl RepoFile for LocalStateFile {
+impl<Handler: FiniteStreamHandler> RepoFile for LocalStateFile<Handler> {
     fn open(self: &mut Self) -> Result<&mut Self, crate::files::OpenRepoFileError> {
         todo!()
     }

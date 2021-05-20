@@ -4,9 +4,7 @@ use clap::{App, Arg, SubCommand,
 use std::{env::current_dir, io};
 use filecastalogue::{files::{blobs::drivers::local::LocalBlobFileCollection,
     indexes::{drivers::local::LocalIndexFileCollection},
-    state::drivers::local::LocalStateFile}, journal::drivers::local::LocalJournal,
-    repo::Repo
-};
+    state::drivers::local::LocalStateFile}, finite_stream_handlers::LocalFile, journal::drivers::local::LocalJournal, repo::Repo};
 
 const ABOUT_REPO: &str =
 "Path to the repo directory. Defaults to the current directory.";
@@ -44,7 +42,7 @@ fn main () -> Result<(), io::Error> {
                     // that means we've run into a bug that made setting the default fail.
                     let repo_path = matches.value_of_os("repo").unwrap();
                     Repo::new(
-                        LocalStateFile::new(repo_path)?,
+                        LocalStateFile::new(LocalFile::new(repo_path))?,
                         LocalIndexFileCollection::new(),
                         LocalBlobFileCollection::new(),
                         LocalJournal::new()
