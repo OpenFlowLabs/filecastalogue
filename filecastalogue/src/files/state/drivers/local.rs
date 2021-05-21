@@ -9,7 +9,6 @@ pub fn file_reader<PathRef: AsRef<Path>>(path: PathRef)
 
 pub struct LocalStateFile<Handler: FiniteStreamHandler> {
     pub handler: Handler,
-    pub state: State
 }
 
 impl<Handler: FiniteStreamHandler> LocalStateFile<Handler> {
@@ -23,7 +22,7 @@ impl<Handler: FiniteStreamHandler> LocalStateFile<Handler> {
 }
 
 impl<Handler: FiniteStreamHandler> RepoFile for LocalStateFile<Handler> {
-    fn open(self: &mut Self) -> Result<&mut Self, crate::files::OpenRepoFileError> {
+    fn read(self: &mut Self) -> Result<&mut Self, crate::files::OpenRepoFileError> {
         todo!()
     }
 

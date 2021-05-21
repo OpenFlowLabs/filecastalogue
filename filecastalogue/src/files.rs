@@ -65,7 +65,7 @@ impl fmt::Display for SaveRepoFileError {
 }
 
 pub trait RepoFile {
-    fn open(self: &mut Self) -> Result<&mut Self, OpenRepoFileError>;
+    fn read(self: &mut Self) -> Result<&mut Self, OpenRepoFileError>;
     fn save(self: &mut Self) -> Result<&mut Self, SaveRepoFileError>;
 }
 
