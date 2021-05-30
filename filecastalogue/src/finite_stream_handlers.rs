@@ -1,6 +1,6 @@
-use std::{fs::File, io::{self, BufReader}, path::{Path, PathBuf}};
+use std::{fs::File, io::{self, BufReader, BufWriter}, path::{Path, PathBuf}};
 
-use serde::de::{DeserializeOwned};
+use serde::{Serialize, de::{DeserializeOwned}};
 
 pub struct LocalFile {
     path: PathBuf
@@ -17,16 +17,23 @@ impl LocalFile {
 pub trait FiniteStreamHandler {
     fn read_all<Target>(self: &mut Self) -> Result<Target, io::Error>
     where Target: DeserializeOwned;
-    fn write_all();
+    fn write_all<Source>(self: &mut Self, source: &Source) -> Result<(), io::Error>
+    where Source: ?Sized + Serialize;
 }
 
 impl FiniteStreamHandler for LocalFile {
     fn read_all<Target>(self: &mut Self) -> Result<Target, io::Error>
     where Target: DeserializeOwned {
-        Ok(serde_json::from_reader(BufReader::new(File::open(self.path.to_owned())?))?)
+        Ok(serde_json::from_reader(
+            BufReader::new(File::open(self.path.to_owned())?)
+        )?)
     }
 
-    fn write_all() {
-        todo!()
+    fn write_all<Source>(self: &mut Self, source: &Source) -> Result<(), io::Error>
+    where Source: ?Sized + Serialize {
+        Ok(serde_json::to_writer_pretty(
+            BufWriter::new(File::open(self.path.to_owned())?),
+            source
+        )?)
     }
 }
