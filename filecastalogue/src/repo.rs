@@ -1,35 +1,20 @@
-use crate::{files::{
-        RepoFile, indexes::IndexFileCollection, blobs::BlobFileCollection
-    }, journal, meta::state::model::State};
-
-pub struct RepoState<
-    StateFile: RepoFile
-    > {
-        pub file: StateFile,
-        pub data: State
-    }
-
-impl<StateFile: RepoFile> RepoState<StateFile> {
-    pub fn new(state_file: StateFile) -> Self {
-        Self {
-            data: state_file.read(),
-            file: state_file,
-        }
-    }
-}
+use crate::{files::{RepoFile, StateProvider, blobs::BlobFileCollection, 
+    indexes::IndexFileCollection}, 
+    journal, meta::state::accessor::{Accessor, VersionEntryAlreadyExistsError}};
 
 pub struct Repo<
-    StateFile: RepoFile,
+    // Handler: FiniteStreamHandler,
+    StateFile: RepoFile + StateProvider,
     Indexes: IndexFileCollection,
     Blobs: BlobFileCollection,
     Journal: journal::Journal
-    > {
-        pub state: RepoState<StateFile>,
+    >
+    {
+        pub state_file: StateFile,
         pub indexes: Indexes,
         pub blobs: Blobs,
         pub journal: Journal
     }
-
 
 // TODO: Change e.g. state to only be a file-thing and load()
 // to return the struct, which we will then set to state.
@@ -44,7 +29,8 @@ pub struct Repo<
 // "driver"?
 
 impl<
-    StateFile: RepoFile,
+    // Handler: FiniteStreamHandler,
+    StateFile: RepoFile + StateProvider,
     Indexes: IndexFileCollection,
     Blobs: BlobFileCollection,
     Journal: journal::Journal
@@ -56,10 +42,29 @@ impl<
             journal: Journal,
         ) -> Repo<StateFile, Indexes, Blobs, Journal> {
             Repo {
-                state: RepoState::new(state_file),
+                state_file: state_file,
                 indexes: indexes,
                 blobs: blobs,
                 journal: journal
+            }
+        }
+        pub fn has_version(self: &mut Self, id: &str) -> bool {
+            self.state_file.get_state().has_version(id)
+        }
+        pub fn add_version(self: &mut Self, id: &str, index: &str)
+        -> Result<&mut Self, VersionEntryAlreadyExistsError> {
+            self.state_file.get_state().add_version(id, index)?;
+            /*
+                Has to do these things:
+                    - Add new version to state file.
+                    - Make sure index file exists.
+            */
+                
+            if self.indexes.has_index(index) {
+                todo!()
+            }
+            else {
+                todo!()
             }
         }
     }

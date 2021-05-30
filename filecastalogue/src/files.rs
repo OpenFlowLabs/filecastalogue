@@ -65,10 +65,14 @@ impl fmt::Display for SaveRepoFileError {
 }
 
 pub trait RepoFile {
-    fn read(self: &mut Self) -> Result<&mut Self, OpenRepoFileError>;
+    fn load(self: &mut Self) -> Result<&mut Self, OpenRepoFileError>;
     fn save(self: &mut Self) -> Result<&mut Self, SaveRepoFileError>;
 }
 
 pub trait RepoFileCollection {
     
+}
+
+pub trait StateProvider {
+    fn get_state(self: &mut Self) -> crate::meta::state::model::State;
 }

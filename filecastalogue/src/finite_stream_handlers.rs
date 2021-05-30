@@ -3,11 +3,11 @@ use std::{fs::File, io::{self, BufReader}, path::{Path, PathBuf}};
 use serde::de::{DeserializeOwned};
 
 pub struct LocalFile {
-    path: PathBuf,
+    path: PathBuf
 }
 
 impl LocalFile {
-    pub fn new<OsStrRef: AsRef<Path>>(path: OsStrRef) -> Self {
+    pub fn new<PathRef: AsRef<Path>>(path: PathRef) -> Self {
         Self {
             path: path.as_ref().to_owned()
         }
