@@ -1,5 +1,9 @@
 use std::{fs::File, io::{self, BufReader}, path::Path};
-use crate::{files::{RepoFile, StateProvider}, finite_stream_handlers::FiniteStreamHandler, meta::state::model::State};
+use crate::{error::{Error, FcResult}, files::{AccessRepoFileErrorPayload, OffendingAction}};
+use io::{Result as IoResult};
+use crate::error::ErrorKind::RepoFileOperationFailed;
+use crate::{files::{RepoFile, StateProvider},
+finite_stream_handlers::FiniteStreamHandler, meta::state::model::State};
 
 pub fn file_reader<PathRef: AsRef<Path>>(path: PathRef)
 -> Result<BufReader<File>, io::Error> {
@@ -13,7 +17,7 @@ pub struct StateFile<Handler> where Handler: FiniteStreamHandler {
 }
 
 impl<Handler: FiniteStreamHandler> StateFile<Handler> {
-    pub fn new(handler: Handler) -> Result<Self, io::Error> {
+    pub fn new(handler: Handler) -> IoResult<Self> {
         let mut mut_handler = handler;
         Ok(Self {
             state: mut_handler.read_all()?,
@@ -23,11 +27,25 @@ impl<Handler: FiniteStreamHandler> StateFile<Handler> {
 }
 
 impl<Handler: FiniteStreamHandler> RepoFile for StateFile<Handler> {
-    fn load(self: &mut Self) -> Result<&mut Self, crate::files::OpenRepoFileError> {
-        todo!()
+    fn load(self: &mut Self) -> FcResult<&mut Self> {
+        match self.handler.read_all() {
+            Ok(deserialized_file_contents) => {
+                self.state = deserialized_file_contents;
+                Ok(self)
+            },
+            Err(io_error) => Err(Error::new(
+                RepoFileOperationFailed,
+                "Trying to get deserialized file contents from the handler.",
+                Some(Box::new(AccessRepoFileErrorPayload::new(
+                    OffendingAction::LoadingRepoFile,
+                    "StateFile"
+                ))),
+                Some(Box::new(io_error))
+            ))
+        }
     }
 
-    fn save(self: &mut Self) -> Result<&mut Self, crate::files::SaveRepoFileError> {
+    fn save(self: &mut Self) -> FcResult<&mut Self> {
         todo!()
     }
 }

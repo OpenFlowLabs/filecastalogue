@@ -1,6 +1,6 @@
 use std::io;
 
-use crate::{files::RepoFile, finite_stream_handlers::FiniteStreamHandler, meta::index::model::Index};
+use crate::{error::FcResult, files::RepoFile, finite_stream_handlers::FiniteStreamHandler, meta::index::model::Index};
 
 pub struct IndexFile<Handler> where Handler: FiniteStreamHandler {
     pub handler: Handler,
@@ -18,11 +18,11 @@ impl<Handler: FiniteStreamHandler> IndexFile<Handler> {
 }
 
 impl<Handler: FiniteStreamHandler> RepoFile for IndexFile<Handler> {
-    fn load(self: &mut Self) -> Result<&mut Self, crate::files::OpenRepoFileError> {
+    fn load(self: &mut Self) -> FcResult<&mut Self> {
         todo!()
     }
 
-    fn save(self: &mut Self) -> Result<&mut Self, crate::files::SaveRepoFileError> {
+    fn save(self: &mut Self) -> FcResult<&mut Self> {
         todo!()
     }
 }

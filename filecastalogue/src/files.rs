@@ -1,4 +1,5 @@
-use std::fmt;
+use std::fmt::{self, Debug, Display};
+use crate::error::{FcResult, Payload};
 
 pub mod blob;
 pub mod index;
@@ -6,67 +7,71 @@ pub mod state;
 pub mod blobs;
 pub mod indexes;
 
-pub struct OpenRepoFileError {
-    pub path: String,
+pub struct AccessRepoFileErrorPayload {
+    pub offending_action: OffendingAction,
     pub repo_file_variety: String,
-    pub context_description: String,
 }
 
-impl fmt::Debug for OpenRepoFileError {
+impl AccessRepoFileErrorPayload {
+    pub fn new<VRef: AsRef<str>>(
+        offending_action: OffendingAction,
+        repo_file_variety: VRef
+    ) -> Self {
+        Self {
+            offending_action: offending_action,
+            repo_file_variety: repo_file_variety.as_ref().to_owned()
+        }
+    }
+}
+
+#[derive(Debug)]
+pub enum OffendingAction {
+    LoadingRepoFile,
+    SavingRepoFile,
+}
+
+impl OffendingAction {
+    pub(crate) fn as_str(&self) -> &'static str {
+        match self {
+            Self::LoadingRepoFile => "loading repo-file",
+            Self::SavingRepoFile => "saving repo-file"
+        }
+    }
+}
+
+impl Display for OffendingAction {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "{}", self.as_str())
+    }
+}
+
+impl Debug for AccessRepoFileErrorPayload {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(
             f,
-            "Error: Failed opening repo-file of the {} variety. Path: \"{}\". Context: {}",
-            self.path,
+            "Failed {} of the {} variety.",
+            self.offending_action,
             self.repo_file_variety,
-            self.context_description
         )
     }
 }
 
-impl fmt::Display for OpenRepoFileError {
+impl Display for AccessRepoFileErrorPayload {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(
             f,
-            "Error: Failed opening repo-file of the {} variety. Path: \"{}\".",
+            "Failed {} of the {} variety.",
+            self.offending_action,
             self.repo_file_variety,
-            self.path
         )
     }
 }
 
-pub struct SaveRepoFileError {
-    pub path: String,
-    pub repo_file_variety: String,
-    pub context_description: String,
-}
-
-impl fmt::Debug for SaveRepoFileError {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(
-            f,
-            "Error: Failed saving repo-file of the {} variety. Path: \"{}\". Context: {}",
-            self.path,
-            self.repo_file_variety,
-            self.context_description
-        )
-    }
-}
-
-impl fmt::Display for SaveRepoFileError {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(
-            f,
-            "Error: Failed saving repo-file of the {} variety. Path: \"{}\".",
-            self.repo_file_variety,
-            self.path
-        )
-    }
-}
+impl Payload for AccessRepoFileErrorPayload {}
 
 pub trait RepoFile {
-    fn load(self: &mut Self) -> Result<&mut Self, OpenRepoFileError>;
-    fn save(self: &mut Self) -> Result<&mut Self, SaveRepoFileError>;
+    fn load(self: &mut Self) -> FcResult<&mut Self>;
+    fn save(self: &mut Self) -> FcResult<&mut Self>;
 }
 
 pub trait RepoFileCollection {

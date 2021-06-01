@@ -1,7 +1,8 @@
 use crate::{files::{blobs::BlobFileCollection},
 opaque_collection_handlers::OpaqueCollectionHandler};
 
-pub struct LocalBlobFileCollection<Handler> where Handler: OpaqueCollectionHandler {
+pub struct LocalBlobFileCollection<Handler>
+where Handler: OpaqueCollectionHandler<> {
     pub handler: Handler
 }
 
