@@ -1,3 +1,4 @@
+#[macro_use]
 pub mod error;
 pub mod meta;
 pub mod journal;
