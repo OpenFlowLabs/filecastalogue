@@ -1,53 +1,51 @@
 use std::fmt;
 //use std::collections::hash_map::{Entry, OccupiedEntry};
-use crate::meta::state::model::{State, Version};
+use crate::{error::{Error, ErrorKind, FcResult, Payload}, meta::state::model::{State, Version}};
 
 
-pub struct VersionEntryAlreadyExistsError {
+pub struct VersionEntryAlreadyExistsErrorPayload {
     pub version_id: String,
     pub version_struct: Version,
-    pub context_description: String,
 }
 
-impl<'err> fmt::Debug for VersionEntryAlreadyExistsError {
+impl<'err> fmt::Debug for VersionEntryAlreadyExistsErrorPayload {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(
             f,
-            "Error: An entry for version \"{}\" already exists and contains: {:?}. Context: {}",
+            "An entry for version \"{}\" already exists and contains: {:?}.",
             self.version_id,
             self.version_struct,
-            self.context_description
         )
     }
 }
 
-impl<'err> fmt::Display for VersionEntryAlreadyExistsError {
+impl<'err> fmt::Display for VersionEntryAlreadyExistsErrorPayload {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(
             f,
-            "Error: An entry for version \"{}\" already exists.",
+            "An entry for version \"{}\" already exists.",
             self.version_id,
         )
     }
 }
 
-pub struct VersionEntryDoesNotExistError {
+impl Payload for VersionEntryAlreadyExistsErrorPayload {}
+
+pub struct VersionEntryDoesNotExistErrorPayload {
     pub version_id: String,
-    pub context_description: String,
 }
 
-impl fmt::Debug for VersionEntryDoesNotExistError {
+impl fmt::Debug for VersionEntryDoesNotExistErrorPayload {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(
             f,
-            "Error: There's no entry for version \"{}\". Context: {}",
+            "Error: There's no entry for version \"{}\".",
             self.version_id,
-            self.context_description
         )
     }
 }
 
-impl fmt::Display for VersionEntryDoesNotExistError {
+impl fmt::Display for VersionEntryDoesNotExistErrorPayload {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(
             f,
@@ -57,17 +55,19 @@ impl fmt::Display for VersionEntryDoesNotExistError {
     }
 }
 
+impl Payload for VersionEntryDoesNotExistErrorPayload {}
+
 pub trait Accessor<'acc> {
     fn has_version(self: &mut Self, id: &str) -> bool;
     fn get_version(self: &mut Self, id: &str)
-    -> Result<Version, VersionEntryDoesNotExistError>;
+    -> FcResult<Version>;
     // fn get_version_entry(self: &'acc mut Self, id: &'acc str)
     // -> Result<OccupiedEntry<'acc, String, Version>, VersionEntryDoesNotExistError<'acc>>;
     fn put_version<'f>(self: &mut Self, id: &'f str, index: &'f str) -> &mut Self;
     fn add_version(self: &mut Self, id: &str, index: &str)
-    -> Result<&mut Self, VersionEntryAlreadyExistsError>;
+    -> FcResult<&mut Self>;
     fn del_version(self: &mut Self, id: &str)
-    -> Result<&mut Self, VersionEntryDoesNotExistError>;
+    -> FcResult<&mut Self>;
 }
 
 impl<'acc> Accessor<'acc> for State {
@@ -111,13 +111,16 @@ impl<'acc> Accessor<'acc> for State {
     // }
 
     fn get_version(self: &mut Self, id: &str)
-    -> Result<Version, VersionEntryDoesNotExistError> {
+    -> FcResult<Version> {
         match self.versions.get(id) {
             Some(version) => Ok(version.to_owned()),
-            None => Err(VersionEntryDoesNotExistError {
-                version_id: id.to_owned(),
-                context_description: String::from("Getting entry for that version.")
-            })
+            None => Err(error!(
+                ErrorKind::VersionEntryDoesNotExist,
+                "Getting entry for that version.",
+                payload => Some(Box::new(VersionEntryDoesNotExistErrorPayload {
+                    version_id: id.to_owned(),
+                }))
+            ))
         }
     }
 
@@ -129,25 +132,31 @@ impl<'acc> Accessor<'acc> for State {
     }
 
     fn add_version(self: &mut Self, id: &str, index: &str)
-    -> Result<&mut Self, VersionEntryAlreadyExistsError> {
+    -> FcResult<&mut Self> {
         match self.get_version(id) {
-            Ok(version) => Err(VersionEntryAlreadyExistsError {
-                version_id: id.to_owned(),
-                version_struct: version.to_owned(),
-                context_description: String::from("Adding a version entry.")
-            }),
+            Ok(version) => Err(error!(
+                ErrorKind::VersionEntryAlreadyExists,
+                "Adding a version entry.",
+                payload => Some(Box::new(VersionEntryAlreadyExistsErrorPayload {
+                    version_id: id.to_owned(),
+                    version_struct: version.to_owned(),
+                }))
+            )),
             Err(_) => Ok(self.put_version(id, index))
         }
     }
 
     fn del_version(self: &mut Self, id: &str)
-    -> Result<&mut Self, VersionEntryDoesNotExistError> {
+    -> FcResult<&mut Self> {
         match self.versions.remove_entry(id) {
             Some(_) => Ok(self),
-            None => Err(VersionEntryDoesNotExistError { 
-                version_id: id.to_owned(),
-                context_description: String::from("Deleting a version entry.")
-            })
+            None => Err(error!(
+                ErrorKind::VersionEntryDoesNotExist,
+                "Deleting a version entry.",
+                payload=> Some(Box::new(VersionEntryDoesNotExistErrorPayload { 
+                    version_id: id.to_owned(),
+                }))
+            ))
         }
     }
 }

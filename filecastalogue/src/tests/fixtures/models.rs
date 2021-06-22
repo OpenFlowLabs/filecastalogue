@@ -1,8 +1,9 @@
 use std::collections::HashMap;
+use crate::error::{Error, ErrorKind};
 use crate::meta::state::model::{State, Version};
 use crate::meta::state::accessor::{
-    VersionEntryDoesNotExistError,
-    VersionEntryAlreadyExistsError
+    VersionEntryDoesNotExistErrorPayload,
+    VersionEntryAlreadyExistsErrorPayload
 };
 
 pub(crate) const NON_EXISTENT_VERSION_ID: &str = "0";
@@ -38,25 +39,27 @@ pub(in crate::tests) fn create_minimal_state_struct() -> State {
 
 #[allow(dead_code, non_snake_case)]
 pub(in crate::tests) fn create_minimal_state_VersionEntryAlreadyExistsError()
--> VersionEntryAlreadyExistsError {
-    VersionEntryAlreadyExistsError {
-        version_id: String::from(MINIMAL_STATE_VERSION_ID),
-        version_struct: Version {
-            index: String::from("MOCKHASH")
-        },
-        context_description: String::from(
-            VERSION_ENTRY_ALREADY_EXISTS_ERROR_CONTEXT_DESCRIPTION
-        )
-    }
+-> Error {
+    error!(
+        ErrorKind::VersionEntryAlreadyExists,
+        VERSION_ENTRY_ALREADY_EXISTS_ERROR_CONTEXT_DESCRIPTION,
+        payload => Some(Box::new(VersionEntryAlreadyExistsErrorPayload {
+            version_id: String::from(MINIMAL_STATE_VERSION_ID),
+            version_struct: Version {
+                index: String::from("MOCKHASH")
+            }
+        }))
+    )
 }
 
 #[allow(dead_code, non_snake_case)]
 pub(in crate::tests) fn create_minimal_state_VersionEntryDoesNotExistError() 
--> VersionEntryDoesNotExistError {
-    VersionEntryDoesNotExistError {
-        version_id: String::from(MINIMAL_STATE_VERSION_ID),
-        context_description: String::from(
-            VERSION_ENTRY_DOES_NOT_EXIST_ERROR_DESCRIPTION
-        )
-    }
+-> Error {
+    error!(
+        ErrorKind::VersionEntryDoesNotExist,
+        VERSION_ENTRY_DOES_NOT_EXIST_ERROR_DESCRIPTION,
+        payload => Some(Box::new(VersionEntryDoesNotExistErrorPayload {
+                version_id: String::from(MINIMAL_STATE_VERSION_ID),
+        }))
+    )
 }

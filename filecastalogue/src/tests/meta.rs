@@ -1,18 +1,14 @@
-use crate::{
-    meta::state,
-    meta::state::accessor::Accessor,
-    tests::fixtures::{
+use crate::{error::FcResult, meta::state, meta::state::accessor::Accessor, tests::fixtures::{
         self,
         models::{NON_EXISTENT_VERSION_ID}
-    }
-};
+    }};
 
 use super::fixtures::models::MINIMAL_STATE_VERSION_ID;
 
 // This is a proxy for "is the State struct serializing using serde_json?".
 // It's a baseline check as to whether anything is working at all, really.
 #[test]
-fn hash_is_same_in_serialized_state() -> Result<(), serde_json::Error> {
+fn hash_is_same_in_serialized_state() -> FcResult<()> {
     let state: state::model::State = serde_json::from_str(fixtures::models::MINIMAL_STATE_JSON)?;
     assert_eq!(
         state.versions["1"].index,

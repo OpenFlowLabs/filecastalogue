@@ -2,11 +2,8 @@ use clap::{App, Arg, SubCommand,
     crate_authors, crate_description, crate_name, crate_version
 };
 use std::{env::current_dir, ffi::OsString, io, path::PathBuf};
-use filecastalogue::{files::{blobs::{drivers::local::LocalBlobFileCollection},
-indexes::{drivers::local::LocalIndexFileCollection}, state::drivers::local::StateFile},
-finite_stream_handlers::LocalFile,
-journal::OptimisticDummyJournal,
-opaque_collection_handlers::LocalDir, repo::Repo};
+use filecastalogue::{error::Error, files::{blobs::{drivers::local::LocalBlobFileCollection},
+indexes::{drivers::local::LocalIndexFileCollection}, state::drivers::local::StateFile}, finite_stream_handlers::LocalFile, journal::OptimisticDummyJournal, opaque_collection_handlers::LocalDir, repo::Repo};
 
 const ABOUT_REPO: &str =
 "Path to the repo directory. Defaults to the current directory.";
@@ -25,7 +22,7 @@ fn create_local_repo
         LocalBlobFileCollection<LocalDir>,
         OptimisticDummyJournal
     >,
-    io::Error
+    Error
 >
 {
     let blob_dir_path = PathBuf::from(&repo_path).join(OsString::from("blobs"));
@@ -34,11 +31,12 @@ fn create_local_repo
     Ok(Repo::new(
         state_file,
         LocalIndexFileCollection::new(LocalDir::new(&repo_path)),
-        // TODO [prio:critical]: repo_path is actually wrong here, it's just there to test the typing atm.
+        // TODO [prio:critical]: repo_path is actually wrong here,
+        // it's just there to test the typing atm.
         LocalBlobFileCollection::new(LocalDir::new(&repo_path)),
         OptimisticDummyJournal::new()
     ))
-} 
+}
 
 fn main () -> Result<(), io::Error> {
 

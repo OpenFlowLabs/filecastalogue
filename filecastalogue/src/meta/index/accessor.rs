@@ -1,28 +1,26 @@
 use std::{ffi::{OsStr, OsString}, fmt};
-use crate::meta::index::model::{Index};
+use crate::{error::{Error, ErrorKind, FcResult, Payload}, meta::index::model::{Index}};
 
 use super::model::FileAspects;
 
-pub struct FileAlreadyTrackedError {
+pub struct FileAlreadyTrackedErrorPayload {
     pub path: OsString,
     pub index_struct: Index,
-    pub context_description: String,
 }
 
-impl fmt::Debug for FileAlreadyTrackedError {
+impl fmt::Debug for FileAlreadyTrackedErrorPayload {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(
             f,
-            "Error: The file at path \"{:?}\" {} {:?}. Context: {}",
+            "Error: The file at path \"{:?}\" {} {:?}.",
             self.path,
             "is already tracked, with the following entry:",
             self.index_struct,
-            self.context_description
         )
     }
 }
 
-impl fmt::Display for FileAlreadyTrackedError {
+impl fmt::Display for FileAlreadyTrackedErrorPayload {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(
             f,
@@ -32,31 +30,34 @@ impl fmt::Display for FileAlreadyTrackedError {
     }
 }
 
-pub struct UntrackedFileError {
+impl Payload for FileAlreadyTrackedErrorPayload {}
+
+
+pub struct UntrackedFileErrorPayload {
     pub path: OsString,
-    pub context_description: String
 }
 
-impl fmt::Debug for UntrackedFileError {
+impl fmt::Debug for UntrackedFileErrorPayload {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(
             f,
-            "Error: There is no file tracked for path \"{:?}\". Context: {}",
-            self.path,
-            self.context_description
+            "There is no file tracked for path \"{:?}\".",
+            self.path
         )
     }
 }
 
-impl fmt::Display for UntrackedFileError {
+impl fmt::Display for UntrackedFileErrorPayload {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(
             f,
-            "Error: There is no file tracked for path \"{:?}\".",
-            self.path,
+            "There is no file tracked for path \"{:?}\".",
+            self.path
         )
     }
 }
+
+impl Payload for UntrackedFileErrorPayload {}
 
 pub trait Accessor {
     fn is_empty(&mut self) -> bool;
@@ -64,9 +65,9 @@ pub trait Accessor {
     fn tracks_files(&mut self) -> bool;
     fn tracks_file(&mut self, path: &OsStr) -> bool;
     fn track_file(&mut self, path: &OsStr, aspects: &FileAspects)
-    -> Result<&mut Self, FileAlreadyTrackedError>;
-    fn untrack_file(&mut self, path: &OsStr) -> Result<&mut Self, FileAlreadyTrackedError>;
-    fn get_aspects(&mut self, path: &OsStr) -> Result<FileAspects, UntrackedFileError>;
+    -> FcResult<&mut Self>;
+    fn untrack_file(&mut self, path: &OsStr) -> FcResult<&mut Self>;
+    fn get_aspects(&mut self, path: &OsStr) -> FcResult<FileAspects>;
 }
 
 impl Accessor for Index {
@@ -92,35 +93,51 @@ impl Accessor for Index {
     }
     
     fn track_file(&mut self, path: &OsStr, aspects: &FileAspects)
-    -> Result<&mut Self, FileAlreadyTrackedError> {
+    -> FcResult<&mut Self> {
         match self.files.insert(path.to_owned(), aspects.to_owned()) {
             None => Ok(self),
-            Some(_) => Err(FileAlreadyTrackedError {
-                path: path.to_owned(),
-                index_struct: self.to_owned(),
-                context_description: String::from("Adding new file to track."),
-            })
+            Some(_) => Err(error!(
+                ErrorKind::FileAlreadyTracked,
+                "Adding new file to track.",
+                payload => Some(Box::new(FileAlreadyTrackedErrorPayload {
+                    path: path.to_owned(),
+                    index_struct: self.to_owned()
+                }))
+            ))
+            // Err(FileAlreadyTrackedError {
+            //     path: path.to_owned(),
+            //     index_struct: self.to_owned(),
+            //     context_description: String::from("Adding new file to track."),
+            // })
         }
     }
 
-    fn untrack_file(&mut self, path: &OsStr) -> Result<&mut Self, FileAlreadyTrackedError> {
+    fn untrack_file(&mut self, path: &OsStr) -> FcResult<&mut Self> {
         match self.files.remove_entry(path) {
             Some(_) => Ok(self),
-            None => Err(FileAlreadyTrackedError {
-                path: path.to_owned(),
-                index_struct: self.to_owned(),
-                context_description: String::from("Untracking a file.")
-            })
+            None => Err(error!(
+                ErrorKind::FileAlreadyTracked,
+                "Untracking a file.",
+                payload => Some(Box::new(FileAlreadyTrackedErrorPayload {
+                    path: path.to_owned(),
+                    index_struct: self.to_owned()
+                }))
+            ))
         }
     }
     
-    fn get_aspects(&mut self, path: &OsStr) -> Result<FileAspects, UntrackedFileError> {
+    fn get_aspects(&mut self, path: &OsStr) -> FcResult<FileAspects> {
         match self.files.get(path) {
             Some(aspects) => Ok(aspects.to_owned()),
-            None => Err(UntrackedFileError {
-                path: path.to_owned(),
-                context_description: String::from("Getting file aspects by path.")
-            })
+            None => Err(
+                error!(
+                    ErrorKind::UntrackedFile,
+                    "Getting file aspects by path.",
+                    payload => Some(Box::new(UntrackedFileErrorPayload {
+                        path: path.to_owned()
+                    }))
+                )
+            )
         }
     }
 }

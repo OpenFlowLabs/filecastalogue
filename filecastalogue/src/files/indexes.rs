@@ -1,5 +1,7 @@
 use core::fmt;
-use std::error::Error;
+use std::{error::Error, rc::Rc};
+use crate::error::FcResult;
+use super::index::drivers::local::RepoIndexFile;
 
 pub mod drivers {
     pub mod local;
@@ -56,5 +58,7 @@ pub enum AddingNewIndexFailedErrors {
 pub trait IndexFileCollection {
     fn has_index(self: &mut Self, index: &str) -> bool;
     fn add_index(self: &mut Self)
-    -> Result<&mut Self, AddingNewIndexFailedErrors>;
+    -> FcResult<&mut Self>;
+    fn get_index_file(self: &mut Self, index: &str)
+    -> FcResult<Rc<(dyn RepoIndexFile)>>;
 }

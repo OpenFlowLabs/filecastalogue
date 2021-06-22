@@ -1,6 +1,5 @@
-use crate::{files::{RepoFile, StateProvider, blobs::BlobFileCollection, 
-    indexes::IndexFileCollection}, 
-    journal, meta::state::accessor::{Accessor, VersionEntryAlreadyExistsError}};
+use crate::{error::FcResult, files::{RepoFile, blobs::BlobFileCollection, 
+    indexes::IndexFileCollection, state::StateProvider}, journal, meta::state::accessor::Accessor};
 
 pub struct Repo<
     // Handler: FiniteStreamHandler,
@@ -52,7 +51,7 @@ impl<
             self.state_file.get_state().has_version(id)
         }
         pub fn add_version(self: &mut Self, id: &str, index: &str)
-        -> Result<&mut Self, VersionEntryAlreadyExistsError> {
+        -> FcResult<&mut Self> {
             self.state_file.get_state().add_version(id, index)?;
             /*
                 Has to do these things:
