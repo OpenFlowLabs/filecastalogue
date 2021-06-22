@@ -69,15 +69,20 @@ impl Display for AccessRepoFileErrorPayload {
 
 impl Payload for AccessRepoFileErrorPayload {}
 
+/**
+Models the abstract notion of a "file" in the repo, regardless
+whether the backend structure of the store that implements it is
+actually based on files. The mental model is that things like
+indexes, the state "file" and blobs are stored in files of
+their own, but how that actually happens, and whether it's even
+files at the end of the day doesn't really concern us here.
+ */
 pub trait RepoFile {
-    fn load(self: &mut Self) -> FcResult<&mut Self>;
-    fn save(self: &mut Self) -> FcResult<&mut Self>;
+    fn load(self: &mut Self) -> FcResult<()>;
+    fn save(self: &mut Self) -> FcResult<()>;
 }
 
 pub trait RepoFileCollection {
     
 }
 
-pub trait StateProvider {
-    fn get_state(self: &mut Self) -> crate::meta::state::model::State;
-}
