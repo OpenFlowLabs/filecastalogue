@@ -83,8 +83,10 @@ pub trait OpaqueCollectionHandler {
     fn get_file<T>(self: &mut Self, name: &OsStr)
     -> FcResult<T> where T: FiniteStreamHandler;
     fn collection_exists(self: &mut Self) -> bool;
-    fn create_collection(self: &mut Self) -> FcResult<()>;
-    fn create_collection_ignore_exists(self: &mut Self) -> FcResult<()>;
+    fn create_collection(self: &mut Self)
+    -> FcResult<&mut(dyn OpaqueCollectionHandler)>;
+    fn create_collection_ignore_exists(self: &mut Self)
+    -> FcResult<&mut(dyn OpaqueCollectionHandler)>;
 }
 
 impl OpaqueCollectionHandler for LocalDir
@@ -102,14 +104,17 @@ impl OpaqueCollectionHandler for LocalDir
     fn collection_exists(self: &mut Self) -> bool {
         self.path.exists()
     }
-    fn create_collection(self: &mut Self) -> FcResult<()> {
+    
+    fn create_collection(self: &mut Self)
+    -> FcResult<&mut(dyn OpaqueCollectionHandler)> {
         self.create()?;
-        Ok(())
+        Ok(self)
     }
 
-    fn create_collection_ignore_exists(self: &mut Self) -> FcResult<()> {
-        self.create_ignore_exists();
-        Ok(())
+    fn create_collection_ignore_exists(self: &mut Self)
+    -> FcResult<&mut(dyn OpaqueCollectionHandler)> {
+        self.create_ignore_exists()?;
+        Ok(self)
     }
 
     // fn read_file<T, NameRef: AsRef<OsStr>>(self: &mut Self, name: NameRef)

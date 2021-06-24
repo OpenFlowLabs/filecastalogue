@@ -30,8 +30,8 @@ impl<
     }
 
     fn add_index(self: &mut Self)
-    -> FcResult<&mut Self> {
-        todo!()
+    -> FcResult<&mut(dyn IndexFileCollection)> {
+        Ok(self)
     }
 
     fn get_index_file<'ifile>(self: &mut Self, index: &str)

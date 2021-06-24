@@ -58,7 +58,7 @@ pub enum AddingNewIndexFailedErrors {
 pub trait IndexFileCollection {
     fn has_index(self: &mut Self, index: &str) -> bool;
     fn add_index(self: &mut Self)
-    -> FcResult<&mut Self>;
+    -> FcResult<&mut(dyn IndexFileCollection)>;
     fn get_index_file(self: &mut Self, index: &str)
     -> FcResult<Rc<(dyn RepoIndexFile)>>;
 }
