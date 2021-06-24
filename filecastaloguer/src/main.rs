@@ -26,14 +26,16 @@ fn create_local_repo
 >
 {
     let blob_dir_path = PathBuf::from(&repo_path).join(OsString::from("blobs"));
+    // Indexes go into the same directory as blobs.
+    let index_dir_path = PathBuf::from(&repo_path).join(OsString::from("blobs"));
     let state_file_path = PathBuf::from(&repo_path).join(OsString::from("state.json"));
     let state_file = StateFile::new(LocalFile::new(state_file_path))?;
     Ok(Repo::new(
         state_file,
-        LocalIndexFileCollection::new(LocalDir::new(&repo_path)),
+        LocalIndexFileCollection::new(LocalDir::new(&index_dir_path)),
         // TODO [prio:critical]: repo_path is actually wrong here,
         // it's just there to test the typing atm.
-        LocalBlobFileCollection::new(LocalDir::new(&repo_path)),
+        LocalBlobFileCollection::new(LocalDir::new(&blob_dir_path)),
         OptimisticDummyJournal::new()
     ))
 }
