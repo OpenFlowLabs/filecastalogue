@@ -1,4 +1,4 @@
-use std::{ffi::{OsStr, OsString}, path::{Path, PathBuf}};
+use std::{ffi::{OsStr, OsString}, fs::create_dir, path::{Path, PathBuf}};
 use crate::{error::{Error, ErrorKind, FcResult, KeyValuePayload},
 finite_stream_handlers::FiniteStreamHandler};
 
@@ -43,35 +43,73 @@ impl LocalDir {
         }
     }
 
+    fn exists(self: &mut Self) -> bool {
+        self.path.exists()
+    }
+
+    /** Attempt to create the directory.
+    */
+    fn create(self: &mut Self) -> FcResult<&mut Self> {
+        create_dir(&self.path)?;
+        Ok(self)
+    }
+
+    /** Attempt to create the directory and silently ignore it if it
+        already exists.
+        This will still pass on any other errors.
+    */ 
+    fn create_ignore_exists(self: &mut Self) -> FcResult<&mut Self> {
+        let result = create_dir(&self.path);
+        match result {
+            Ok(_) => Ok(self),
+            Err(e) => match e.kind() {
+                std::io::ErrorKind::AlreadyExists => Ok(self),
+                _ => Err(e.into())
+            },
+        }
+    }
+
     // fn get_file<NameRef: AsRef<OsString>>(self: &mut Self, name: NameRef)
     // -> FcResult<File> {
     //     let localized_name = PathBuf::from(name.as_ref());
     //     File::open(self.path.join(localized_name))
-    // }   
+    // }
 }
 
 // A collection of files of which we know nothing except that
 // it holds an unknown number (incl. 0) of files of a certain kind.
 pub trait OpaqueCollectionHandler {
-    fn has_file(self: &mut Self, name: &OsStr) -> bool;
+    fn has_file(self: &mut Self, name: &OsStr) -> FcResult<bool>;
     fn get_file<T>(self: &mut Self, name: &OsStr)
     -> FcResult<T> where T: FiniteStreamHandler;
-    // TODO: Wrap in proper error. What we get here doesn't necessarily
-    // have to be io::Error.
-    // fn read_file<T, NameRef: AsRef<OsStr>>(self: &mut Self, name: NameRef)
-    // -> FcResult<T>;
+    fn collection_exists(self: &mut Self) -> bool;
+    fn create_collection(self: &mut Self) -> FcResult<()>;
+    fn create_collection_ignore_exists(self: &mut Self) -> FcResult<()>;
 }
 
 impl OpaqueCollectionHandler for LocalDir
 {
-    fn has_file(self: &mut Self, name: &OsStr) -> bool {
-        self.path.exists()
+    fn has_file(self: &mut Self, name: &OsStr) -> FcResult<bool> {
+        Ok(self.get_file_path(name)?.exists())
     }
 
     fn get_file<T>(self: &mut Self, name: &OsStr)
     -> FcResult<T> where T: FiniteStreamHandler {
         let path = self.get_file_path(name)?;
         Ok(FiniteStreamHandler::new(path))
+    }
+
+    fn collection_exists(self: &mut Self) -> bool {
+        self.path.exists()
+    }
+    fn create_collection(self: &mut Self) -> FcResult<()> {
+        self.create()?;
+        Ok(())
+    }
+
+    fn create_collection_ignore_exists(self: &mut Self) -> FcResult<()> {
+        self.create_ignore_exists();
+        Ok(())
     }
 
     // fn read_file<T, NameRef: AsRef<OsStr>>(self: &mut Self, name: NameRef)
