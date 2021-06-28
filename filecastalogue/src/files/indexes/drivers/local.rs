@@ -31,7 +31,8 @@ impl<
 
     fn add_index_file(self: &mut Self, index_file: &(dyn RepoIndexFile))
     -> FcResult<&mut(dyn IndexFileCollection)> {
-        Ok(self.handler.)
+        // Ok(self.handler.)
+        todo!()
     }
 
     fn get_index_file<'ifile>(self: &mut Self, index: &str)
