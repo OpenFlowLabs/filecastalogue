@@ -154,7 +154,8 @@ impl OpaqueCollectionHandler for LocalDir
         match path.exists() {
             true => Ok(T::new(path)),
             false => Err(error!(
-                ErrorKind::
+                ErrorKind::CollectionHandlerOperationFailed,
+                "Getting a file from the collection."
             ))
         }
         
