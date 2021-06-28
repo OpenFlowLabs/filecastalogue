@@ -1,6 +1,49 @@
-use std::{ffi::{OsStr, OsString}, fs::create_dir, path::{Path, PathBuf}};
-use crate::{error::{Error, ErrorKind, FcResult, KeyValuePayload},
-finite_stream_handlers::FiniteStreamHandler};
+use std::{ffi::{OsStr, OsString}, fmt::Display, fs::create_dir, path::{Path, PathBuf}};
+use crate::{error::{Error, ErrorKind, FcResult, KeyValuePayload, Payload}, finite_stream_handlers::FiniteStreamHandler};
+
+#[derive(Debug)]
+pub enum Problem {
+    IndexFileAlreadyExists
+}
+
+impl Problem {
+    pub(crate) fn as_str(&self) -> &'static str {
+        match self {
+            Self::IndexFileAlreadyExists => "Index file already exists."
+        }
+    }
+}
+
+impl Display for Problem {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", self)
+    }
+}
+
+#[derive(Debug)]
+pub struct OpaqueCollectionErrorPayload {
+    pub problem: Problem
+}
+
+impl OpaqueCollectionErrorPayload {
+    fn new(problem: Problem) -> Self {
+        Self {
+            problem: problem
+        }
+    }
+}
+
+impl Display for OpaqueCollectionErrorPayload {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(
+            f,
+            "{}",
+            self.problem
+        )
+    }
+}
+
+impl Payload for OpaqueCollectionErrorPayload {}
 
 pub struct LocalDir {
     path: PathBuf
@@ -82,6 +125,8 @@ pub trait OpaqueCollectionHandler {
     fn has_file(self: &mut Self, name: &OsStr) -> FcResult<bool>;
     fn get_file<T>(self: &mut Self, name: &OsStr)
     -> FcResult<T> where T: FiniteStreamHandler;
+    fn get_new_file<T>(self: &mut Self, name: &OsStr)
+    -> FcResult<T> where T: FiniteStreamHandler;
     fn collection_exists(self: &mut Self) -> bool;
     fn create_collection(self: &mut Self) -> FcResult<()>;
     fn create_collection_ignore_exists(self: &mut Self) -> FcResult<()>;
@@ -93,15 +138,38 @@ impl OpaqueCollectionHandler for LocalDir
         Ok(self.get_file_path(name)?.exists())
     }
 
+    /// Get a file from the collection by name.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use crate::opaque_file_collection;
+    ///
+    /// let handler = LocalDir<T>
+    /// let file: T = handler.get_file("existingfile")
+    ///```
     fn get_file<T>(self: &mut Self, name: &OsStr)
     -> FcResult<T> where T: FiniteStreamHandler {
         let path = self.get_file_path(name)?;
-        Ok(FiniteStreamHandler::new(path))
+        match path.exists() {
+            true => Ok(T::new(path)),
+            false => Err(error!(
+                ErrorKind::
+            ))
+        }
+        
+    }
+
+    fn get_new_file<T>(self: &mut Self, name: &OsStr)
+    -> FcResult<T> where T: FiniteStreamHandler {
+        let path = self.get_file_path(name)?;
+        Ok(T::new(path))
     }
 
     fn collection_exists(self: &mut Self) -> bool {
         self.path.exists()
     }
+
     fn create_collection(self: &mut Self) -> FcResult<()> {
         self.create()?;
         Ok(())

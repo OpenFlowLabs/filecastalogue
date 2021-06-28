@@ -12,6 +12,7 @@ pub enum ErrorKind {
     VersionEntryAlreadyExists,
     UntrackedFile,
     DoubleDotFileName,
+    CollectionHandlerOperationFailed,
     Io,
     Serde
 }
@@ -25,6 +26,7 @@ impl ErrorKind {
             ErrorKind::VersionEntryAlreadyExists => "Version entry already exists.",
             ErrorKind::UntrackedFile => "Path for which there is no file tracked encountered.",
             ErrorKind::DoubleDotFileName => "Double-dot (..) file name encountered.",
+            ErrorKind::CollectionHandlerOperationFailed => "Collection handler operation failed.",
             ErrorKind::Io => "Standard IO Error: std::io::Error.",
             ErrorKind::Serde => "Error with JSON (de)serialization: serde_json::Error.",
         }
