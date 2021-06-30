@@ -2,5 +2,6 @@
 members = [
   "filecastalogue",
   "filecastaloguer",
+  "filecastalogue_macros",
   "ops",
 ]
