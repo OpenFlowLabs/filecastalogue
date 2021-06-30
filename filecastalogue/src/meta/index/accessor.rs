@@ -99,10 +99,10 @@ impl Accessor for Index {
             Some(_) => Err(error!(
                 ErrorKind::FileAlreadyTracked,
                 "Adding new file to track.",
-                payload => Some(Box::new(FileAlreadyTrackedErrorPayload {
+                payload => FileAlreadyTrackedErrorPayload {
                     path: path.to_owned(),
                     index_struct: self.to_owned()
-                }))
+                }
             ))
             // Err(FileAlreadyTrackedError {
             //     path: path.to_owned(),
@@ -118,10 +118,10 @@ impl Accessor for Index {
             None => Err(error!(
                 ErrorKind::FileAlreadyTracked,
                 "Untracking a file.",
-                payload => Some(Box::new(FileAlreadyTrackedErrorPayload {
+                payload => FileAlreadyTrackedErrorPayload {
                     path: path.to_owned(),
                     index_struct: self.to_owned()
-                }))
+                }
             ))
         }
     }
@@ -133,9 +133,9 @@ impl Accessor for Index {
                 error!(
                     ErrorKind::UntrackedFile,
                     "Getting file aspects by path.",
-                    payload => Some(Box::new(UntrackedFileErrorPayload {
+                    payload => UntrackedFileErrorPayload {
                         path: path.to_owned()
-                    }))
+                    }
                 )
             )
         }

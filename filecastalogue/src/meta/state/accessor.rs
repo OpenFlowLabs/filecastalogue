@@ -117,9 +117,9 @@ impl<'acc> Accessor<'acc> for State {
             None => Err(error!(
                 ErrorKind::VersionEntryDoesNotExist,
                 "Getting entry for that version.",
-                payload => Some(Box::new(VersionEntryDoesNotExistErrorPayload {
+                payload => VersionEntryDoesNotExistErrorPayload {
                     version_id: id.to_owned(),
-                }))
+                }
             ))
         }
     }
@@ -137,10 +137,10 @@ impl<'acc> Accessor<'acc> for State {
             Ok(version) => Err(error!(
                 ErrorKind::VersionEntryAlreadyExists,
                 "Adding a version entry.",
-                payload => Some(Box::new(VersionEntryAlreadyExistsErrorPayload {
+                payload => VersionEntryAlreadyExistsErrorPayload {
                     version_id: id.to_owned(),
                     version_struct: version.to_owned(),
-                }))
+                }
             )),
             Err(_) => Ok(self.put_version(id, index))
         }
@@ -153,9 +153,9 @@ impl<'acc> Accessor<'acc> for State {
             None => Err(error!(
                 ErrorKind::VersionEntryDoesNotExist,
                 "Deleting a version entry.",
-                payload=> Some(Box::new(VersionEntryDoesNotExistErrorPayload { 
+                payload=> VersionEntryDoesNotExistErrorPayload { 
                     version_id: id.to_owned(),
-                }))
+                }
             ))
         }
     }

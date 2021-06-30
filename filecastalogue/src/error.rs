@@ -216,7 +216,6 @@ macro_rules! payload {
     }
 }
 
-
 #[macro_export]
 macro_rules! error {
     ($kind:expr, $context:expr, $payload:expr, $wrapped:expr) => {
@@ -226,7 +225,7 @@ macro_rules! error {
         Error::new($kind, $context, None, None)
     };
     ($kind:expr, $context:expr, payload => $payload:expr) => {
-        Error::new($kind, $context, $payload, None)
+        Error::new($kind, $context, Some(Box::new($payload)), None)
     };
     ($kind:expr, $context:expr, wrapped => $wrapped:expr) => {
         Error::new($kind, $context, None, $wrapped)

@@ -43,12 +43,12 @@ pub(in crate::tests) fn create_minimal_state_VersionEntryAlreadyExistsError()
     error!(
         ErrorKind::VersionEntryAlreadyExists,
         VERSION_ENTRY_ALREADY_EXISTS_ERROR_CONTEXT_DESCRIPTION,
-        payload => Some(Box::new(VersionEntryAlreadyExistsErrorPayload {
+        payload => VersionEntryAlreadyExistsErrorPayload {
             version_id: String::from(MINIMAL_STATE_VERSION_ID),
             version_struct: Version {
                 index: String::from("MOCKHASH")
             }
-        }))
+        }
     )
 }
 
@@ -58,8 +58,8 @@ pub(in crate::tests) fn create_minimal_state_VersionEntryDoesNotExistError()
     error!(
         ErrorKind::VersionEntryDoesNotExist,
         VERSION_ENTRY_DOES_NOT_EXIST_ERROR_DESCRIPTION,
-        payload => Some(Box::new(VersionEntryDoesNotExistErrorPayload {
+        payload => VersionEntryDoesNotExistErrorPayload {
                 version_id: String::from(MINIMAL_STATE_VERSION_ID),
-        }))
+        }
     )
 }

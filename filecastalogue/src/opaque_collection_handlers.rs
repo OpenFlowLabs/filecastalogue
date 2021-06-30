@@ -67,12 +67,8 @@ impl LocalDir {
             None => Err(error!(
                 ErrorKind::DoubleDotFileName,
                 "Getting file_name portion of a path to make sure it isn't absolute.",
-                payload => Some(
-                    Box::new(
-                        KeyValuePayload::new()
-                        .add("Original path", Box::new(file_name_path.to_owned()))
-                    )
-                )
+                payload => KeyValuePayload::new()
+                .add("Original path", Box::new(file_name_path.to_owned()))
             ))
         }
     }
