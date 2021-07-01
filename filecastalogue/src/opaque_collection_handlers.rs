@@ -6,6 +6,7 @@ pub enum Problem {
     IndexFileAlreadyExists
 }
 
+#[allow(dead_code)] // For as_str.
 impl Problem {
     pub(crate) fn as_str(&self) -> &'static str {
         match self {
@@ -26,7 +27,7 @@ pub struct OpaqueCollectionErrorPayload {
 }
 
 impl OpaqueCollectionErrorPayload {
-    fn new(problem: Problem) -> Self {
+    pub fn new(problem: Problem) -> Self {
         Self {
             problem: problem
         }
@@ -154,7 +155,6 @@ impl OpaqueCollectionHandler for LocalDir
                 "Getting a file from the collection."
             ))
         }
-        
     }
 
     fn get_new_file<T>(self: &mut Self, name: &OsStr)

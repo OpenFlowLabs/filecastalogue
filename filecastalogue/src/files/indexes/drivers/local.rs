@@ -1,8 +1,7 @@
 use std::{ffi::OsStr, rc::Rc};
 use crate::{
     error::FcResult, files::{
-        RepoFile, index::{
-            IndexProvider,
+        index::{
             drivers::local::{IndexFile, RepoIndexFile}},
             indexes::IndexFileCollection},
     finite_stream_handlers::LocalFile,

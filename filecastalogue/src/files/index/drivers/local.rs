@@ -45,7 +45,7 @@ impl<Handler: FiniteStreamHandler> IndexFile<Handler> {
     }
     /** Save the index to the file. */
     pub fn save(self: &mut Self) -> FcResult<()> {
-        self.handler.write_all(&self.index);
+        self.handler.write_all(&self.index)?;
         Ok(())
     }
 }
@@ -57,12 +57,12 @@ file backing of the "IndexFile"; its persistence layer, so to say.
 impl<Handler: FiniteStreamHandler> RepoFile for IndexFile<Handler> {
     
     fn load(self: &mut Self) -> FcResult<()> {
-        self.load();
+        self.load()?;
         Ok(())
     }
 
     fn save(self: &mut Self) -> FcResult<()> {
-        self.save();
+        self.save()?;
         Ok(())
     }
 }
