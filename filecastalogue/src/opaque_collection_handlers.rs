@@ -119,10 +119,11 @@ impl LocalDir {
 // A collection of files of which we know nothing except that
 // it holds an unknown number (incl. 0) of files of a certain kind.
 pub trait OpaqueCollectionHandler {
-    fn has_file(self: &mut Self, name: &OsStr) -> FcResult<bool>;
-    fn get_file<T>(self: &mut Self, name: &OsStr)
+    fn has_file<NameRef: AsRef<OsStr>>(self: &mut Self, name: NameRef)
+    -> FcResult<bool>;
+    fn get_file<T, NameRef: AsRef<OsStr>>(self: &mut Self, name: NameRef)
     -> FcResult<T> where T: FiniteStreamHandler;
-    fn get_new_file<T>(self: &mut Self, name: &OsStr)
+    fn get_new_file<T, NameRef: AsRef<OsStr>>(self: &mut Self, name: NameRef)
     -> FcResult<T> where T: FiniteStreamHandler;
     fn collection_exists(self: &mut Self) -> bool;
     fn create_collection(self: &mut Self) -> FcResult<()>;
@@ -131,7 +132,8 @@ pub trait OpaqueCollectionHandler {
 
 impl OpaqueCollectionHandler for LocalDir
 {
-    fn has_file(self: &mut Self, name: &OsStr) -> FcResult<bool> {
+    fn has_file<NameRef: AsRef<OsStr>>(self: &mut Self, name: NameRef)
+    -> FcResult<bool> {
         Ok(self.get_file_path(name)?.exists())
     }
 
@@ -145,7 +147,7 @@ impl OpaqueCollectionHandler for LocalDir
     /// let handler = LocalDir<T>
     /// let file: T = handler.get_file("existingfile")
     ///```
-    fn get_file<T>(self: &mut Self, name: &OsStr)
+    fn get_file<T, NameRef: AsRef<OsStr>>(self: &mut Self, name: NameRef)
     -> FcResult<T> where T: FiniteStreamHandler {
         let path = self.get_file_path(name)?;
         match path.exists() {
@@ -157,7 +159,8 @@ impl OpaqueCollectionHandler for LocalDir
         }
     }
 
-    fn get_new_file<T>(self: &mut Self, name: &OsStr)
+    /// Takes care of configuring a new file
+    fn get_new_file<T, NameRef: AsRef<OsStr>>(self: &mut Self, name: NameRef)
     -> FcResult<T> where T: FiniteStreamHandler {
         let path = self.get_file_path(name)?;
         Ok(T::new(path))
