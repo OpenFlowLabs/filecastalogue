@@ -59,7 +59,7 @@ impl<
                     - Make sure index file exists.
             */
                 
-            if self.indexes.has_index(index) {
+            if self.indexes.has_index(index)? {
                 todo!()
             }
             else {
