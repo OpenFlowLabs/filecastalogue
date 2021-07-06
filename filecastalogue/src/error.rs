@@ -1,8 +1,75 @@
-use std::{collections::HashMap, error::Error as StdError,fmt::{Debug, Display}, io};
+use std::{collections::HashMap, error::Error as StdError, fmt::{Debug, Display}, io, path::PathBuf};
 
 pub trait Payload: Debug + Display {}
 
 pub type FcResult<T> = std::result::Result<T, Error>;
+
+#[derive(Debug)]
+enum ConversionWasLossy {
+    Yes,
+    No
+}
+
+impl ConversionWasLossy {
+    pub(crate) fn as_str(&self) -> &'static str {
+        match *self {
+            // We expect this to appear in front of the path,
+            // hence the trailing space.
+            ConversionWasLossy::Yes => concat!(
+                "[WARNING: The path might be rendered incorrectly in this ",
+                "error message, as lossless conversion to unicode wasn't ",
+                "possible.] "
+            ),
+            // Since we want to be able to drop this enum directly into
+            // error messages, the lossless case should behave as closely,
+            // as possible to not existing while still being a str.
+            // Hence the "".
+            ConversionWasLossy::No => "",
+        }
+    }
+}
+
+impl Display for ConversionWasLossy {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", self.as_str())
+    }
+}
+
+#[derive(Debug)]
+pub struct ErrorPathBuf {
+    string: String,
+    conversion_was_lossy: ConversionWasLossy
+}
+impl From<PathBuf> for ErrorPathBuf {
+    fn from(pathBuf: PathBuf) -> Self {
+        let (string, conversion_was_lossy) =
+            match pathBuf.to_str() {
+                Some(path) => (
+                    String::from(path),
+                    ConversionWasLossy::No
+                ),
+                None => (
+                    String::from(pathBuf.to_string_lossy()),
+                    ConversionWasLossy::Yes
+                )
+        };
+        Self {
+            string: string,
+            conversion_was_lossy: conversion_was_lossy
+        }
+    }
+}
+
+impl Display for ErrorPathBuf {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(
+            f,
+            "{}{}",
+            self.conversion_was_lossy,
+            self.string
+        )
+    }
+}
 
 #[derive(Debug)]
 pub enum ErrorKind {
@@ -12,7 +79,7 @@ pub enum ErrorKind {
     VersionEntryAlreadyExists,
     UntrackedFile,
     DoubleDotFileName,
-    CollectionHandlerOperationFailed,
+    PathDoesNotExistInCollection,
     Io,
     Serde
 }
@@ -26,7 +93,7 @@ impl ErrorKind {
             ErrorKind::VersionEntryAlreadyExists => "Version entry already exists.",
             ErrorKind::UntrackedFile => "Path for which there is no file tracked encountered.",
             ErrorKind::DoubleDotFileName => "Double-dot (..) file name encountered.",
-            ErrorKind::CollectionHandlerOperationFailed => "Collection handler operation failed.",
+            ErrorKind::PathDoesNotExistInCollection => "Path doesn't exist in collection.",
             ErrorKind::Io => "Standard IO Error: std::io::Error.",
             ErrorKind::Serde => "Error with JSON (de)serialization: serde_json::Error.",
         }
