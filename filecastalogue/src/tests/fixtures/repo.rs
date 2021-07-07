@@ -1,10 +1,17 @@
-use crate::{error::FcResult, files::{blobs::drivers::local::LocalBlobFileCollection, indexes::drivers::local::LocalIndexFileCollection, state::drivers::local::StateFile}, finite_stream_handlers::LocalFile, journal::OptimisticDummyJournal, opaque_collection_handlers::LocalDir, repo::Repo};
+use crate::{error::FcResult,
+    files::{blobs::drivers::local::LocalBlobFileCollection,
+        indexes::drivers::local::LocalIndexFileCollection,
+        state::drivers::local::StateFile},
+        finite_stream_handlers::JsonStream,
+        journal::OptimisticDummyJournal,
+        opaque_collection_handlers::LocalDir,
+        repo::Repo};
 
 pub(crate) const NON_EXISTENT_VERSION_ID: &str = "0";
 
 pub(in crate::tests) fn create_minimal_repo_struct()
 -> FcResult<Repo<
-    StateFile<LocalFile>,
+    StateFile<JsonStream>,
     LocalIndexFileCollection<LocalDir>,
     LocalBlobFileCollection<LocalDir>,
     OptimisticDummyJournal

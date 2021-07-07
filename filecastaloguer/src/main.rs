@@ -3,7 +3,7 @@ use clap::{App, Arg, SubCommand,
 };
 use std::{env::current_dir, ffi::OsString, io, path::PathBuf};
 use filecastalogue::{error::Error, files::{blobs::{drivers::local::LocalBlobFileCollection},
-indexes::{drivers::local::LocalIndexFileCollection}, state::drivers::local::StateFile}, finite_stream_handlers::LocalFile, journal::OptimisticDummyJournal, opaque_collection_handlers::LocalDir, repo::Repo};
+indexes::{drivers::local::LocalIndexFileCollection}, state::drivers::local::StateFile}, finite_stream_handlers::JsonStream, journal::OptimisticDummyJournal, opaque_collection_handlers::LocalDir, repo::Repo};
 
 const ABOUT_REPO: &str =
 "Path to the repo directory. Defaults to the current directory.";
@@ -17,7 +17,7 @@ fn create_local_repo
 (repo_path: PathBuf)
 -> Result<
     Repo<
-        StateFile<LocalFile>,
+        StateFile<JsonStream>,
         LocalIndexFileCollection<LocalDir>,
         LocalBlobFileCollection<LocalDir>,
         OptimisticDummyJournal
@@ -29,7 +29,7 @@ fn create_local_repo
     // Indexes go into the same directory as blobs.
     let index_dir_path = PathBuf::from(&repo_path).join(OsString::from("blobs"));
     let state_file_path = PathBuf::from(&repo_path).join(OsString::from("state.json"));
-    let state_file = StateFile::new(LocalFile::new(state_file_path))?;
+    let state_file = StateFile::new(JsonStream::new(state_file_path))?;
     Ok(Repo::new(
         state_file,
         LocalIndexFileCollection::new(LocalDir::new(&index_dir_path)),

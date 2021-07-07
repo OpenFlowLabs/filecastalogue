@@ -1,44 +1,44 @@
-use std::{fs::File, io::{BufReader, BufWriter}, path::{Path, PathBuf}};
+use std::{io::{BufReader, BufWriter, Read, Write}};
 
 use serde::{Serialize, de::{DeserializeOwned}};
 
 use crate::error::FcResult;
 
-pub struct LocalFile {
-    path: PathBuf
-}
+pub struct JsonStream {}
 
-impl LocalFile {
-    pub fn new<PathRef: AsRef<Path>>(path: PathRef) -> Self {
-        Self {
-            path: path.as_ref().to_owned()
-        }
+impl JsonStream {
+    pub fn new() -> Self {
+        Self {}
     }
 }
 
 pub trait FiniteStreamHandler {
-    fn new<PathRef: AsRef<Path>>(path: PathRef) -> Self;
-    fn read_all<Target>(self: &mut Self) -> FcResult<Target>
-    where Target: DeserializeOwned;
-    fn write_all<Source>(self: &mut Self, source: &Source) -> FcResult<()>
+    fn read_all<Target>(self: &mut Self, source: &mut (dyn Read))
+    -> FcResult<Target>
+    where Target: DeserializeOwned ;
+    fn write_all<Source>(self: &mut Self,
+        writer: &mut (dyn Write),
+        source: &Source)
+    -> FcResult<()>
     where Source: ?Sized + Serialize;
 }
 
-impl FiniteStreamHandler for LocalFile {
-    fn new<PathRef: AsRef<Path>>(path: PathRef) -> Self {
-        Self::new(path)
-    }
-    fn read_all<Target>(self: &mut Self) -> FcResult<Target>
+impl FiniteStreamHandler for JsonStream {
+    fn read_all<Target>(self: &mut Self, reader: &mut (dyn Read))
+    -> FcResult<Target>
     where Target: DeserializeOwned {
         Ok(serde_json::from_reader(
-            BufReader::new(File::open(self.path.to_owned())?)
+            BufReader::new(reader)
         )?)
     }
 
-    fn write_all<Source>(self: &mut Self, source: &Source) -> FcResult<()>
+    fn write_all<Source>(self: &mut Self,
+        writer: &mut (dyn Write),
+        source: &Source)
+    -> FcResult<()>
     where Source: ?Sized + Serialize {
         Ok(serde_json::to_writer_pretty(
-            BufWriter::new(File::open(self.path.to_owned())?),
+            BufWriter::new(writer),
             source
         )?)
     }
