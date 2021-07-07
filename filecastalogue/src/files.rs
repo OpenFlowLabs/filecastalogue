@@ -1,4 +1,4 @@
-use std::fmt::{self, Debug, Display};
+use std::{fmt::{self, Debug, Display}, io::{Read, Write}};
 use crate::error::{FcResult, Payload};
 
 pub mod blob;
@@ -78,8 +78,8 @@ their own, but how that actually happens, and whether it's even
 files at the end of the day doesn't really concern us here.
  */
 pub trait RepoFile {
-    fn load(self: &mut Self) -> FcResult<()>;
-    fn save(self: &mut Self) -> FcResult<()>;
+    fn load(self: &mut Self, reader: &mut (dyn Read)) -> FcResult<()>;
+    fn save(self: &mut Self, writer: &mut (dyn Write)) -> FcResult<()>;
 }
 
 pub trait RepoFileCollection {

@@ -128,7 +128,7 @@ pub trait OpaqueCollectionHandler {
     fn has_file<NameRef: AsRef<OsStr>>(self: &mut Self, name: NameRef)
     -> FcResult<bool>;
     fn get_file_reader(&self, name: &OsStr)
-    -> FcResult<Rc<(dyn Read)>>;
+    -> FcResult<Box<(dyn Read)>>;
     fn get_file_writer(&self, name: &OsStr)
     -> FcResult<Rc<(dyn Write)>>;
     fn get_new_file<T, NameRef: AsRef<OsStr>>(self: &mut Self, name: NameRef)
@@ -146,8 +146,8 @@ impl OpaqueCollectionHandler for LocalDir
     }
 
     fn get_file_reader(&self, name: &OsStr)
-    -> FcResult<Rc<(dyn Read)>> {
-        Ok(Rc::new(self.get_file(name)?))
+    -> FcResult<Box<(dyn Read)>> {
+        Ok(Box::new(self.get_file(name)?))
     }
 
     fn get_file_writer(&self, name: &OsStr)
@@ -159,7 +159,8 @@ impl OpaqueCollectionHandler for LocalDir
     fn get_new_file<T, NameRef: AsRef<OsStr>>(self: &mut Self, name: NameRef)
     -> FcResult<T> where T: FiniteStreamHandler {
         let path = self.get_file_path(name)?;
-        Ok(T::new(path))
+        todo!()
+        // Ok(T::new(path))
     }
 
     fn collection_exists(self: &mut Self) -> bool {

@@ -1,9 +1,9 @@
-use std::{ffi::OsStr, rc::Rc};
+use std::{rc::Rc};
 use crate::{error::FcResult, files::{
         index::{
             drivers::local::{IndexFile, RepoIndexFile}},
-            indexes::IndexFileCollection}, finite_stream_handlers::{
-                LocalFile}, opaque_collection_handlers::OpaqueCollectionHandler};
+            indexes::IndexFileCollection},
+            opaque_collection_handlers::OpaqueCollectionHandler};
 
 // TODO: Evaluate the nature of this struct, as "its "local"
 // nature has mgeneralized a lot to "not really local" over
@@ -38,17 +38,19 @@ impl<
     }
 
     fn get_new_index_file(self: &mut Self, index_file: &(dyn RepoIndexFile))
+    // This returning "IndexFileCollection" doesn't look quite right.. :p
     -> FcResult<&mut(dyn IndexFileCollection)> {
         todo!(); // get_new_file will need a proper name specified, not "".
         // let index_file: = IndexFile::new(self.handler.get_new_file("")?);
-        
     }
 
     fn get_index_file<'ifile>(self: &mut Self, index: &str)
     -> FcResult<Rc<(dyn RepoIndexFile)>> {
-        let handler: LocalFile = self.handler.get_file(OsStr::new(index))?;
+        let mut reader = self.handler.get_file_reader(index)?;
         let index_file: Rc<(dyn RepoIndexFile)> = Rc::new(
-            IndexFile::new(handler)?
+            IndexFile::from_existing(
+                &mut reader
+            )?
         );
         Ok(index_file)
     }
