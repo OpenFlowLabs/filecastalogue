@@ -3,6 +3,7 @@ pub mod error;
 pub mod meta;
 pub mod journal;
 pub mod files;
+pub mod hash_file_name;
 #[cfg(test)]
 mod tests;
 pub mod repo;
