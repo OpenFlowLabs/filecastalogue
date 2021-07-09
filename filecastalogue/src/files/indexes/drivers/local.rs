@@ -1,9 +1,8 @@
-use std::{rc::Rc};
+use std::{ffi::OsStr, rc::Rc};
 use crate::{error::FcResult, files::{
         index::{
             drivers::local::{IndexFile, RepoIndexFile}},
-            indexes::IndexFileCollection},
-            opaque_collection_handlers::OpaqueCollectionHandler};
+            indexes::IndexFileCollection}, opaque_collection_handlers::OpaqueCollectionHandler};
 
 // TODO: Evaluate the nature of this struct, as "its "local"
 // nature has mgeneralized a lot to "not really local" over
@@ -44,9 +43,11 @@ impl<
         // let index_file: = IndexFile::new(self.handler.get_new_file("")?);
     }
 
-    fn get_index_file<'ifile>(self: &mut Self, index: &str)
+    fn get_index_file(self: &mut Self, index: &str)
     -> FcResult<Rc<(dyn RepoIndexFile)>> {
-        let mut reader = self.handler.get_file_reader(index)?;
+        let mut reader = self.handler.get_file_reader(
+            OsStr::new(index)
+        )?;
         let index_file: Rc<(dyn RepoIndexFile)> = Rc::new(
             IndexFile::from_existing(
                 &mut reader

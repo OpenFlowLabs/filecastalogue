@@ -1,6 +1,6 @@
 use std::{ffi::{OsStr, OsString}, fmt::Display, fs::{File, create_dir},
 io::{Read, Write}, path::{Path, PathBuf}, rc::Rc};
-use crate::{error::{Error, ErrorKind, ErrorPathBuf, FcResult, Payload}, finite_stream_handlers::FiniteStreamHandler};
+use crate::{error::{Error, ErrorKind, ErrorPathBuf, FcResult, Payload}};
 
 #[derive(Debug)]
 pub struct PathDoesNotExistInCollectionPayload {
@@ -14,8 +14,8 @@ impl Display for PathDoesNotExistInCollectionPayload {
             concat!(
                 "Collection path: {}, file name: {}.",
             ),
-            ErrorPathBuf::from(self.collection_path),
-            ErrorPathBuf::from(self.file_name)
+            ErrorPathBuf::from(self.collection_path.to_owned()),
+            ErrorPathBuf::from(self.file_name.to_owned())
         )
     }
 }
@@ -30,7 +30,7 @@ impl Display for DoubleDotFileName {
         write!(
             f,
             "Original path: {}",
-            ErrorPathBuf::from(self.original_path)
+            ErrorPathBuf::from(self.original_path.to_owned())
         )
     }
 }
@@ -131,8 +131,6 @@ pub trait OpaqueCollectionHandler {
     -> FcResult<Box<(dyn Read)>>;
     fn get_file_writer(&self, name: &OsStr)
     -> FcResult<Rc<(dyn Write)>>;
-    fn get_new_file<T, NameRef: AsRef<OsStr>>(self: &mut Self, name: NameRef)
-    -> FcResult<T> where T: FiniteStreamHandler;
     fn collection_exists(self: &mut Self) -> bool;
     fn create_collection(self: &mut Self) -> FcResult<()>;
     fn create_collection_ignore_exists(self: &mut Self) -> FcResult<()>;
@@ -153,14 +151,6 @@ impl OpaqueCollectionHandler for LocalDir
     fn get_file_writer(&self, name: &OsStr)
     -> FcResult<Rc<(dyn Write)>> {
         Ok(Rc::new(self.get_file(name)?))
-    }
-
-    /// Takes care of configuring a new file
-    fn get_new_file<T, NameRef: AsRef<OsStr>>(self: &mut Self, name: NameRef)
-    -> FcResult<T> where T: FiniteStreamHandler {
-        let path = self.get_file_path(name)?;
-        todo!()
-        // Ok(T::new(path))
     }
 
     fn collection_exists(self: &mut Self) -> bool {

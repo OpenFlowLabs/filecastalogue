@@ -1,55 +1,46 @@
-use std::{fs::File, io::BufReader, path::Path};
-use crate::{error::{Error, FcResult, WrappedError}, files::{AccessRepoFileErrorPayload, OffendingAction}};
-use crate::error::ErrorKind::RepoFileOperationFailed;
-use crate::{files::{RepoFile, state::StateProvider},
-finite_stream_handlers::FiniteStreamHandler, meta::state::model::State};
+use std::{io::{BufReader, Read, Write}};
+use crate::{error::{Error, ErrorKind, FcResult, WrappedError}, files::{AccessRepoFileErrorPayload, OffendingAction}};
+use crate::{files::{RepoFile, state::StateProvider},meta::state::model::State};
 
-pub fn file_reader<PathRef: AsRef<Path>>(path: PathRef)
--> FcResult<BufReader<File>> {
-    // let file = File::open(path)?;
-    Ok(BufReader::new(File::open(path)?))
-}
-
-pub struct StateFile<Handler> where Handler: FiniteStreamHandler {
-    pub handler: Handler,
+pub struct StateFile {
     pub state: State,
 }
 
-impl<Handler: FiniteStreamHandler> StateFile<Handler> {
-    pub fn new(handler: Handler) -> FcResult<Self> {
-        let mut mut_handler = handler;
+impl StateFile {
+    pub fn from_existing(readable: &mut (dyn Read)) -> FcResult<Self> {
         Ok(Self {
-            state: mut_handler.read_all()?,
-            handler: mut_handler,
+            state: serde_json::from_reader(BufReader::new(readable))?,
         })
     }
 }
 
-impl<Handler: FiniteStreamHandler> RepoFile for StateFile<Handler> {
-    fn load(self: &mut Self) -> FcResult<()> {
-        match self.handler.read_all() {
+impl RepoFile for StateFile {
+    fn load(self: &mut Self, readable: &mut (dyn Read)) -> FcResult<()> {
+        let reader = BufReader::new(readable);
+        match serde_json::from_reader(reader) {
             Ok(deserialized_file_contents) => {
                 self.state = deserialized_file_contents;
                 Ok(())
             },
-            Err(io_error) => Err(Error::new(
-                RepoFileOperationFailed,
+            Err(io_error) => Err(error!(
+                ErrorKind::RepoFileOperationFailed,
                 "Trying to get deserialized file contents from the handler.",
-                Some(Box::new(AccessRepoFileErrorPayload::new(
+                AccessRepoFileErrorPayload::new(
                     OffendingAction::LoadingRepoFile,
                     "StateFile"
-                ))),
-                Some(WrappedError::Fc(Box::new(io_error)))
+                ),
+                WrappedError::Serde(io_error)
             ))
         }
     }
 
-    fn save(self: &mut Self) -> FcResult<()> {
-        todo!()
+    fn save(self: &mut Self, writer: &mut (dyn Write)) -> FcResult<()> {
+        serde_json::to_writer_pretty(writer, &self.state)?;
+        Ok(())
     }
 }
 
-impl<Handler: FiniteStreamHandler> StateProvider for StateFile<Handler> {
+impl StateProvider for StateFile {
     fn get_state(self: &mut Self) -> crate::meta::state::model::State {
         todo!()
     }
