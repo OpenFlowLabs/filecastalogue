@@ -34,13 +34,13 @@ impl IndexFile {
         })
     }
     /** Load the index from the specified source. */
-    pub fn load(self: &mut Self, readable: &mut(dyn Read)) -> FcResult<()> {
+    pub fn load(self: &mut Self, readable: &mut (dyn Read)) -> FcResult<()> {
         let mut reader = BufReader::new(readable);
         self.index = serde_json::from_reader(reader)?;
         Ok(())
     }
     /** Write the index to the specified sink. */
-    pub fn save(self: &mut Self, writer: &mut(dyn Write)) -> FcResult<()> {
+    pub fn save(self: &mut Self, writer: &mut (dyn Write)) -> FcResult<()> {
         serde_json::to_writer_pretty(writer, &self.index);
         Ok(())
     }
