@@ -41,15 +41,15 @@ pub struct ErrorPathBuf {
     conversion_was_lossy: ConversionWasLossy
 }
 impl From<PathBuf> for ErrorPathBuf {
-    fn from(pathBuf: PathBuf) -> Self {
+    fn from(path_buf: PathBuf) -> Self {
         let (string, conversion_was_lossy) =
-            match pathBuf.to_str() {
+            match path_buf.to_str() {
                 Some(path) => (
                     String::from(path),
                     ConversionWasLossy::No
                 ),
                 None => (
-                    String::from(pathBuf.to_string_lossy()),
+                    String::from(path_buf.to_string_lossy()),
                     ConversionWasLossy::Yes
                 )
         };
@@ -286,7 +286,7 @@ macro_rules! payload {
 #[macro_export]
 macro_rules! error {
     ($kind:expr, $context:expr, $payload:expr, $wrapped:expr) => {
-        Error::new($kind, $context, $payload, $wrapped)
+        Error::new($kind, $context, Some(Box::new($payload)), Some($wrapped))
     };
     ($kind:expr, $context:expr) => {
         Error::new($kind, $context, None, None)
@@ -295,6 +295,6 @@ macro_rules! error {
         Error::new($kind, $context, Some(Box::new($payload)), None)
     };
     ($kind:expr, $context:expr, wrapped => $wrapped:expr) => {
-        Error::new($kind, $context, None, $wrapped)
+        Error::new($kind, $context, None, Some($wrapped))
     };
 }
