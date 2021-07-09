@@ -1,6 +1,9 @@
-use std::{io::{BufReader, Read, Write}};
-use crate::{error::{Error, ErrorKind, FcResult, WrappedError}, files::{AccessRepoFileErrorPayload, OffendingAction}};
-use crate::{files::{RepoFile, state::StateProvider},meta::state::model::State};
+use std::{io::{BufReader, BufWriter, Read, Write}};
+use crate::{access_repo_file_error, error::{Error, ErrorKind,
+    FcResult, WrappedError}, files::{AccessRepoFileErrorPayload,
+        OffendingAction}, globals::STATE_FILE_NAME};
+use crate::{files::{RepoFile, state::StateProvider},
+meta::state::model::State};
 
 pub struct StateFile {
     pub state: State,
@@ -22,21 +25,26 @@ impl RepoFile for StateFile {
                 self.state = deserialized_file_contents;
                 Ok(())
             },
-            Err(io_error) => Err(error!(
-                ErrorKind::RepoFileOperationFailed,
-                "Trying to get deserialized file contents from the handler.",
-                AccessRepoFileErrorPayload::new(
-                    OffendingAction::LoadingRepoFile,
-                    "StateFile"
-                ),
-                WrappedError::Serde(io_error)
+            Err(serde_error) => Err(access_repo_file_error!(
+                OffendingAction::LoadingRepoFile,
+                context => "Trying to load local state file from the filesystem.",
+                identifier => STATE_FILE_NAME,
+                wrapped => serde_error
             ))
         }
     }
 
-    fn save(self: &mut Self, writer: &mut (dyn Write)) -> FcResult<()> {
-        serde_json::to_writer_pretty(writer, &self.state)?;
-        Ok(())
+    fn save(self: &mut Self, writeable: &mut (dyn Write)) -> FcResult<()> {
+        let writer = BufWriter::new(writeable);
+        match serde_json::to_writer_pretty(writer, &self.state) {
+            Ok(_) => Ok(()),
+            Err(serde_error) => Err(access_repo_file_error!(
+                OffendingAction::SavingRepoFile,
+                context => "Trying to save local state file to the filesystem.",
+                identifier => STATE_FILE_NAME,
+                wrapped => serde_error
+            ))
+        }
     }
 }
 
