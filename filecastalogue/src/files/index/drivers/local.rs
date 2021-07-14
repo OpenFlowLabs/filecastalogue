@@ -33,17 +33,6 @@ impl IndexFile {
             index: serde_json::from_reader(reader)?,
         })
     }
-    /** Load the index from the specified source. */
-    pub fn load(self: &mut Self, readable: &mut (dyn Read)) -> FcResult<()> {
-        let reader = BufReader::new(readable);
-        self.index = serde_json::from_reader(reader)?;
-        Ok(())
-    }
-    /** Write the index to the specified sink. */
-    pub fn save(self: &mut Self, writer: &mut (dyn Write)) -> FcResult<()> {
-        serde_json::to_writer_pretty(writer, &self.index)?;
-        Ok(())
-    }
 }
 
 /**
@@ -52,13 +41,14 @@ file backing of the "IndexFile"; its persistence layer, so to say.
 */
 impl RepoFile for IndexFile {
     
-    fn load(self: &mut Self, reader: &mut (dyn Read)) -> FcResult<()> {
-        self.load(reader)?;
+    fn load(self: &mut Self, readable: &mut (dyn Read)) -> FcResult<()> {
+        let reader = BufReader::new(readable);
+        self.index = serde_json::from_reader(reader)?;
         Ok(())
     }
 
-    fn save(self: &mut Self, writer: &mut (dyn Write)) -> FcResult<()> {
-        self.save(writer)?;
+    fn save(self: &mut Self, writeable: &mut (dyn Write)) -> FcResult<()> {
+        serde_json::to_writer_pretty(writeable, &self.index)?;
         Ok(())
     }
 }
