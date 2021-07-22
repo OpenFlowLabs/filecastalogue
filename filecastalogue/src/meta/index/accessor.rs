@@ -1,18 +1,19 @@
 use std::{ffi::{OsStr}};
 use crate::{error::{Error, ErrorKind, FcResult}};
+use super::super::file_aspects::enums::TrackedFileAspects;
 use super::{
     error::{FileAlreadyTrackedErrorPayload, UntrackedFileErrorPayload},
-    model::{FileAspects, Index}};
+    model::Index};
     
 pub trait Accessor {
     fn is_empty(&mut self) -> bool;
         // fn get_all_file_paths(&mut self) -> Keys<String, FileAspects>;
     fn tracks_files(&mut self) -> bool;
     fn tracks_file(&mut self, path: &OsStr) -> bool;
-    fn track_file(&mut self, path: &OsStr, aspects: &FileAspects)
+    fn track_file(&mut self, path: &OsStr, aspects: &TrackedFileAspects)
     -> FcResult<&mut Self>;
     fn untrack_file(&mut self, path: &OsStr) -> FcResult<&mut Self>;
-    fn get_aspects(&mut self, path: &OsStr) -> FcResult<FileAspects>;
+    fn get_aspects(&mut self, path: &OsStr) -> FcResult<TrackedFileAspects>;
 }
 
 impl Accessor for Index {
@@ -37,7 +38,7 @@ impl Accessor for Index {
         }
     }
     
-    fn track_file(&mut self, path: &OsStr, aspects: &FileAspects)
+    fn track_file(&mut self, path: &OsStr, aspects: &TrackedFileAspects)
     -> FcResult<&mut Self> {
         match self.files.insert(path.to_owned(), aspects.to_owned()) {
             None => Ok(self),
@@ -71,7 +72,7 @@ impl Accessor for Index {
         }
     }
     
-    fn get_aspects(&mut self, path: &OsStr) -> FcResult<FileAspects> {
+    fn get_aspects(&mut self, path: &OsStr) -> FcResult<TrackedFileAspects> {
         match self.files.get(path) {
             Some(aspects) => Ok(aspects.to_owned()),
             None => Err(
