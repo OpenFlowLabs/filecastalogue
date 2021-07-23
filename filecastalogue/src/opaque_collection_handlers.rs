@@ -127,9 +127,9 @@ impl LocalDir {
 pub trait OpaqueCollectionHandler {
     fn has_file<NameRef: AsRef<OsStr>>(self: &mut Self, name: NameRef)
     -> FcResult<bool>;
-    fn get_file_reader(&self, name: &OsStr)
+    fn get_file_readable(&self, name: &OsStr)
     -> FcResult<Box<(dyn Read)>>;
-    fn get_file_writer(&self, name: &OsStr)
+    fn get_file_writeable(&self, name: &OsStr)
     -> FcResult<Rc<(dyn Write)>>;
     fn collection_exists(self: &mut Self) -> bool;
     fn create_collection(self: &mut Self) -> FcResult<()>;
@@ -143,12 +143,12 @@ impl OpaqueCollectionHandler for LocalDir
         Ok(self.get_file_path(name)?.exists())
     }
 
-    fn get_file_reader(&self, name: &OsStr)
+    fn get_file_readable(&self, name: &OsStr)
     -> FcResult<Box<(dyn Read)>> {
         Ok(Box::new(self.get_file(name)?))
     }
 
-    fn get_file_writer(&self, name: &OsStr)
+    fn get_file_writeable(&self, name: &OsStr)
     -> FcResult<Rc<(dyn Write)>> {
         Ok(Rc::new(self.get_file(name)?))
     }

@@ -1,11 +1,11 @@
-use crate::{error::FcResult, files::{RepoFile, blobs::BlobFileCollection, 
-    indexes::IndexFileCollection, state::StateProvider}, journal, meta::state::accessor::Accessor};
+use crate::{error::FcResult, files::{RepoFile, tracked_collection::TrackedFileCollection, 
+    index_collection::IndexFileCollection, state::StateProvider}, journal, meta::state::accessor::Accessor};
 
 pub struct Repo<
     // Handler: FiniteStreamHandler,
     StateFile: RepoFile + StateProvider,
     Indexes: IndexFileCollection,
-    Blobs: BlobFileCollection,
+    Blobs: TrackedFileCollection,
     Journal: journal::Journal
     >
     {
@@ -31,7 +31,7 @@ impl<
     // Handler: FiniteStreamHandler,
     StateFile: RepoFile + StateProvider,
     Indexes: IndexFileCollection,
-    Blobs: BlobFileCollection,
+    Blobs: TrackedFileCollection,
     Journal: journal::Journal
     > Repo<StateFile, Indexes, Blobs, Journal> {
         pub fn new(

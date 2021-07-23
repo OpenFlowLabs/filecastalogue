@@ -3,10 +3,12 @@ use std::{fmt::{self, Debug, Display}, io::{Read, Write}};
 use crate::error::{FcResult, Payload};
 
 pub mod blob;
+pub mod tracked;
 pub mod index;
 pub mod state;
-pub mod blobs;
-pub mod indexes;
+pub mod hashable;
+pub mod tracked_collection;
+pub mod index_collection;
 
 pub struct AccessRepoFileErrorPayload {
     pub offending_action: OffendingAction,

@@ -1,6 +1,6 @@
 use crate::{error::FcResult,
-    files::{blobs::drivers::local::LocalBlobFileCollection,
-        indexes::drivers::local::LocalIndexFileCollection,
+    files::{tracked_collection::MiscTrackedFileCollection,
+        index_collection::MiscIndexFileCollection,
         state::drivers::local::StateFile},
         journal::OptimisticDummyJournal,
         opaque_collection_handlers::LocalDir,
@@ -11,8 +11,8 @@ pub(crate) const NON_EXISTENT_VERSION_ID: &str = "0";
 pub(in crate::tests) fn create_minimal_repo_struct()
 -> FcResult<Repo<
     StateFile,
-    LocalIndexFileCollection<LocalDir>,
-    LocalBlobFileCollection<LocalDir>,
+    MiscIndexFileCollection<LocalDir>,
+    MiscTrackedFileCollection<LocalDir>,
     OptimisticDummyJournal
 >> {
     Ok(Repo::new(

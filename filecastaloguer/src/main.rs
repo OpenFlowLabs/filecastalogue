@@ -2,8 +2,8 @@ use clap::{App, Arg, SubCommand,
     crate_authors, crate_description, crate_name, crate_version
 };
 use std::{env::current_dir, ffi::OsString, fs::File, io, path::PathBuf};
-use filecastalogue::{error::Error, files::{blobs::{drivers::local::LocalBlobFileCollection},
-indexes::{drivers::local::LocalIndexFileCollection}, state::drivers::local::StateFile},
+use filecastalogue::{error::Error, files::{tracked_collection::MiscTrackedFileCollection,
+index_collection::MiscIndexFileCollection, state::drivers::local::StateFile},
 journal::OptimisticDummyJournal, opaque_collection_handlers::LocalDir, repo::Repo};
 
 const ABOUT_REPO: &str =
@@ -19,8 +19,8 @@ fn create_local_repo
 -> Result<
     Repo<
         StateFile,
-        LocalIndexFileCollection<LocalDir>,
-        LocalBlobFileCollection<LocalDir>,
+        MiscIndexFileCollection<LocalDir>,
+        MiscTrackedFileCollection<LocalDir>,
         OptimisticDummyJournal
     >,
     Error
@@ -35,10 +35,10 @@ fn create_local_repo
     )?;
     Ok(Repo::new(
         state_file,
-        LocalIndexFileCollection::new(LocalDir::new(&index_dir_path)),
+        MiscIndexFileCollection::new(LocalDir::new(&index_dir_path)),
         // TODO [prio:critical]: repo_path is actually wrong here,
         // it's just there to test the typing atm.
-        LocalBlobFileCollection::new(LocalDir::new(&blob_dir_path)),
+        MiscTrackedFileCollection::new(LocalDir::new(&blob_dir_path)),
         OptimisticDummyJournal::new()
     ))
 }

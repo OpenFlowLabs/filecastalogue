@@ -1,11 +1,9 @@
 use std::io::{BufReader, Read, Write};
-use crate::{
-    error::FcResult, files::{
-        RepoFile,
-        index::IndexProvider},
-    meta::index::model::Index};
-
-pub trait RepoIndexFile: RepoFile + IndexProvider {}
+use crate::error::FcResult;
+use crate::files::hashable::Hashable;
+use super::super::super::{RepoFile, blob::BlobProvider, index::IndexProvider};
+use super::super::Index;
+pub trait RepoIndexFile: RepoFile + IndexProvider + BlobProvider + Hashable {}
 
 /**
 A local index file.
@@ -67,4 +65,16 @@ impl IndexProvider for IndexFile {
     }
 }
 
-impl RepoIndexFile for IndexFile{}
+impl BlobProvider for IndexFile {
+    fn get_blob(&self) -> FcResult<Vec<u8>> {
+        Ok(serde_json::to_vec_pretty(&self.index)?)
+    }
+}
+
+impl Hashable for IndexFile {
+    fn get_hash(&self) -> FcResult<String> {
+        (self as &(dyn BlobProvider)).get_hash()
+    }
+}
+
+impl RepoIndexFile for IndexFile {}
