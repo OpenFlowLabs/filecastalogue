@@ -47,12 +47,12 @@ impl<
                 journal: journal
             }
         }
-        pub fn has_version(self: &mut Self, id: &str) -> bool {
-            self.state_file.get_state().has_version(id)
+        pub fn has_version(self: &mut Self, id: &str) -> FcResult<bool> {
+            Ok(self.state_file.get_state()?.clone().has_version(id))
         }
         pub fn add_version(self: &mut Self, id: &str, index: &str)
         -> FcResult<&mut Self> {
-            self.state_file.get_state().add_version(id, index)?;
+            self.state_file.get_state()?.clone().add_version(id, index)?;
             /*
                 Has to do these things:
                     - Add new version to state file.

@@ -92,7 +92,7 @@ impl RepoFile for StateFile {
 }
 
 impl StateProvider for StateFile {
-    fn get_state(self: &mut Self) -> crate::meta::state::model::State {
-        todo!()
+    fn get_state(self: &mut Self) -> FcResult<&State> {
+        Ok(&self.state)
     }
 }
