@@ -1,5 +1,5 @@
 use core::fmt;
-use std::{error::Error, rc::Rc};
+use std::{error::Error, ffi::OsString, rc::Rc};
 use crate::error::FcResult;
 use super::{index::drivers::local::RepoIndexFile};
 use std::ffi::OsStr;
@@ -44,10 +44,21 @@ impl<
         // let index_file: = IndexFile::new(self.handler.get_new_file("")?);
     }
 
-    fn get_index_file(self: &mut Self, index: &str)
+    // TODO: Do we really want this to be Rc?
+    //  It's probably going to be cumbersome regarding mutability, and we might
+    //  not want to provide too much flexibility in terms of spraying file
+    //  related references everywhere. At the same time, getting the file,
+    //  loading, getting the index, setting the index and saving ought to be
+    //  straight forward and painless.
+    //  Also, it's too early to tell how fancy things might be getting in Repo
+    //  related code, particularly with journal/staging/consistency related
+    //  things in mind, so maybe we don't want to be too restricting (yet?)
+    //  in order not to shackle the prototyping process too much.
+    /// Get an index file from the collection.
+    fn get_index_file(self: &mut Self, hash: &str)
     -> FcResult<Rc<(dyn RepoIndexFile)>> {
         let mut reader = self.handler.get_file_readable(
-            OsStr::new(index)
+            OsStr::new(hash)
         )?;
         let index_file: Rc<(dyn RepoIndexFile)> = Rc::new(
             IndexFile::from_existing(
@@ -57,10 +68,17 @@ impl<
         Ok(index_file)
     }
 
+    /// Save an index file to the collection.
+    /// This will get the hash of the file's contents, write them to
+    /// to a file with the hash for a name and return the hash.
     fn put_index_file(
-        self: &mut Self, index_file: &(dyn RepoIndexFile))
+        self: &mut Self, index_file: &mut (dyn RepoIndexFile))
     -> FcResult<String> {
-        todo!()
+        let hash = index_file.get_hash()?;
+        let mut writeable = self.handler.get_file_writeable(
+            &OsString::from(&hash))?;
+        index_file.save(&mut writeable)?;
+        Ok(hash)
     }
 }
 
@@ -117,6 +135,6 @@ pub trait IndexFileCollection {
     fn get_index_file(self: &mut Self, index: &str)
     -> FcResult<Rc<(dyn RepoIndexFile)>>;
     fn put_index_file<'putting>(
-        self: &mut Self, index_file: &'putting (dyn RepoIndexFile))
+        self: &mut Self, index_file: &'putting mut (dyn RepoIndexFile))
     -> FcResult<String>;
 }

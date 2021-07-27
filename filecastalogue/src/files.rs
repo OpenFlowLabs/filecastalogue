@@ -1,4 +1,3 @@
-#[macro_use]
 use std::{fmt::{self, Debug, Display}, io::{Read, Write}};
 use crate::error::{FcResult, Payload};
 
@@ -130,7 +129,7 @@ macro_rules! access_repo_file_error {
                 None,
                 None
             ))),
-            Some(WrappedError::Serde($wrapped))
+            Some($wrapped)
         )
     };
     (
@@ -149,7 +148,7 @@ macro_rules! access_repo_file_error {
                 None,
                 Some(format!("{:?}", $buf_info))
             ))),
-            Some(WrappedError::Serde($wrapped))
+            Some($wrapped)
         )
     };
     (
@@ -185,7 +184,7 @@ files at the end of the day doesn't really concern us here.
  */
 pub trait RepoFile {
     fn load(self: &mut Self, reader: &mut (dyn Read)) -> FcResult<()>;
-    fn save(self: &mut Self, writeable: &mut (dyn Write)) -> FcResult<()>;
+    fn save(self: &mut Self, writeable: &mut dyn Write) -> FcResult<()>;
 }
 
 pub trait RepoFileCollection {

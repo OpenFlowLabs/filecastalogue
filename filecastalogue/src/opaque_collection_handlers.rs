@@ -1,5 +1,5 @@
 use std::{ffi::{OsStr, OsString}, fmt::Display, fs::{File, create_dir},
-io::{Read, Write}, path::{Path, PathBuf}, rc::Rc};
+io::{Read, Write}, path::{Path, PathBuf}};
 use crate::{error::{Error, ErrorKind, ErrorPathBuf, FcResult, Payload}};
 
 #[derive(Debug)]
@@ -130,7 +130,7 @@ pub trait OpaqueCollectionHandler {
     fn get_file_readable(&self, name: &OsStr)
     -> FcResult<Box<(dyn Read)>>;
     fn get_file_writeable(&self, name: &OsStr)
-    -> FcResult<Rc<(dyn Write)>>;
+    -> FcResult<Box<(dyn Write)>>;
     fn collection_exists(self: &mut Self) -> bool;
     fn create_collection(self: &mut Self) -> FcResult<()>;
     fn create_collection_ignore_exists(self: &mut Self) -> FcResult<()>;
@@ -149,8 +149,8 @@ impl OpaqueCollectionHandler for LocalDir
     }
 
     fn get_file_writeable(&self, name: &OsStr)
-    -> FcResult<Rc<(dyn Write)>> {
-        Ok(Rc::new(self.get_file(name)?))
+    -> FcResult<Box<(dyn Write)>> {
+        Ok(Box::new(self.get_file(name)?))
     }
 
     fn collection_exists(self: &mut Self) -> bool {

@@ -33,20 +33,20 @@ impl IndexFile {
     }
 }
 
-/**
-Operations that pertain first and foremost to the actual
-file backing of the "IndexFile"; its persistence layer, so to say.
-*/
+/// IndexFile in its capacity as a file with a particular function in a Repo.
 impl RepoFile for IndexFile {
     
+    /// Fill IndexFile with JSON data from a Read object.
     fn load(self: &mut Self, readable: &mut (dyn Read)) -> FcResult<()> {
         let reader = BufReader::new(readable);
         self.index = serde_json::from_reader(reader)?;
         Ok(())
     }
 
+    /// Save the contents of IndexFile to a Write object.
     fn save(self: &mut Self, writeable: &mut (dyn Write)) -> FcResult<()> {
-        serde_json::to_writer_pretty(writeable, &self.index)?;
+        let serialized = serde_json::to_vec_pretty(&self.index)?;
+        writeable.write(&serialized)?;
         Ok(())
     }
 }
