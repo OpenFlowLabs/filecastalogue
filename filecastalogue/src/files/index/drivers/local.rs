@@ -1,59 +1,88 @@
-use std::io::{BufReader, Read, Write};
-use crate::error::FcResult;
+use std::io::{Read, Write};
+use crate::{error::FcResult, meta::index::model::Index,
+meta::converter::Converter};
 use crate::files::hashable::Hashable;
 use super::super::super::{RepoFile, blob::BlobProvider, index::IndexProvider};
-use super::super::Index;
 pub trait RepoIndexFile: RepoFile + IndexProvider + BlobProvider + Hashable {}
 
-/**
-A local index file.
- */
+/// Represents a blob file holding an index.
+/// 
+/// Index blob files hold their blob in memory as a deserialized Index
+/// struct. When the blob is needed in a u8 centric format, it has
+/// to be serialized first. This is based on the assumption that u8
+/// is only relevant to indexes in terms of loading, saving and hashing.
 pub struct IndexFile {
-
-    /** This is where the index is "cached" when it's loaded from
-    the file or set by other means, and where it will be read from
-    when saving the index to the file.
-    Loading the file will write to this, saving the file
-    will read this (and write it to the file). This might
-    also get modified by other means. In general, this is
-    supposed to provide an in-place "workspace" to modify
-    the index without persisting every single immediate step.
-    Other precautions will have to be taken in order to make
-    sure this doesn't get messy.*/
-    pub index: Index,
+    /// This is where the index is "cached" when it's loaded from
+    /// the file or set by other means, and where it will be read from
+    /// when saving the index to the file.
+    /// 
+    /// Loading the file will write to this, saving the file
+    /// will read this (and write it to the file). In general, this is
+    /// supposed to provide an in-place "workspace" to modify
+    /// the index without persisting every single immediate step.
+    /// 
+    /// By convention, when setting our .index member from anything else
+    /// than an already existing Index value, only the principal conversion
+    /// methods belonging to the Index model should be used to obtain
+    /// the index used to do so.
+    /// 
+    /// Likewise, when converting the index value to something else, such
+    /// as a blob, only use the therein contained conversion methods.
+    /// 
+    /// Using only principal methods for conversions ensures a
+    /// single source of process of how indexes are transformed between
+    /// their serialized and deserialized state, which part of the code
+    /// is responsible for it and where to look when things go wrong.
+    index: Index,
 }
 
 impl IndexFile {
-    /** Create an IndexFile struct from an existing file. */
+
+    /// Create an IndexFile struct from a blob provided by a Read.
+    /// 
+    /// The blob needs to be JSON deserializable by serde_json.
     pub fn from_existing(readable: &mut (dyn Read)) -> FcResult<Self> {
-        let reader = BufReader::new(readable);
         Ok(Self {
-            index: serde_json::from_reader(reader)?,
+            index: Index::from_read(readable)?
         })
     }
 }
 
-/// IndexFile in its capacity as a file with a particular function in a Repo.
+/// The interface for getting data from and to persistent storage.
+/// 
+/// This is supposed to be used by whatever is handling persistent storage
+/// for index files, feeding a Read/Write implementation to the herein
+/// implemented methods to provide us with an implementation agnostic
+/// interface to the persistent storage.
 impl RepoFile for IndexFile {
     
-    /// Fill IndexFile with JSON data from a Read object.
+    /* Notes:
+        If we end up not using .load for IndexFile, we could consider
+        reworking/splitting RepoFile (e.g. into a load and save version),
+        particularly if we won't use it for the Tracked file struct
+        either.
+    */
+    /// Fill IndexFile with JSON data from a Read.
+    /// 
+    /// The mental model is that the Read represents the persistent storage
+    /// of an index in JSON form. The data received needs to be deserializable
+    /// by serde_json.
     fn load(self: &mut Self, readable: &mut (dyn Read)) -> FcResult<()> {
-        let reader = BufReader::new(readable);
-        self.index = serde_json::from_reader(reader)?;
+        self.index = Index::from_read(readable)?;
         Ok(())
     }
 
-    /// Save the contents of IndexFile to a Write object.
+    /// Serialize the index as we're currently holding it to a Write.
     fn save(self: &mut Self, writeable: &mut (dyn Write)) -> FcResult<()> {
-        let serialized = serde_json::to_vec_pretty(&self.index)?;
-        writeable.write(&serialized)?;
+        let blob = self.index.to_blob()?;
+        writeable.write(&blob)?;
         Ok(())
     }
 }
 
-/** This is the index related stuff, providing convenient access
-to the actual index data. That's its main mission, not persistence or
-storage/file backend management. */
+/// This is the index related interface, providing convenient access
+/// to the actual index data. That's its main mission, not persistence or
+/// storage/file backend management.
 impl IndexProvider for IndexFile {
     fn get_index(self: &mut Self) -> FcResult<&Index> {
         Ok(&self.index)
@@ -67,7 +96,7 @@ impl IndexProvider for IndexFile {
 
 impl BlobProvider for IndexFile {
     fn get_blob(&self) -> FcResult<Vec<u8>> {
-        Ok(serde_json::to_vec_pretty(&self.index)?)
+        Ok(self.index.to_blob()?)
     }
 }
 
