@@ -1,6 +1,6 @@
+use std::convert::TryInto;
 use std::io::{Read, Write};
-use crate::{error::FcResult, meta::index::model::Index,
-meta::converter::Converter};
+use crate::{error::FcResult, meta::index::model::Index};
 use crate::files::hashable::Hashable;
 use super::super::super::{RepoFile, blob::BlobProvider, index::IndexProvider};
 pub trait RepoIndexFile: RepoFile + IndexProvider + BlobProvider + Hashable {}
@@ -43,7 +43,7 @@ impl IndexFile {
     /// The blob needs to be JSON deserializable by serde_json.
     pub fn from_existing(readable: &mut (dyn Read)) -> FcResult<Self> {
         Ok(Self {
-            index: Index::from_read(readable)?
+            index: readable.try_into()?
         })
     }
 }
@@ -68,13 +68,13 @@ impl RepoFile for IndexFile {
     /// of an index in JSON form. The data received needs to be deserializable
     /// by serde_json.
     fn load(self: &mut Self, readable: &mut (dyn Read)) -> FcResult<()> {
-        self.index = Index::from_read(readable)?;
+        self.index = readable.try_into()?;
         Ok(())
     }
 
     /// Serialize the index as we're currently holding it to a Write.
     fn save(self: &mut Self, writeable: &mut (dyn Write)) -> FcResult<()> {
-        let blob = self.index.to_blob()?;
+        let blob: Vec<u8> = self.index.clone().try_into()?;
         writeable.write(&blob)?;
         Ok(())
     }
@@ -96,7 +96,7 @@ impl IndexProvider for IndexFile {
 
 impl BlobProvider for IndexFile {
     fn get_blob(&self) -> FcResult<Vec<u8>> {
-        Ok(self.index.to_blob()?)
+        Ok(self.index.clone().try_into()?)
     }
 }
 
