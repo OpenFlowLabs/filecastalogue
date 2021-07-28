@@ -1,6 +1,6 @@
 use std::fmt;
 use crate::error::Payload;
-use super::model::Version;
+use super::super::version::model::Version;
 
 pub struct VersionEntryAlreadyExistsErrorPayload {
     pub version_id: String,

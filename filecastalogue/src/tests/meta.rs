@@ -1,4 +1,4 @@
-use crate::{error::FcResult, meta::state, meta::state::accessor::Accessor, tests::fixtures::{
+use crate::{error::FcResult, meta::state, meta::{state::accessor::Accessor, version::model::Version}, meta::version, tests::fixtures::{
         self,
         models::{NON_EXISTENT_VERSION_ID}
     }};
@@ -32,7 +32,7 @@ fn has_version_returns_false_when_state_does_not_have_version() -> () {
 #[test]
 fn get_version_returns_version() -> () {
     let mut state = fixtures::models::create_minimal_state_struct();
-    let result: state::model::Version = state.get_version("1").ok().unwrap();
+    let result: version::model::Version = state.get_version("1").ok().unwrap();
     assert_eq!(result, state.versions[MINIMAL_STATE_VERSION_ID]);
 }
 
@@ -59,7 +59,7 @@ fn put_version() -> () {
         "Preparation failed: State shouldn't have the version ({}) we're about to insert yet.",
         new_id
     );
-    state.put_version(new_id, new_hash);
+    state.put_version(new_id, Version::new(new_hash));
     assert_eq!(state.has_version(new_id), true);
 }
 
@@ -73,7 +73,7 @@ fn add_version() -> () {
         new_id
     );
     let result = state.add_version(
-        new_id, new_hash
+        new_id, Version::new( new_hash)
     );
     assert_ne!(result.is_err(), true, 
         "Preparation failed: .has_version() shouldn't return an error here. Version ID: {}",

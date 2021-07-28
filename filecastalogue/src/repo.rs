@@ -1,5 +1,5 @@
 use crate::{error::FcResult, files::{RepoFile, tracked_collection::TrackedFileCollection, 
-    index_collection::IndexFileCollection, state::StateProvider}, journal, meta::state::accessor::Accessor};
+    index_collection::IndexFileCollection, state::StateProvider}, journal, meta::{state::accessor::Accessor, version::{accessor::VersionAccessor, model::Version}}};
 
 pub struct Repo<
     // Handler: FiniteStreamHandler,
@@ -50,16 +50,23 @@ impl<
         pub fn has_version(self: &mut Self, id: &str) -> FcResult<bool> {
             Ok(self.state_file.get_state()?.clone().has_version(id))
         }
-        pub fn add_version(self: &mut Self, id: &str, index: &str)
+        // version is consumed here, in order to force explicit handling of
+        // situations where the version has to continue being available in the
+        // calling context.
+        pub fn add_version(self: &mut Self, id: &str, version: Version)
         -> FcResult<&mut Self> {
-            self.state_file.get_state()?.clone().add_version(id, index)?;
+            self.state_file.get_state()?.clone().add_version(id, version.clone())?;
             /*
                 Has to do these things:
                     - Add new version to state file.
                     - Make sure index file exists.
             */
-                
-            if self.indexes.has_index(index)? {
+            
+            let index_id = match version.get_index_id() {
+                Some(index_id) => index_id,
+                None => todo!(),
+            };
+            if self.indexes.has_index(&index_id)? {
                 todo!()
             }
             else {

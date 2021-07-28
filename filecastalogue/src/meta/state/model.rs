@@ -1,9 +1,6 @@
 use std::collections::HashMap;
 use serde::{Serialize, Deserialize};
-#[derive(Serialize, Deserialize, Debug, Eq, PartialEq, Clone)]
-pub struct Version {
-    pub index: String
-}
+use super::super::version::model::Version;
 
 #[derive(Serialize, Deserialize, Debug, Eq, PartialEq, Clone)]
 pub struct State {

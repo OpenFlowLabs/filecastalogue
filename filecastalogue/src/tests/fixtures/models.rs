@@ -1,6 +1,7 @@
 use std::collections::HashMap;
 use crate::error::{Error, ErrorKind};
-use crate::meta::state::model::{State, Version};
+use crate::meta::state::model::State;
+use crate::meta::version::model::Version;
 use crate::meta::state::error::{
     VersionEntryDoesNotExistErrorPayload,
     VersionEntryAlreadyExistsErrorPayload
