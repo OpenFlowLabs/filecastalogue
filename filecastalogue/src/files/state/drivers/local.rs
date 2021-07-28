@@ -1,10 +1,9 @@
-use std::{io::{Read, Write}};
+use std::{convert::TryInto, io::{Read, Write}};
 use crate::{access_repo_file_error, error::{Error, ErrorKind,
     FcResult, WrappedError}, files::{AccessRepoFileErrorPayload,
         OffendingAction}, globals::STATE_FILE_NAME};
 use crate::{files::{RepoFile, state::StateProvider},
-meta::state::model::State, meta::converter::Converter};
-
+meta::state::model::State};
 
 pub struct StateFile {
 
@@ -18,8 +17,8 @@ pub struct StateFile {
     /// 
     /// By convention, when setting our .state member from anything else
     /// than an already existing State value, only the principal conversion
-    /// methods belonging to the State model should be used to obtain
-    /// the new value.
+    /// into/try_into methods implemented for the State model should be used
+    /// to obtain the new value.
     /// 
     /// Likewise, when converting the state value to something else, such
     /// as a blob, only use the therein contained conversion methods.
@@ -28,6 +27,9 @@ pub struct StateFile {
     /// of process of how the state is transformed between its serialized
     /// and deserialized form, which part of the code is responsible for it
     /// and where to look when things go wrong.
+    /// 
+    /// For an overview, have a look at principal_conversions.rs of
+    /// the state meta module.
     pub state: State,
 }
 
@@ -38,7 +40,7 @@ impl StateFile {
     /// The blob needs to be JSON deserializable by serde_json.
     pub fn from_existing(readable: &mut (dyn Read)) -> FcResult<Self> {
         Ok(Self {
-            state: State::from_read(readable)?
+            state: readable.try_into()?
         })
     }
 }
@@ -60,7 +62,7 @@ impl RepoFile for StateFile {
         
         // TODO: If we're using access_repo_file_error!, we should use it for
         //  this too, or not use it at all.
-        match State::from_read(readable) {
+        match readable.try_into() {
             Ok(deserialized_file_contents) => {
                 self.state = deserialized_file_contents;
                 Ok(())
@@ -77,9 +79,10 @@ impl RepoFile for StateFile {
     /// Serialize our current version of the state to a Write.
     fn save(self: &mut Self, writeable: &mut dyn Write) -> FcResult<()> {
 
+        let blob: Vec<u8> = self.state.clone().try_into()?;
         // TODO: If we're using access_repo_file_error!, we should use it for
         //  this too, or not use it at all.
-        match writeable.write(&self.state.to_blob()?) {
+        match writeable.write(&blob) {
             Ok(_) => Ok(()),
             Err(io_error) => Err(access_repo_file_error!(
                 OffendingAction::SavingRepoFile,
