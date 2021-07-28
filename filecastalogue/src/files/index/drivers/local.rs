@@ -23,16 +23,19 @@ pub struct IndexFile {
     /// 
     /// By convention, when setting our .index member from anything else
     /// than an already existing Index value, only the principal conversion
-    /// methods belonging to the Index model should be used to obtain
-    /// the index used to do so.
+    /// into/try_into methods implemented for the Index model should be used
+    /// to obtain the index used to do so.
     /// 
     /// Likewise, when converting the index value to something else, such
-    /// as a blob, only use the therein contained conversion methods.
+    /// as a blob, only use these conversion methods.
     /// 
     /// Using only principal methods for conversions ensures a
     /// single source of process of how indexes are transformed between
     /// their serialized and deserialized state, which part of the code
     /// is responsible for it and where to look when things go wrong.
+    /// 
+    /// For an overview, have a look at principal_conversions.rs of
+    /// the index meta module.
     index: Index,
 }
 

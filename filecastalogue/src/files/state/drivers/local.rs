@@ -17,8 +17,8 @@ pub struct StateFile {
     /// 
     /// By convention, when setting our .state member from anything else
     /// than an already existing State value, only the principal conversion
-    /// methods belonging to the State model should be used to obtain
-    /// the new value.
+    /// into/try_into methods implemented for the State model should be used
+    /// to obtain the new value.
     /// 
     /// Likewise, when converting the state value to something else, such
     /// as a blob, only use the therein contained conversion methods.
@@ -27,6 +27,9 @@ pub struct StateFile {
     /// of process of how the state is transformed between its serialized
     /// and deserialized form, which part of the code is responsible for it
     /// and where to look when things go wrong.
+    /// 
+    /// For an overview, have a look at principal_conversions.rs of
+    /// the state meta module.
     pub state: State,
 }
 
