@@ -2,11 +2,11 @@ use std::{fmt::{self, Debug, Display}, io::{Read, Write}};
 use crate::error::{FcResult, Payload};
 
 pub mod blob;
-pub mod tracked;
+pub mod tracked_ordinary_blob;
 pub mod index;
 pub mod state;
 pub mod hashable;
-pub mod tracked_collection;
+pub mod tracked_ordinary_blob_collection;
 pub mod index_collection;
 
 pub struct AccessRepoFileErrorPayload {

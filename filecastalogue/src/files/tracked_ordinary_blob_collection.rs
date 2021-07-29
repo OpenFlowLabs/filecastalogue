@@ -1,23 +1,23 @@
 use std::ffi::{OsStr, OsString};
 use crate::{error::FcResult,
     opaque_collection_handlers::OpaqueCollectionHandler};
-use super::tracked::{RepoTrackedFile, TrackedFile};
+use super::tracked_ordinary_blob::{RepoTrackedOrdinaryBlobFile, TrackedOrdinaryBlobFile};
 
-pub trait TrackedFileCollection {
+pub trait TrackedOrdinaryBlobFileCollection {
     fn has_file(self: &mut Self, hash: &str) -> FcResult<bool>;
     fn get_file(self: &mut Self, hash: &str)
-    -> FcResult<Box<dyn RepoTrackedFile>>;
+    -> FcResult<Box<dyn RepoTrackedOrdinaryBlobFile>>;
     fn put_file(
-        self: &mut Self, tracked_file: &mut (dyn RepoTrackedFile))
+        self: &mut Self, tracked_file: &mut (dyn RepoTrackedOrdinaryBlobFile))
     -> FcResult<String>;
 }
 
-pub struct MiscTrackedFileCollection<Handler>
+pub struct MiscTrackedOrdinaryBlobFileCollection<Handler>
 where Handler: OpaqueCollectionHandler<> {
     pub handler: Handler
 }
 
-impl<Handler: OpaqueCollectionHandler> MiscTrackedFileCollection<Handler> {
+impl<Handler: OpaqueCollectionHandler> MiscTrackedOrdinaryBlobFileCollection<Handler> {
     pub fn new(handler: Handler) -> Self {
         Self {
             handler: handler
@@ -25,19 +25,19 @@ impl<Handler: OpaqueCollectionHandler> MiscTrackedFileCollection<Handler> {
     }
 }
 
-impl<Handler: OpaqueCollectionHandler> TrackedFileCollection
-for MiscTrackedFileCollection<Handler> {
+impl<Handler: OpaqueCollectionHandler> TrackedOrdinaryBlobFileCollection
+for MiscTrackedOrdinaryBlobFileCollection<Handler> {
     fn has_file(self: &mut Self, hash: &str) -> FcResult<bool> {
         self.handler.has_file(hash)
     }
 
     fn get_file(self: &mut Self, hash: &str)
-    -> FcResult<Box<dyn RepoTrackedFile>> {
+    -> FcResult<Box<dyn RepoTrackedOrdinaryBlobFile>> {
         let mut readable = self.handler.get_file_readable(
             OsStr::new(hash)
         )?;
-        let tracked_file: Box<dyn RepoTrackedFile> = Box::new(
-            TrackedFile::from_existing(
+        let tracked_file: Box<dyn RepoTrackedOrdinaryBlobFile> = Box::new(
+            TrackedOrdinaryBlobFile::from_existing(
                 &mut readable
             )?
         );
@@ -45,7 +45,7 @@ for MiscTrackedFileCollection<Handler> {
     }
 
     fn put_file(
-        self: &mut Self, tracked_file: &mut (dyn RepoTrackedFile))
+        self: &mut Self, tracked_file: &mut (dyn RepoTrackedOrdinaryBlobFile))
     -> FcResult<String> {
         let hash = tracked_file.get_hash()?;
         let mut writeable = self.handler.get_file_writeable(

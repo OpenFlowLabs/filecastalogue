@@ -2,7 +2,7 @@ use clap::{App, Arg, SubCommand,
     crate_authors, crate_description, crate_name, crate_version
 };
 use std::{env::current_dir, ffi::OsString, fs::File, io, path::PathBuf};
-use filecastalogue::{error::Error, files::{tracked_collection::MiscTrackedFileCollection,
+use filecastalogue::{error::Error, files::{tracked_ordinary_blob_collection::MiscTrackedOrdinaryBlobFileCollection,
 index_collection::MiscIndexFileCollection, state::StateFile},
 journal::OptimisticDummyJournal, opaque_collection_handlers::LocalDir, repo::Repo};
 
@@ -20,7 +20,7 @@ fn create_local_repo
     Repo<
         StateFile,
         MiscIndexFileCollection<LocalDir>,
-        MiscTrackedFileCollection<LocalDir>,
+        MiscTrackedOrdinaryBlobFileCollection<LocalDir>,
         OptimisticDummyJournal
     >,
     Error
@@ -38,7 +38,7 @@ fn create_local_repo
         MiscIndexFileCollection::new(LocalDir::new(&index_dir_path)),
         // TODO [prio:critical]: repo_path is actually wrong here,
         // it's just there to test the typing atm.
-        MiscTrackedFileCollection::new(LocalDir::new(&blob_dir_path)),
+        MiscTrackedOrdinaryBlobFileCollection::new(LocalDir::new(&blob_dir_path)),
         OptimisticDummyJournal::new()
     ))
 }

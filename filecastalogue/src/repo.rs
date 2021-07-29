@@ -1,13 +1,13 @@
 use std::{ffi::OsStr, io::Read};
 
-use crate::{error::FcResult, files::{RepoFile, tracked_collection::TrackedFileCollection, 
+use crate::{error::FcResult, files::{RepoFile, tracked_ordinary_blob_collection::TrackedOrdinaryBlobFileCollection, 
     index_collection::IndexFileCollection, state::StateProvider}, journal, meta::{file_aspects::aspects::{directory::TrackableDirectoryAspects, non_existing::TrackableNonExistingAspects, ordinary::TrackableOrdinaryAspects, symlink::TrackableSymlinkAspects}, state::accessor::Accessor, version::{accessor::VersionAccessor, model::Version}}};
 
 pub struct Repo<
     // Handler: FiniteStreamHandler,
     StateFile: RepoFile + StateProvider,
     Indexes: IndexFileCollection,
-    Blobs: TrackedFileCollection,
+    Blobs: TrackedOrdinaryBlobFileCollection,
     Journal: journal::Journal
     >
     {
@@ -34,7 +34,7 @@ impl<
     // Handler: FiniteStreamHandler,
     StateFile: RepoFile + StateProvider,
     Indexes: IndexFileCollection,
-    Blobs: TrackedFileCollection,
+    Blobs: TrackedOrdinaryBlobFileCollection,
     Journal: journal::Journal
     > Repo<StateFile, Indexes, Blobs, Journal> {
         pub fn new(

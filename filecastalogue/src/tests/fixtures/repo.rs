@@ -1,5 +1,5 @@
 use crate::{error::FcResult,
-    files::{tracked_collection::MiscTrackedFileCollection,
+    files::{tracked_ordinary_blob_collection::MiscTrackedOrdinaryBlobFileCollection,
         index_collection::MiscIndexFileCollection,
         state::StateFile},
         journal::OptimisticDummyJournal,
@@ -12,7 +12,7 @@ pub(in crate::tests) fn create_minimal_repo_struct()
 -> FcResult<Repo<
     StateFile,
     MiscIndexFileCollection<LocalDir>,
-    MiscTrackedFileCollection<LocalDir>,
+    MiscTrackedOrdinaryBlobFileCollection<LocalDir>,
     OptimisticDummyJournal
 >> {
     Ok(Repo::new(
