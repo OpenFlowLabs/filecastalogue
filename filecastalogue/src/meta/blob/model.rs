@@ -29,6 +29,12 @@ impl Default for Blob {
     }
 }
 
+impl Clone for Blob {
+    fn clone(&self) -> Self {
+        Blob::from_vec(Vec::clone(&self.inner))
+    }
+}
+
 impl Deref for Blob {
     type Target = Vec<u8>;
 
