@@ -5,6 +5,17 @@ use super::{index::{IndexFile, RepoIndexFile}};
 use std::ffi::OsStr;
 use crate::{opaque_collection_handlers::OpaqueCollectionHandler};
 
+pub trait IndexFileCollection {
+    fn has_index(self: &mut Self, index: &str) -> FcResult<bool>;
+    fn get_new_index_file(self: &mut Self, index_file: &(dyn RepoIndexFile))
+    -> FcResult<&mut(dyn IndexFileCollection)>;
+    fn get_index_file(self: &mut Self, index: &str)
+    -> FcResult<Rc<(dyn RepoIndexFile)>>;
+    fn put_index_file<'putting>(
+        self: &mut Self, index_file: &'putting mut (dyn RepoIndexFile))
+    -> FcResult<String>;
+}
+
 // TODO: Evaluate the nature of this struct, as "its "local"
 // nature has generalized a lot to "not really local" over
 // the course of the refactoring to the Handler-based approach.
@@ -124,15 +135,4 @@ impl<WrappedError: Error> Error for AddingNewIndexFailedError<WrappedError> {
 
 pub enum AddingNewIndexFailedErrors {
     IoError(AddingNewIndexFailedError<std::io::Error>)
-}
-
-pub trait IndexFileCollection {
-    fn has_index(self: &mut Self, index: &str) -> FcResult<bool>;
-    fn get_new_index_file(self: &mut Self, index_file: &(dyn RepoIndexFile))
-    -> FcResult<&mut(dyn IndexFileCollection)>;
-    fn get_index_file(self: &mut Self, index: &str)
-    -> FcResult<Rc<(dyn RepoIndexFile)>>;
-    fn put_index_file<'putting>(
-        self: &mut Self, index_file: &'putting mut (dyn RepoIndexFile))
-    -> FcResult<String>;
 }
