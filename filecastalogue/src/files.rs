@@ -210,7 +210,7 @@ their own, but how that actually happens, and whether it's even
 files at the end of the day doesn't really concern us here.
  */
 pub trait RepoFile {
-    fn load(self: &mut Self, reader: &mut (dyn Read)) -> FcResult<()>;
+    fn load(self: &mut Self, readable: &mut (dyn Read)) -> FcResult<()>;
     fn save(self: &mut Self, writeable: &mut dyn Write) -> FcResult<()>;
 }
 
