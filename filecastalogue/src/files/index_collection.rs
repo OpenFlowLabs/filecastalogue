@@ -6,7 +6,7 @@ use std::ffi::OsStr;
 use crate::{opaque_collection_handlers::OpaqueCollectionHandler};
 
 // TODO: Evaluate the nature of this struct, as "its "local"
-// nature has mgeneralized a lot to "not really local" over
+// nature has generalized a lot to "not really local" over
 // the course of the refactoring to the Handler-based approach.
 // Of course, there's also the hard coded dependency on
 // LocalFile right now, which we might be able to dynamic
