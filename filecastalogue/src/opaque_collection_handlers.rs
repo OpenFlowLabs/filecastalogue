@@ -154,7 +154,7 @@ impl OpaqueCollectionHandler for LocalDir
     }
 
     fn collection_exists(self: &mut Self) -> bool {
-        self.path.exists()
+        self.exists()
     }
 
     fn create_collection(self: &mut Self) -> FcResult<()> {
