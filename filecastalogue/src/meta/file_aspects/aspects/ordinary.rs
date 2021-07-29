@@ -1,4 +1,6 @@
 use serde::{Serialize, Deserialize};
+use crate::meta::file_aspects::attributes;
+
 use super::super::attributes::Attributes;
 
 /// Aspects of an ordinary file relevant when it's tracked in a Repo.
@@ -38,4 +40,27 @@ pub struct TrackedOrdinaryAspects {
 #[derive(Serialize, Deserialize, Debug, Eq, PartialEq, Clone)]
 pub struct TrackableOrdinaryAspects {
     pub attributes: Attributes
+}
+
+impl TrackedOrdinaryAspects {
+
+    pub fn new(hash: &str, attributes: Attributes) -> Self {
+        Self {
+            hash: hash.to_owned(),
+            attributes: attributes,
+        }
+    }
+
+    /// Construct from trackable aspects and a hash.
+    /// 
+    /// Combines the trackable aspects and the hash into an object that
+    /// holds all aspects, including the hash we need to track an ordinary
+    /// file in a Repo.
+    pub fn from_trackable(trackable_aspects: TrackableOrdinaryAspects, hash: &str)
+    -> Self {
+        Self::new(
+            hash,
+            trackable_aspects.attributes
+        )
+    }
 }
