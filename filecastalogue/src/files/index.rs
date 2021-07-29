@@ -1,3 +1,4 @@
+use crate::meta::blob::model::Blob;
 use crate::{error::FcResult, meta::index::model::Index};
 use std::convert::TryInto;
 use std::io::{Read, Write};
@@ -93,7 +94,7 @@ impl RepoFile for IndexFile {
 
     /// Serialize the index as we're currently holding it to a Write.
     fn save(self: &mut Self, writeable: &mut (dyn Write)) -> FcResult<()> {
-        let blob: Vec<u8> = self.index.clone().try_into()?;
+        let blob: Blob = self.index.clone().try_into()?;
         writeable.write(&blob)?;
         Ok(())
     }
@@ -114,7 +115,7 @@ impl IndexProvider for IndexFile {
 }
 
 impl BlobProvider for IndexFile {
-    fn get_blob(&self) -> FcResult<Vec<u8>> {
+    fn get_blob(&self) -> FcResult<Blob> {
         Ok(self.index.clone().try_into()?)
     }
 }

@@ -1,6 +1,7 @@
 use std::{convert::TryInto, io::{Read, Write}};
-use crate::{access_repo_file_error, error::{Error, ErrorKind, FcResult, KeyValuePayload, WrappedError}, files::{AccessRepoFileErrorPayload,
-        OffendingAction}, globals::STATE_FILE_NAME, meta::state::model::State};
+use crate::{access_repo_file_error, error::{Error, ErrorKind,
+    FcResult, WrappedError}, files::{AccessRepoFileErrorPayload,
+        OffendingAction}, meta::{blob::model::Blob, state::model::State}};
 use crate::{files::{RepoFile}};
 
 pub trait StateProvider {
@@ -80,7 +81,7 @@ impl RepoFile for StateFile {
     /// Serialize our current version of the state to a Write.
     fn save(self: &mut Self, writeable: &mut dyn Write) -> FcResult<()> {
 
-        let blob: Vec<u8> = self.state.clone().try_into()?;
+        let blob: Blob = self.state.clone().try_into()?;
         match writeable.write(&blob) {
             Ok(_) => Ok(()),
             Err(io_error) => Err(access_repo_file_error!(

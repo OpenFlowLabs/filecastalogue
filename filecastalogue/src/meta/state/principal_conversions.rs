@@ -1,5 +1,5 @@
 use std::{convert::{TryFrom, TryInto}, io::Read};
-use crate::{error::{Error}};
+use crate::{error::{Error}, meta::blob::model::Blob};
 use super::model::State;
 
 /// Principal conversions between State and various other forms.
@@ -23,14 +23,13 @@ impl TryFrom<&mut (dyn Read)> for State {
     /// The Read must produce a serde_json deserializable Blob
     /// or this will fail.
     fn try_from(readable: &mut (dyn Read)) -> Result<Self, Self::Error> {
-        let mut blob= vec!();
-        readable.read_to_end(&mut blob)?;
-        let index = blob.try_into()?;
-        Ok(index)
+        let blob: Blob = readable.try_into()?;
+        let state = blob.try_into()?;
+        Ok(state)
     }
 }
 
-impl TryFrom<Vec<u8>> for State {
+impl TryFrom<Blob> for State {
     type Error = Error;
 
     /// Principal conversion from Blob to State.
@@ -39,19 +38,19 @@ impl TryFrom<Vec<u8>> for State {
     /// deserialized form from a Blob.
     /// 
     /// The Blob must be serde_json deserializable or this will fail.
-    fn try_from(blob: Vec<u8>) -> Result<Self, Self::Error> {
+    fn try_from(blob: Blob) -> Result<Self, Self::Error> {
         Ok(serde_json::from_slice(&blob)?)
     }
 }
 
-impl TryFrom<State> for Vec<u8> {
+impl TryFrom<State> for Blob {
     type Error = Error;
 
     /// Principal conversion from State to Blob.
     /// 
     /// This is the one way which should be used to obtain a Blob from
     /// the deserialized form of the State.
-    fn try_from(index: State) -> Result<Self, Self::Error> {
-        Ok(serde_json::to_vec_pretty(&index)?)
+    fn try_from(state: State) -> Result<Self, Self::Error> {
+        Ok(serde_json::to_vec_pretty(&state)?.try_into()?)
     }
 }

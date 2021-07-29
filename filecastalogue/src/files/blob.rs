@@ -1,10 +1,10 @@
-use crate::error::FcResult;
+use crate::{error::FcResult, meta::blob::model::Blob};
 use super::hashable::Hashable;
 
 /// Intended for access to the actual binary of either a tracked
 /// or an index file, e.g. for hashing or applying state.
 pub trait BlobProvider {
-    fn get_blob(&self) -> FcResult<Vec<u8>>;
+    fn get_blob(&self) -> FcResult<Blob>;
 }
 
 /*
