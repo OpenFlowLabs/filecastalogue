@@ -3,7 +3,7 @@ use clap::{App, Arg, SubCommand,
 };
 use std::{env::current_dir, ffi::OsString, fs::File, io, path::PathBuf};
 use filecastalogue::{error::Error, files::{tracked_collection::MiscTrackedFileCollection,
-index_collection::MiscIndexFileCollection, state::drivers::local::StateFile},
+index_collection::MiscIndexFileCollection, state::StateFile},
 journal::OptimisticDummyJournal, opaque_collection_handlers::LocalDir, repo::Repo};
 
 const ABOUT_REPO: &str =

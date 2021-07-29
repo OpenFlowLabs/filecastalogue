@@ -1,7 +1,7 @@
 use crate::{error::FcResult,
     files::{tracked_collection::MiscTrackedFileCollection,
         index_collection::MiscIndexFileCollection,
-        state::drivers::local::StateFile},
+        state::StateFile},
         journal::OptimisticDummyJournal,
         opaque_collection_handlers::LocalDir,
         repo::Repo};

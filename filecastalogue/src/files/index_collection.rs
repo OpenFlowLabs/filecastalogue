@@ -1,11 +1,9 @@
 use core::fmt;
 use std::{error::Error, ffi::OsString, rc::Rc};
 use crate::error::FcResult;
-use super::{index::drivers::local::RepoIndexFile};
+use super::{index::{IndexFile, RepoIndexFile}};
 use std::ffi::OsStr;
-use crate::{files::{
-        index::{
-            drivers::local::{IndexFile}}}, opaque_collection_handlers::OpaqueCollectionHandler};
+use crate::{opaque_collection_handlers::OpaqueCollectionHandler};
 
 // TODO: Evaluate the nature of this struct, as "its "local"
 // nature has mgeneralized a lot to "not really local" over
