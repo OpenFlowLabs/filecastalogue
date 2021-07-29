@@ -1,5 +1,7 @@
+use std::{ffi::OsStr, io::Read};
+
 use crate::{error::FcResult, files::{RepoFile, tracked_collection::TrackedFileCollection, 
-    index_collection::IndexFileCollection, state::StateProvider}, journal, meta::{state::accessor::Accessor, version::{accessor::VersionAccessor, model::Version}}};
+    index_collection::IndexFileCollection, state::StateProvider}, journal, meta::{file_aspects::aspects::{directory::TrackableDirectoryAspects, non_existing::TrackableNonExistingAspects, ordinary::TrackableOrdinaryAspects, symlink::TrackableSymlinkAspects}, state::accessor::Accessor, version::{accessor::VersionAccessor, model::Version}}};
 
 pub struct Repo<
     // Handler: FiniteStreamHandler,
@@ -28,6 +30,7 @@ pub struct Repo<
 // "driver"?
 
 impl<
+    'rpo,
     // Handler: FiniteStreamHandler,
     StateFile: RepoFile + StateProvider,
     Indexes: IndexFileCollection,
@@ -47,14 +50,14 @@ impl<
                 journal: journal
             }
         }
-        pub fn has_version(self: &mut Self, id: &str) -> FcResult<bool> {
+        pub fn has_version(self: &'rpo mut Self, id: &str) -> FcResult<bool> {
             Ok(self.state_file.get_state()?.clone().has_version(id))
         }
         // version is consumed here, in order to force explicit handling of
         // situations where the version has to continue being available in the
         // calling context.
-        pub fn add_version(self: &mut Self, id: &str, version: Version)
-        -> FcResult<&mut Self> {
+        pub fn add_version(self: &'rpo mut Self, id: &str, version: Version)
+        -> FcResult<&'rpo mut Self> {
             self.state_file.get_state()?.clone().add_version(id, version.clone())?;
             /*
                 Has to do these things:
@@ -72,6 +75,67 @@ impl<
             else {
                 todo!()
             }
+        }
+
+        /// Track a file that doesn't exist.
+        /// 
+        /// WARNING: This informs tools applying this tracked entry to
+        /// make sure no file doesn't exist at that path on the target
+        /// system, e.g. they might delete anything found at that path.
+        /// 
+        /// Takes the ID of the version that should be tracking it and
+        /// the path where nothing is supposed to exist on the target system.
+        pub fn track_non_existing(
+            &'rpo mut self,
+            version_id: &str,
+            file_path: &OsStr,
+            // trackable_aspects: TrackableNonExistingAspects,
+        ) -> FcResult<&'rpo mut Self> {
+            todo!();
+        }
+
+        /// Track a directory.
+        /// 
+        /// Takes the ID of the version that should be tracking it, the
+        /// path of the directory on the tracked system as well as an object
+        /// describing the aspects it should have there.
+        pub fn track_directory(
+            &'rpo mut self,
+            version_id: &str,
+            file_path: &OsStr,
+            trackable_aspects: TrackableDirectoryAspects,
+        ) -> FcResult<&'rpo mut Self> {
+            todo!();
+        }
+
+        /// Track an ordinary (blob) file.
+        /// 
+        /// Takes the ID of the version that should be tracking it, the
+        /// path of the file on the tracked system as well as an object
+        /// describing the aspects it (should) have there and a Read providing
+        /// its blob.
+        pub fn track_ordinary(
+            &'rpo mut self,
+            version_id: &str,
+            file_path: &OsStr,
+            trackable_aspects: TrackableOrdinaryAspects,
+            blob_readable: &(dyn Read)
+        ) -> FcResult<&'rpo mut Self> {
+            todo!();
+        }
+
+        /// Track a symlink.
+        /// 
+        /// Takes the ID of the version that should be tracking it, the
+        /// path of the symlink on the tracked system as well as an object
+        /// describing the aspects it (should) have there.
+        pub fn track_symlink(
+            &'rpo mut self,
+            version_id: &str,
+            file_path: &OsStr,
+            trackable_aspects: TrackableSymlinkAspects,
+        ) -> FcResult<&'rpo mut Self> {
+            todo!();
         }
     }
 
