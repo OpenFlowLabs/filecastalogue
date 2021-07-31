@@ -17,9 +17,22 @@ pub trait BlobProvider {
 /// from sprawling, this serves as a single source of process for how
 /// to hash a BlobProvider's blob.
 /// 
-/// Example (assuming impl BlobProvider for IndexFile):
+/// Example:
 /// ```
-/// impl Hashable for IndexFile {
+/// use filecastalogue::{
+///     error::FcResult,
+///     meta::blob::model::Blob,
+///     files::{hashable::Hashable, index::IndexFile, blob::BlobProvider}
+/// };
+/// 
+/// struct Example {}
+/// impl BlobProvider for Example {
+///     fn get_blob(&self) -> FcResult<Blob> {
+///         let example_blob = Blob::default();
+///         Ok(example_blob)
+///     }
+/// }
+/// impl Hashable for Example {
 ///     fn get_hash(&self) -> FcResult<String> {
 ///         (self as &(dyn BlobProvider)).get_hash()
 ///     }
