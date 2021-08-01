@@ -14,3 +14,9 @@ Cargo.lock
 # Some messy tmp things the filecastalogue_mess crate may or may not be doing. :D
 filecastalogue_mess/.tmp/state/*
 !filecastalogue_mess/.tmp/state/.gitkeep
+
+# Ignoring the filecastalogue crate's .tmp dir.
+filecastalogue/.tmp
+
+# IDE stuff.
+.vscode
