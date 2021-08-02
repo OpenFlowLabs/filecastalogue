@@ -80,6 +80,7 @@ pub enum ErrorKind {
     UntrackedFile,
     DoubleDotFileName,
     PathDoesNotExistInCollection,
+    TestSetupSafetyCheckFailed,
     Io,
     Serde
 }
@@ -94,6 +95,7 @@ impl ErrorKind {
             ErrorKind::UntrackedFile => "Path for which there is no file tracked encountered.",
             ErrorKind::DoubleDotFileName => "Double-dot (..) file name encountered.",
             ErrorKind::PathDoesNotExistInCollection => "Path doesn't exist in collection.",
+            ErrorKind::TestSetupSafetyCheckFailed => "Test setup safety check failed.",
             ErrorKind::Io => "Standard IO Error: std::io::Error.",
             ErrorKind::Serde => "Error with JSON (de)serialization: serde_json::Error.",
         }
@@ -273,6 +275,8 @@ impl Display for KeyValuePayload {
 
 impl Payload for KeyValuePayload {}
 impl Payload for &mut KeyValuePayload {}
+impl Payload for String {}
+impl Payload for &str {}
 
 #[macro_export] 
 macro_rules! payload {
