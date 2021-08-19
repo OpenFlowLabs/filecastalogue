@@ -1,0 +1,466 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="1896.875px" preserveAspectRatio="none" style="width:1067px;height:1896px;background:#00000000;" version="1.1" viewBox="0 0 1067 1896" width="1067.7083px" zoomAndPan="magnify"><defs><linearGradient id="g1ngm1cbrl962y0" x1="50%" x2="50%" y1="0%" y2="100%"><stop offset="0%" stop-color="#4DABF5"/><stop offset="100%" stop-color="#2196F3"/></linearGradient><filter height="300%" id="f1ngm1cbrl962y" width="300%" x="-1" y="-1"><feGaussianBlur result="blurOut" stdDeviation="2.0833333333333335"/><feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/><feOffset dx="4.166666666666667" dy="4.166666666666667" in="blurOut2" result="blurOut3"/><feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/></filter></defs><g><rect fill="url(#g1ngm1cbrl962y0)" filter="url(#f1ngm1cbrl962y)" height="56.2174" rx="13.0208" ry="13.0208" style="stroke:#2196F3;stroke-width:1.5625;" width="55.2083" x="10.4167" y="919.7042"/><text fill="#FFFFFF" font-family="Verdana" font-size="12.5" lengthAdjust="spacing" textLength="13.5417" x="31.25" y="952.1403">cli</text><rect fill="url(#g1ngm1cbrl962y0)" filter="url(#f1ngm1cbrl962y)" height="56.2174" rx="13.0208" ry="13.0208" style="stroke:#2196F3;stroke-width:1.5625;" width="108.3333" x="117.7083" y="919.7042"/><text fill="#FFFFFF" font-family="Verdana" font-size="12.5" lengthAdjust="spacing" textLength="66.6667" x="138.5417" y="952.1403">dev/admin</text><rect fill="url(#g1ngm1cbrl962y0)" filter="url(#f1ngm1cbrl962y)" height="56.2174" rx="13.0208" ry="13.0208" style="stroke:#2196F3;stroke-width:1.5625;" width="71.875" x="278.125" y="136.4095"/><text fill="#FFFFFF" font-family="Verdana" font-size="12.5" lengthAdjust="spacing" textLength="30.2083" x="298.9583" y="168.8456">repo</text><rect fill="url(#g1ngm1cbrl962y0)" filter="url(#f1ngm1cbrl962y)" height="56.2174" rx="13.0208" ry="13.0208" style="stroke:#2196F3;stroke-width:1.5625;" width="66.6667" x="402.0833" y="20.8333"/><text fill="#FFFFFF" font-family="Verdana" font-size="12.5" lengthAdjust="spacing" textLength="25" x="422.9167" y="53.2694">tar?</text><path d="M350,164.5182 L360.4167,164.5182 C376.0417,164.5182 376.0417,48.9421 391.6667,48.9421 L402.0833,48.9421 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><rect fill="url(#g1ngm1cbrl962y0)" filter="url(#f1ngm1cbrl962y)" height="56.2174" rx="13.0208" ry="13.0208" style="stroke:#2196F3;stroke-width:1.5625;" width="87.5" x="402.0833" y="97.8841"/><text fill="#FFFFFF" font-family="Verdana" font-size="12.5" lengthAdjust="spacing" textLength="41.6667" x="422.9167" y="130.3202">delete</text><rect fill="url(#g1ngm1cbrl962y0)" filter="url(#f1ngm1cbrl962y)" height="56.2174" rx="13.0208" ry="13.0208" style="stroke:#2196F3;stroke-width:1.5625;" width="71.875" x="541.6667" y="97.8841"/><text fill="#FFFFFF" font-family="Verdana" font-size="12.5" lengthAdjust="spacing" textLength="30.2083" x="562.5" y="130.3202">path</text><path d="M489.5833,125.9928 L500,125.9928 C515.625,125.9928 515.625,125.9928 531.25,125.9928 L541.6667,125.9928 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><path d="M350,164.5182 L360.4167,164.5182 C376.0417,164.5182 376.0417,125.9928 391.6667,125.9928 L402.0833,125.9928 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><rect fill="url(#g1ngm1cbrl962y0)" filter="url(#f1ngm1cbrl962y)" height="56.2174" rx="13.0208" ry="13.0208" style="stroke:#2196F3;stroke-width:1.5625;" width="67.7083" x="402.0833" y="174.9349"/><text fill="#FFFFFF" font-family="Verdana" font-size="12.5" lengthAdjust="spacing" textLength="26.0417" x="422.9167" y="207.371">new</text><path d="M350,164.5182 L360.4167,164.5182 C376.0417,164.5182 376.0417,203.0436 391.6667,203.0436 L402.0833,203.0436 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><rect fill="url(#g1ngm1cbrl962y0)" filter="url(#f1ngm1cbrl962y)" height="56.2174" rx="13.0208" ry="13.0208" style="stroke:#2196F3;stroke-width:1.5625;" width="192.7083" x="402.0833" y="251.9857"/><text fill="#FFFFFF" font-family="Verdana" font-size="12.5" lengthAdjust="spacing" textLength="151.0417" x="422.9167" y="284.4218">future proof fantasy url</text><path d="M350,164.5182 L360.4167,164.5182 C376.0417,164.5182 376.0417,280.0944 391.6667,280.0944 L402.0833,280.0944 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><path d="M226.0417,947.8129 L236.4583,947.8129 C252.0833,947.8129 252.0833,164.5182 267.7083,164.5182 L278.125,164.5182 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><rect fill="url(#g1ngm1cbrl962y0)" filter="url(#f1ngm1cbrl962y)" height="56.2174" rx="13.0208" ry="13.0208" style="stroke:#2196F3;stroke-width:1.5625;" width="66.6667" x="278.125" y="667.4398"/><text fill="#FFFFFF" font-family="Verdana" font-size="12.5" lengthAdjust="spacing" textLength="25" x="298.9583" y="699.8759">add</text><rect fill="url(#g1ngm1cbrl962y0)" filter="url(#f1ngm1cbrl962y)" height="56.2174" rx="13.0208" ry="13.0208" style="stroke:#2196F3;stroke-width:1.5625;" width="94.7917" x="396.875" y="390.2425"/><text fill="#FFFFFF" font-family="Verdana" font-size="12.5" lengthAdjust="spacing" textLength="53.125" x="417.7083" y="422.6786">ordinary</text><text fill="#000000" font-family="sans-serif" font-size="14.5833" lengthAdjust="spacing" textLength="71.875" x="557.2917" y="343.6147">version_id</text><path d="M491.6667,418.3512 L502.0833,418.3512 C517.7083,418.3512 517.7083,338.5661 533.3333,338.5661 L543.75,338.5661 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><text fill="#000000" font-family="sans-serif" font-size="14.5833" lengthAdjust="spacing" textLength="93.75" x="557.2917" y="383.5073">tracked_path</text><path d="M491.6667,418.3512 L502.0833,418.3512 C517.7083,418.3512 517.7083,378.4587 533.3333,378.4587 L543.75,378.4587 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><rect fill="url(#g1ngm1cbrl962y0)" filter="url(#f1ngm1cbrl962y)" height="56.2174" rx="13.0208" ry="13.0208" style="stroke:#2196F3;stroke-width:1.5625;" width="84.375" x="543.75" y="430.1351"/><text fill="#FFFFFF" font-family="Verdana" font-size="12.5" lengthAdjust="spacing" textLength="42.7083" x="564.5833" y="462.5712">maybe</text><text fill="#000000" font-family="sans-serif" font-size="14.5833" lengthAdjust="spacing" textLength="55.2083" x="693.75" y="423.3999">nothing</text><path d="M628.125,458.2438 L638.5417,458.2438 C654.1667,458.2438 654.1667,418.3512 669.7917,418.3512 L680.2083,418.3512 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><text fill="#000000" font-family="sans-serif" font-size="14.5833" lengthAdjust="spacing" textLength="307.2917" x="693.75" y="463.2924">path/URL (URL as a future proofing fantasy)</text><path d="M628.125,458.2438 L638.5417,458.2438 C654.1667,458.2438 654.1667,458.2438 669.7917,458.2438 L680.2083,458.2438 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><text fill="#000000" font-family="sans-serif" font-size="14.5833" lengthAdjust="spacing" textLength="68.75" x="693.75" y="503.185">attributes</text><path d="M628.125,458.2438 L638.5417,458.2438 C654.1667,458.2438 654.1667,498.1364 669.7917,498.1364 L680.2083,498.1364 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><path d="M491.6667,418.3512 L502.0833,418.3512 C517.7083,418.3512 517.7083,458.2438 533.3333,458.2438 L543.75,458.2438 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><path d="M344.7917,695.5485 L355.2083,695.5485 C370.8333,695.5485 370.8333,418.3512 386.4583,418.3512 L396.875,418.3512 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><rect fill="url(#g1ngm1cbrl962y0)" filter="url(#f1ngm1cbrl962y)" height="56.2174" rx="13.0208" ry="13.0208" style="stroke:#2196F3;stroke-width:1.5625;" width="58.3333" x="396.875" y="569.7591"/><text fill="#FFFFFF" font-family="Verdana" font-size="12.5" lengthAdjust="spacing" textLength="16.6667" x="417.7083" y="602.1952">dir</text><text fill="#000000" font-family="sans-serif" font-size="14.5833" lengthAdjust="spacing" textLength="71.875" x="520.8333" y="543.0776">version_id</text><path d="M455.2083,597.8678 L465.625,597.8678 C481.25,597.8678 481.25,538.029 496.875,538.029 L507.2917,538.029 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><text fill="#000000" font-family="sans-serif" font-size="14.5833" lengthAdjust="spacing" textLength="93.75" x="520.8333" y="582.9702">tracked_path</text><path d="M455.2083,597.8678 L465.625,597.8678 C481.25,597.8678 481.25,577.9215 496.875,577.9215 L507.2917,577.9215 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><rect fill="url(#g1ngm1cbrl962y0)" filter="url(#f1ngm1cbrl962y)" height="56.2174" rx="13.0208" ry="13.0208" style="stroke:#2196F3;stroke-width:1.5625;" width="84.375" x="507.2917" y="609.6517"/><text fill="#FFFFFF" font-family="Verdana" font-size="12.5" lengthAdjust="spacing" textLength="42.7083" x="528.125" y="642.0878">maybe</text><text fill="#000000" font-family="sans-serif" font-size="14.5833" lengthAdjust="spacing" textLength="55.2083" x="657.2917" y="622.8628">nothing</text><path d="M591.6667,637.7604 L602.0833,637.7604 C617.7083,637.7604 617.7083,617.8141 633.3333,617.8141 L643.75,617.8141 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><text fill="#000000" font-family="sans-serif" font-size="14.5833" lengthAdjust="spacing" textLength="68.75" x="657.2917" y="662.7553">attributes</text><path d="M591.6667,637.7604 L602.0833,637.7604 C617.7083,637.7604 617.7083,657.7067 633.3333,657.7067 L643.75,657.7067 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><path d="M455.2083,597.8678 L465.625,597.8678 C481.25,597.8678 481.25,637.7604 496.875,637.7604 L507.2917,637.7604 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><path d="M344.7917,695.5485 L355.2083,695.5485 C370.8333,695.5485 370.8333,597.8678 386.4583,597.8678 L396.875,597.8678 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><rect fill="url(#g1ngm1cbrl962y0)" filter="url(#f1ngm1cbrl962y)" height="56.2174" rx="13.0208" ry="13.0208" style="stroke:#2196F3;stroke-width:1.5625;" width="88.5417" x="396.875" y="749.2757"/><text fill="#FFFFFF" font-family="Verdana" font-size="12.5" lengthAdjust="spacing" textLength="46.875" x="417.7083" y="781.7118">symlink</text><text fill="#000000" font-family="sans-serif" font-size="14.5833" lengthAdjust="spacing" textLength="71.875" x="551.0417" y="702.6479">version_id</text><path d="M485.4167,777.3844 L495.8333,777.3844 C511.4583,777.3844 511.4583,697.5993 527.0833,697.5993 L537.5,697.5993 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><text fill="#000000" font-family="sans-serif" font-size="14.5833" lengthAdjust="spacing" textLength="93.75" x="551.0417" y="742.5405">tracked_path</text><path d="M485.4167,777.3844 L495.8333,777.3844 C511.4583,777.3844 511.4583,737.4919 527.0833,737.4919 L537.5,737.4919 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><rect fill="url(#g1ngm1cbrl962y0)" filter="url(#f1ngm1cbrl962y)" height="56.2174" rx="13.0208" ry="13.0208" style="stroke:#2196F3;stroke-width:1.5625;" width="84.375" x="537.5" y="789.1683"/><text fill="#FFFFFF" font-family="Verdana" font-size="12.5" lengthAdjust="spacing" textLength="42.7083" x="558.3333" y="821.6044">maybe</text><text fill="#000000" font-family="sans-serif" font-size="14.5833" lengthAdjust="spacing" textLength="55.2083" x="687.5" y="782.4331">nothing</text><path d="M621.875,817.277 L632.2917,817.277 C647.9167,817.277 647.9167,777.3844 663.5417,777.3844 L673.9583,777.3844 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><text fill="#000000" font-family="sans-serif" font-size="14.5833" lengthAdjust="spacing" textLength="82.2917" x="687.5" y="822.3256">target_path</text><path d="M621.875,817.277 L632.2917,817.277 C647.9167,817.277 647.9167,817.277 663.5417,817.277 L673.9583,817.277 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><text fill="#000000" font-family="sans-serif" font-size="14.5833" lengthAdjust="spacing" textLength="68.75" x="687.5" y="862.2182">attributes</text><path d="M621.875,817.277 L632.2917,817.277 C647.9167,817.277 647.9167,857.1696 663.5417,857.1696 L673.9583,857.1696 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><path d="M485.4167,777.3844 L495.8333,777.3844 C511.4583,777.3844 511.4583,817.277 527.0833,817.277 L537.5,817.277 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><path d="M344.7917,695.5485 L355.2083,695.5485 C370.8333,695.5485 370.8333,777.3844 386.4583,777.3844 L396.875,777.3844 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><rect fill="url(#g1ngm1cbrl962y0)" filter="url(#f1ngm1cbrl962y)" height="56.2174" rx="13.0208" ry="13.0208" style="stroke:#2196F3;stroke-width:1.5625;" width="116.6667" x="396.875" y="928.7923"/><text fill="#FFFFFF" font-family="Verdana" font-size="12.5" lengthAdjust="spacing" textLength="75" x="417.7083" y="961.2284">nonExisting</text><text fill="#000000" font-family="sans-serif" font-size="14.5833" lengthAdjust="spacing" textLength="71.875" x="579.1667" y="902.1108">version_id</text><path d="M513.5417,956.901 L523.9583,956.901 C539.5833,956.901 539.5833,897.0622 555.2083,897.0622 L565.625,897.0622 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><text fill="#000000" font-family="sans-serif" font-size="14.5833" lengthAdjust="spacing" textLength="93.75" x="579.1667" y="942.0034">tracked_path</text><path d="M513.5417,956.901 L523.9583,956.901 C539.5833,956.901 539.5833,936.9548 555.2083,936.9548 L565.625,936.9548 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><rect fill="url(#g1ngm1cbrl962y0)" filter="url(#f1ngm1cbrl962y)" height="56.2174" rx="13.0208" ry="13.0208" style="stroke:#2196F3;stroke-width:1.5625;" width="84.375" x="565.625" y="968.6849"/><text fill="#FFFFFF" font-family="Verdana" font-size="12.5" lengthAdjust="spacing" textLength="42.7083" x="586.4583" y="1001.121">maybe</text><text fill="#000000" font-family="sans-serif" font-size="14.5833" lengthAdjust="spacing" textLength="55.2083" x="715.625" y="981.896">nothing</text><path d="M650,996.7936 L660.4167,996.7936 C676.0417,996.7936 676.0417,976.8473 691.6667,976.8473 L702.0833,976.8473 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><text fill="#000000" font-family="sans-serif" font-size="14.5833" lengthAdjust="spacing" textLength="68.75" x="715.625" y="1021.7885">attributes</text><path d="M650,996.7936 L660.4167,996.7936 C676.0417,996.7936 676.0417,1016.7399 691.6667,1016.7399 L702.0833,1016.7399 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><path d="M513.5417,956.901 L523.9583,956.901 C539.5833,956.901 539.5833,996.7936 555.2083,996.7936 L565.625,996.7936 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><path d="M344.7917,695.5485 L355.2083,695.5485 C370.8333,695.5485 370.8333,956.901 386.4583,956.901 L396.875,956.901 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><rect fill="url(#g1ngm1cbrl962y0)" filter="url(#f1ngm1cbrl962y)" height="56.2174" rx="13.0208" ry="13.0208" style="stroke:#2196F3;stroke-width:1.5625;" width="79.1667" x="396.875" y="1005.8431"/><text fill="#FFFFFF" font-family="Verdana" font-size="12.5" lengthAdjust="spacing" textLength="37.5" x="417.7083" y="1038.2792">scan?</text><path d="M344.7917,695.5485 L355.2083,695.5485 C370.8333,695.5485 370.8333,1033.9518 386.4583,1033.9518 L396.875,1033.9518 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><path d="M226.0417,947.8129 L236.4583,947.8129 C252.0833,947.8129 252.0833,695.5485 267.7083,695.5485 L278.125,695.5485 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><rect fill="url(#g1ngm1cbrl962y0)" filter="url(#f1ngm1cbrl962y)" height="56.2174" rx="13.0208" ry="13.0208" style="stroke:#2196F3;stroke-width:1.5625;" width="60.4167" x="278.125" y="1203.9388"/><text fill="#FFFFFF" font-family="Verdana" font-size="12.5" lengthAdjust="spacing" textLength="18.75" x="298.9583" y="1236.3749">list</text><rect fill="url(#g1ngm1cbrl962y0)" filter="url(#f1ngm1cbrl962y)" height="56.2174" rx="13.0208" ry="13.0208" style="stroke:#2196F3;stroke-width:1.5625;" width="67.7083" x="390.625" y="1203.9388"/><text fill="#FFFFFF" font-family="Verdana" font-size="12.5" lengthAdjust="spacing" textLength="26.0417" x="411.4583" y="1236.3749">files</text><text fill="#000000" font-family="sans-serif" font-size="14.5833" lengthAdjust="spacing" textLength="276.0417" x="523.9583" y="1097.4721">if version_id: only show for that version</text><path d="M458.3333,1232.0475 L468.75,1232.0475 C484.375,1232.0475 484.375,1092.4235 500,1092.4235 L510.4167,1092.4235 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><text fill="#000000" font-family="sans-serif" font-size="14.5833" lengthAdjust="spacing" textLength="140.625" x="523.9583" y="1137.3647">if nothing: show all?</text><path d="M458.3333,1232.0475 L468.75,1232.0475 C484.375,1232.0475 484.375,1132.3161 500,1132.3161 L510.4167,1132.3161 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><rect fill="url(#g1ngm1cbrl962y0)" filter="url(#f1ngm1cbrl962y)" height="56.2174" rx="13.0208" ry="13.0208" style="stroke:#2196F3;stroke-width:1.5625;" width="84.375" x="510.4167" y="1243.8314"/><text fill="#FFFFFF" font-family="Verdana" font-size="12.5" lengthAdjust="spacing" textLength="42.7083" x="531.25" y="1276.2675">maybe</text><text fill="#000000" font-family="sans-serif" font-size="14.5833" lengthAdjust="spacing" textLength="55.2083" x="660.4167" y="1177.2573">nothing</text><path d="M594.7917,1271.9401 L605.2083,1271.9401 C620.8333,1271.9401 620.8333,1172.2087 636.4583,1172.2087 L646.875,1172.2087 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><text fill="#000000" font-family="sans-serif" font-size="14.5833" lengthAdjust="spacing" textLength="71.875" x="660.4167" y="1217.1499">version_id</text><path d="M594.7917,1271.9401 L605.2083,1271.9401 C620.8333,1271.9401 620.8333,1212.1012 636.4583,1212.1012 L646.875,1212.1012 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><text fill="#000000" font-family="sans-serif" font-size="14.5833" lengthAdjust="spacing" textLength="39.5833" x="660.4167" y="1316.8813">OPTS</text><text fill="#000000" font-family="sans-serif" font-size="14.5833" lengthAdjust="spacing" textLength="66.6667" x="776.0417" y="1257.0424">................</text><path d="M710.4167,1311.8327 L720.8333,1311.8327 C736.4583,1311.8327 736.4583,1251.9938 752.0833,1251.9938 L762.5,1251.9938 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><text fill="#000000" font-family="sans-serif" font-size="14.5833" lengthAdjust="spacing" textLength="66.6667" x="776.0417" y="1296.935">................</text><path d="M710.4167,1311.8327 L720.8333,1311.8327 C736.4583,1311.8327 736.4583,1291.8864 752.0833,1291.8864 L762.5,1291.8864 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><text fill="#000000" font-family="sans-serif" font-size="14.5833" lengthAdjust="spacing" textLength="66.6667" x="776.0417" y="1336.8276">................</text><path d="M710.4167,1311.8327 L720.8333,1311.8327 C736.4583,1311.8327 736.4583,1331.779 752.0833,1331.779 L762.5,1331.779 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><text fill="#000000" font-family="sans-serif" font-size="14.5833" lengthAdjust="spacing" textLength="71.875" x="776.0417" y="1376.7202">version_id</text><path d="M710.4167,1311.8327 L720.8333,1311.8327 C736.4583,1311.8327 736.4583,1371.6715 752.0833,1371.6715 L762.5,1371.6715 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><path d="M594.7917,1271.9401 L605.2083,1271.9401 C620.8333,1271.9401 620.8333,1311.8327 636.4583,1311.8327 L646.875,1311.8327 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><path d="M458.3333,1232.0475 L468.75,1232.0475 C484.375,1232.0475 484.375,1271.9401 500,1271.9401 L510.4167,1271.9401 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><path d="M338.5417,1232.0475 L348.9583,1232.0475 C364.5833,1232.0475 364.5833,1232.0475 380.2083,1232.0475 L390.625,1232.0475 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><path d="M226.0417,947.8129 L236.4583,947.8129 C252.0833,947.8129 252.0833,1232.0475 267.7083,1232.0475 L278.125,1232.0475 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><rect fill="url(#g1ngm1cbrl962y0)" filter="url(#f1ngm1cbrl962y)" height="56.2174" rx="13.0208" ry="13.0208" style="stroke:#2196F3;stroke-width:1.5625;" width="107.2917" x="278.125" y="1402.0345"/><text fill="#FFFFFF" font-family="Verdana" font-size="12.5" lengthAdjust="spacing" textLength="65.625" x="298.9583" y="1434.4706">report___?</text><path d="M226.0417,947.8129 L236.4583,947.8129 C252.0833,947.8129 252.0833,1430.1432 267.7083,1430.1432 L278.125,1430.1432 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><rect fill="url(#g1ngm1cbrl962y0)" filter="url(#f1ngm1cbrl962y)" height="56.2174" rx="13.0208" ry="13.0208" style="stroke:#2196F3;stroke-width:1.5625;" width="88.5417" x="278.125" y="1610.3048"/><text fill="#FFFFFF" font-family="Verdana" font-size="12.5" lengthAdjust="spacing" textLength="46.875" x="298.9583" y="1642.7409">version</text><rect fill="url(#g1ngm1cbrl962y0)" filter="url(#f1ngm1cbrl962y)" height="56.2174" rx="13.0208" ry="13.0208" style="stroke:#2196F3;stroke-width:1.5625;" width="89.5833" x="418.75" y="1479.0853"/><text fill="#FFFFFF" font-family="Verdana" font-size="12.5" lengthAdjust="spacing" textLength="47.9167" x="439.5833" y="1511.5214">remove</text><text fill="#000000" font-family="sans-serif" font-size="14.5833" lengthAdjust="spacing" textLength="71.875" x="573.9583" y="1512.2426">version_id</text><path d="M508.3333,1507.194 L518.75,1507.194 C534.375,1507.194 534.375,1507.194 550,1507.194 L560.4167,1507.194 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><path d="M366.6667,1638.4135 L377.0833,1638.4135 C392.7083,1638.4135 392.7083,1507.194 408.3333,1507.194 L418.75,1507.194 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><rect fill="url(#g1ngm1cbrl962y0)" filter="url(#f1ngm1cbrl962y)" height="56.2174" rx="13.0208" ry="13.0208" style="stroke:#2196F3;stroke-width:1.5625;" width="66.6667" x="418.75" y="1556.1361"/><text fill="#FFFFFF" font-family="Verdana" font-size="12.5" lengthAdjust="spacing" textLength="25" x="439.5833" y="1588.5722">add</text><text fill="#000000" font-family="sans-serif" font-size="14.5833" lengthAdjust="spacing" textLength="71.875" x="551.0417" y="1589.2934">version_id</text><path d="M485.4167,1584.2448 L495.8333,1584.2448 C511.4583,1584.2448 511.4583,1584.2448 527.0833,1584.2448 L537.5,1584.2448 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><path d="M366.6667,1638.4135 L377.0833,1638.4135 C392.7083,1638.4135 392.7083,1584.2448 408.3333,1584.2448 L418.75,1584.2448 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><rect fill="url(#g1ngm1cbrl962y0)" filter="url(#f1ngm1cbrl962y)" height="56.2174" rx="13.0208" ry="13.0208" style="stroke:#2196F3;stroke-width:1.5625;" width="60.4167" x="418.75" y="1633.1868"/><text fill="#FFFFFF" font-family="Verdana" font-size="12.5" lengthAdjust="spacing" textLength="18.75" x="439.5833" y="1665.623">list</text><path d="M366.6667,1638.4135 L377.0833,1638.4135 C392.7083,1638.4135 392.7083,1661.2956 408.3333,1661.2956 L418.75,1661.2956 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><rect fill="url(#g1ngm1cbrl962y0)" filter="url(#f1ngm1cbrl962y)" height="56.2174" rx="13.0208" ry="13.0208" style="stroke:#2196F3;stroke-width:1.5625;" width="79.1667" x="418.75" y="1710.2376"/><text fill="#FFFFFF" font-family="Verdana" font-size="12.5" lengthAdjust="spacing" textLength="37.5" x="439.5833" y="1742.6737">insert</text><text fill="#000000" font-family="sans-serif" font-size="14.5833" lengthAdjust="spacing" textLength="54.1667" x="563.5417" y="1693.5293">before?</text><path d="M497.9167,1738.3464 L508.3333,1738.3464 C523.9583,1738.3464 523.9583,1688.4806 539.5833,1688.4806 L550,1688.4806 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><text fill="#000000" font-family="sans-serif" font-size="14.5833" lengthAdjust="spacing" textLength="32.2917" x="563.5417" y="1733.4218">after</text><path d="M497.9167,1738.3464 L508.3333,1738.3464 C523.9583,1738.3464 523.9583,1728.3732 539.5833,1728.3732 L550,1728.3732 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><text fill="#000000" font-family="sans-serif" font-size="14.5833" lengthAdjust="spacing" textLength="71.875" x="563.5417" y="1773.3144">version_id</text><rect fill="url(#g1ngm1cbrl962y0)" filter="url(#f1ngm1cbrl962y)" height="56.2174" rx="13.0208" ry="13.0208" style="stroke:#2196F3;stroke-width:1.5625;" width="84.375" x="697.9167" y="1740.1571"/><text fill="#FFFFFF" font-family="Verdana" font-size="12.5" lengthAdjust="spacing" textLength="42.7083" x="718.75" y="1772.5932">maybe</text><text fill="#000000" font-family="sans-serif" font-size="14.5833" lengthAdjust="spacing" textLength="196.875" x="847.9167" y="1753.3681">position (according to list) ?</text><path d="M782.2917,1768.2658 L792.7083,1768.2658 C808.3333,1768.2658 808.3333,1748.3195 823.9583,1748.3195 L834.375,1748.3195 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><text fill="#000000" font-family="sans-serif" font-size="14.5833" lengthAdjust="spacing" textLength="117.7083" x="847.9167" y="1793.2607">other_version_id</text><path d="M782.2917,1768.2658 L792.7083,1768.2658 C808.3333,1768.2658 808.3333,1788.2121 823.9583,1788.2121 L834.375,1788.2121 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><path d="M645.8333,1768.2658 L656.25,1768.2658 C671.875,1768.2658 671.875,1768.2658 687.5,1768.2658 L697.9167,1768.2658 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><path d="M497.9167,1738.3464 L508.3333,1738.3464 C523.9583,1738.3464 523.9583,1768.2658 539.5833,1768.2658 L550,1768.2658 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><path d="M366.6667,1638.4135 L377.0833,1638.4135 C392.7083,1638.4135 392.7083,1738.3464 408.3333,1738.3464 L418.75,1738.3464 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><path d="M226.0417,947.8129 L236.4583,947.8129 C252.0833,947.8129 252.0833,1638.4135 267.7083,1638.4135 L278.125,1638.4135 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><rect fill="url(#g1ngm1cbrl962y0)" filter="url(#f1ngm1cbrl962y)" height="56.2174" rx="13.0208" ry="13.0208" style="stroke:#2196F3;stroke-width:1.5625;" width="107.2917" x="278.125" y="1818.575"/><text fill="#FFFFFF" font-family="Verdana" font-size="12.5" lengthAdjust="spacing" textLength="65.625" x="298.9583" y="1851.0111">apply .... ?</text><path d="M226.0417,947.8129 L236.4583,947.8129 C252.0833,947.8129 252.0833,1846.6838 267.7083,1846.6838 L278.125,1846.6838 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><path d="M65.625,947.8129 L76.0417,947.8129 C91.6667,947.8129 91.6667,947.8129 107.2917,947.8129 L117.7083,947.8129 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><!--MD5=[ec97904fa4fa8cca2d5da115aebc7095]
+@startmindmap aziro diagram
+!theme materia
+
+* cli
+** dev/admin
+*** repo
+**** tar?
+**** delete 
+***** path
+**** new
+**** future proof fantasy url
+*** add
+**** ordinary
+*****_ version_id
+*****_ tracked_path
+***** maybe
+******_ nothing
+******_ path/URL (URL as a future proofing fantasy)
+******_ attributes
+**** dir
+*****_ version_id
+*****_ tracked_path
+***** maybe
+******_ nothing
+******_ attributes
+**** symlink
+*****_ version_id
+*****_ tracked_path
+***** maybe
+******_ nothing
+******_ target_path
+******_ attributes
+**** nonExisting
+*****_ version_id
+*****_ tracked_path
+***** maybe
+******_ nothing
+******_ attributes
+**** scan?
+*** list
+**** files
+*****_ if version_id: only show for that version
+*****_ if nothing: show all?
+***** maybe
+******_ nothing
+******_ version_id
+******_ OPTS
+*******_ ................
+*******_ ................
+*******_ ................
+*******_ version_id
+*** report___?
+*** version
+**** remove
+*****_ version_id
+**** add
+*****_ version_id
+**** list
+**** insert
+*****_ before?
+*****_ after
+*****_ version_id
+****** maybe
+*******_ position (according to list) ?
+*******_ other_version_id
+*** apply .... ?
+
+@endmindmap
+
+@startmindmap aziro diagram
+
+
+
+skinparam backgroundColor transparent
+skinparam useBetaStyle false
+
+
+
+
+
+
+
+skinparam defaultFontName       "Verdana"
+skinparam defaultFontSize       12
+skinparam dpi                   100
+skinparam shadowing             true
+skinparam roundcorner           8
+skinparam ParticipantPadding    40
+skinparam BoxPadding            40
+skinparam Padding               10
+skinparam ArrowColor            #666
+skinparam stereotype {
+    CBackgroundColor #fff
+    CBorderColor #cccccc
+    ABackgroundColor #70bf73
+    ABorderColor #3D8C40
+    IBackgroundColor #B7161C
+    IBorderColor #b7161c
+    EBackgroundColor #ffad33
+    EBorderColor #CC7A00
+    NBackgroundColor #b052c0
+    NBorderColor #7D1F8D
+}
+skinparam title {
+	FontColor	                 #2196F3
+	BorderColor	                 #cccccc
+	FontSize	    	         20
+	BorderRoundCorner            8
+	BorderThickness 	         1
+	BackgroundColor              #fff-#fff
+}
+
+skinparam legend {
+	BackgroundColor #fff
+	BorderColor #cccccc
+	FontColor #222
+}
+
+skinparam swimlane {
+	BorderColor #9C27B0
+	BorderThickness 2
+	TitleBackgroundColor  #fff-#fff
+	TitleFontColor #2196F3
+}
+
+
+skinparam activity {
+		FontColor #FFF
+	BorderColor #2196F3
+	BackgroundColor #4dabf5-#2196F3
+	BarColor #4CAF50
+	StartColor #9C27B0
+	EndColor #9C27B0
+	DiamondBackgroundColor #FFF-#fff
+  	DiamondBorderColor #cccccc
+	DiamondFontColor #222
+}
+
+
+skinparam participant {
+		FontColor #FFF
+	BorderColor #2196F3
+	BackgroundColor #4dabf5-#2196F3
+	ParticipantBorderThickness 2
+}
+
+
+skinparam actor {
+		FontColor #FFF
+	BorderColor #2196F3
+	BackgroundColor #4dabf5-#2196F3
+	FontColor #222
+}
+
+
+skinparam arrow {
+	Thickness 3
+	Color #2196F3
+	FontColor #222
+}
+
+
+skinparam sequence {
+	BorderColor #2196F3
+	TitleFontColor #2196F3
+	BackgroundColor transparent
+	StartColor #2196F3
+	EndColor #2196F3
+	BoxBackgroundColor #fff
+	BoxBorderColor #666
+	BoxFontColor #222
+	LifeLineBorderColor #cccccc
+	LifeLineBorderThickness 2
+	LifeLineBackgroundColor #fff
+	GroupBorderColor #666
+	GroupFontColor #222
+	GroupHeaderFontColor #9C27B0
+	DividerBackgroundColor #FFF-#fff
+    DividerBorderColor #666
+    DividerBorderThickness 2
+    DividerFontColor #222
+	ReferenceBackgroundColor transparent
+	ReferenceBorderColor #666
+	ReferenceFontColor #222
+	ReferenceHeaderFontColor #9C27B0
+}
+
+
+skinparam partition {
+	BorderColor #2196F3
+	FontColor #2196F3
+	BackgroundColor transparent
+}
+
+
+skinparam collections {
+		FontColor #FFF
+	BorderColor #2196F3
+	BackgroundColor #4dabf5-#2196F3
+}
+
+
+skinparam control {
+		FontColor #FFF
+	BorderColor #2196F3
+	BackgroundColor #4dabf5-#2196F3
+	FontColor #222
+}
+
+
+skinparam entity {
+		FontColor #FFF
+	BorderColor #2196F3
+	BackgroundColor #4dabf5-#2196F3
+	FontColor #222
+}
+
+
+skinparam boundary {
+		FontColor #FFF
+	BorderColor #2196F3
+	BackgroundColor #4dabf5-#2196F3
+	FontColor #222
+}
+
+
+skinparam agent {
+	BackgroundColor #orange
+	BorderColor #999999
+	FontColor #333333
+}
+
+
+skinparam note {
+	BorderThickness 1
+	BackgroundColor #b052c0-#9C27B0
+	BorderColor #9C27B0
+	FontColor #FFF
+}
+
+
+skinparam artifact {
+	BackgroundColor #FFF-#fff
+	BorderColor #666
+	FontColor #666
+}
+
+
+skinparam component {
+		FontColor #FFF
+	BorderColor #2196F3
+	BackgroundColor #4dabf5-#2196F3
+}
+
+
+skinparam interface {
+	BackgroundColor  #B7161C
+	BorderColor  #e51c23
+	FontColor #222
+}
+
+
+skinparam storage {
+	BackgroundColor #ffad33-#ff9800
+  	BorderColor #ff9800
+	FontColor #FFF
+}
+
+
+skinparam node {
+	BackgroundColor #fff-#fff
+	BorderColor #222
+	FontColor #222
+}
+
+
+skinparam cloud {
+	BackgroundColor #F2FCFE-#eeeeee
+	BorderColor #F2FCFE
+	FontColor #222
+}
+
+
+skinparam database {
+		FontColor #FFF
+	BorderColor #2196F3
+	BackgroundColor #4dabf5-#2196F3
+	FontColor #222
+}
+
+
+skinparam class {
+		FontColor #FFF
+	BorderColor #2196F3
+	BackgroundColor #4dabf5-#2196F3
+	HeaderBackgroundColor #2196F3-#1a78c2
+	StereotypeFontColor #222
+	BorderThickness 1
+	AttributeFontColor #fff
+	AttributeFontSize 11
+}
+
+
+skinparam object {
+		FontColor #FFF
+	BorderColor #2196F3
+	BackgroundColor #4dabf5-#2196F3
+	StereotypeFontColor #222
+	BorderThickness 1
+	AttributeFontColor #222
+	AttributeFontSize 11
+}
+
+
+skinparam usecase {
+		FontColor #FFF
+	BorderColor #2196F3
+	BackgroundColor #4dabf5-#2196F3
+	BorderThickness 2
+	StereotypeFontColor #2196F3
+}
+
+
+skinparam rectangle {
+	FontColor #2196F3
+	BackgroundColor #fff-#fff
+	BorderThickness 2
+	StereotypeFontColor #2196F3
+}
+
+
+skinparam package {
+		FontColor #FFF
+	BorderColor #2196F3
+	BackgroundColor #4dabf5-#2196F3
+	BackgroundColor #fff-#fff
+	BorderThickness 2
+}
+
+
+skinparam folder {
+	BackgroundColor #FFF-#fff
+  	BorderColor #ff9800
+	FontColor #ff9800
+	BorderThickness 2
+}
+
+
+skinparam frame {
+	BackgroundColor #FFF-#fff
+  	BorderColor #9C27B0
+	FontColor #9C27B0
+	BorderThickness 2
+}
+
+
+skinparam state {
+		FontColor #FFF
+	BorderColor #2196F3
+	BackgroundColor #4dabf5-#2196F3
+	BorderColor #1a78c2
+	StartColor #9C27B0
+	EndColor #9C27B0
+	AttributeFontColor #222
+	AttributeFontSize 11
+}
+
+
+skinparam queue {
+		FontColor #FFF
+	BorderColor #2196F3
+	BackgroundColor #4dabf5-#2196F3
+}
+
+
+skinparam card {
+	BackgroundColor #b052c0-#9C27B0
+	BorderColor #9C27B0
+	FontColor #FFF
+}
+
+
+skinparam file {
+	BackgroundColor #fff-#fff
+	BorderColor #666
+	FontColor #666
+
+}
+
+
+
+* cli
+** dev/admin
+*** repo
+**** tar?
+**** delete 
+***** path
+**** new
+**** future proof fantasy url
+*** add
+**** ordinary
+*****_ version_id
+*****_ tracked_path
+***** maybe
+******_ nothing
+******_ path/URL (URL as a future proofing fantasy)
+******_ attributes
+**** dir
+*****_ version_id
+*****_ tracked_path
+***** maybe
+******_ nothing
+******_ attributes
+**** symlink
+*****_ version_id
+*****_ tracked_path
+***** maybe
+******_ nothing
+******_ target_path
+******_ attributes
+**** nonExisting
+*****_ version_id
+*****_ tracked_path
+***** maybe
+******_ nothing
+******_ attributes
+**** scan?
+*** list
+**** files
+*****_ if version_id: only show for that version
+*****_ if nothing: show all?
+***** maybe
+******_ nothing
+******_ version_id
+******_ OPTS
+*******_ ................
+*******_ ................
+*******_ ................
+*******_ version_id
+*** report___?
+*** version
+**** remove
+*****_ version_id
+**** add
+*****_ version_id
+**** list
+**** insert
+*****_ before?
+*****_ after
+*****_ version_id
+****** maybe
+*******_ position (according to list) ?
+*******_ other_version_id
+*** apply .... ?
+
+@endmindmap
+
+PlantUML version 1.2021.7(Sun May 23 14:40:07 CEST 2021)
+(GPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Default Encoding: UTF-8
+Language: en
+Country: US
+--></g></svg>
