@@ -1,0 +1,196 @@
+@startmindmap cli_mindmap
+!theme materia
+
+* cli
+** dev
+*** init/new
+**** path
+***** create new repo in path
+**** recursive?
+***** add all/some files?
+*** add
+**** file
+***** add version?
+***** update version?
+**** dir?
+*** list
+**** files
+***** versions
+*** status
+**** diff file version
+*** remove
+**** file?
+**** version?
+**** repository?
+*** commit
+**** apply version changes
+*** apply?
+*** version
+**** like git checkout?
+** admin
+*** use configfiles???
+
+@endmindmap
+
+@startuml workflow Cli
+!theme materia
+
+title Workflow Cli
+
+participant Terminal as term
+participant Cli as cli
+participant Filecastalogue as fcl
+database "Persistent Data" as data
+
+term --> cli: commands
+cli --> term: errors
+term -> cli: init /path
+cli -> fcl: new repo
+fcl -> data: create repo in /path
+
+cli --> fcl: stuff
+
+fcl --> data: stuff
+
+
+@enduml
+
+@startmindmap aziro diagram
+!theme materia
+
+* cli
+** dev/admin
+*** repo
+**** tar?
+**** delete 
+***** path
+**** new
+**** future proof fantasy url
+*** add
+**** ordinary
+*****_ version_id
+*****_ tracked_path
+***** maybe
+******_ nothing
+******_ path/URL (URL as a future proofing fantasy)
+******_ attributes
+**** dir
+*****_ version_id
+*****_ tracked_path
+***** maybe
+******_ nothing
+******_ attributes
+**** symlink
+*****_ version_id
+*****_ tracked_path
+***** maybe
+******_ nothing
+******_ target_path
+******_ attributes
+**** nonExisting
+*****_ version_id
+*****_ tracked_path
+***** maybe
+******_ nothing
+******_ attributes
+**** scan?
+*** list
+**** files
+*****_ if version_id: only show for that version
+*****_ if nothing: show all?
+***** maybe
+******_ nothing
+******_ version_id
+******_ OPTS
+*******_ ................
+*******_ ................
+*******_ ................
+*******_ version_id
+*** report___?
+*** version
+**** remove
+*****_ version_id
+**** add
+*****_ version_id
+**** list
+**** insert
+*****_ before?
+*****_ after
+*****_ version_id
+****** maybe
+*******_ position (according to list) ?
+*******_ other_version_id
+*** apply .... ?
+
+@endmindmap
+
+
+
+@startuml cli
+!theme spacelab
+
+package Dev{
+
+} 
+
+package Admin{
+
+} 
+
+
+@enduml
+
+
+
+# Filecastalogue
+
+## Use Cases
+```plantuml
+@startuml filecastalogue
+!theme materia
+left to right direction
+
+package Administration {
+    actor "System Admin" as a
+}
+
+
+package Development {
+    actor "Developer" as d
+    actor "Packager" as p
+    usecase "Make Configuration files" as mcf
+    p -> mcf
+    d -> mcf
+}
+
+package "Application and Configs" {
+    usecase "Store Configuration files" as scf
+    usecase "Use Configuration files" as ucf
+    a -> ucf
+    Development --> scf
+}
+
+package System {
+    usecase "Verify the configuration of the system against the repo" as verify
+    usecase "Update the configuration to a new version" as update
+    usecase "Rollback configuration to previous version" as rollback
+    usecase "Report on system compliance with stored config" as report
+    a --> verify
+    a --> update
+    a --> rollback
+    a --> report
+}
+
+@enduml
+```
+
+@startuml Use Cases
+left to right direction
+
+package Administration{
+    actor "System Admin" as a
+}  
+
+@enduml
+
+ 

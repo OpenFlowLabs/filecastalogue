@@ -1,0 +1,396 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="1062.5px" preserveAspectRatio="none" style="width:718px;height:1062px;background:#00000000;" version="1.1" viewBox="0 0 718 1062" width="718.75px" zoomAndPan="magnify"><defs><linearGradient id="gbsznb9uip6qq0" x1="50%" x2="50%" y1="0%" y2="100%"><stop offset="0%" stop-color="#4DABF5"/><stop offset="100%" stop-color="#2196F3"/></linearGradient><filter height="300%" id="fbsznb9uip6qq" width="300%" x="-1" y="-1"><feGaussianBlur result="blurOut" stdDeviation="2.0833333333333335"/><feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/><feOffset dx="4.166666666666667" dy="4.166666666666667" in="blurOut2" result="blurOut3"/><feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/></filter></defs><g><rect fill="url(#gbsznb9uip6qq0)" filter="url(#fbsznb9uip6qq)" height="56.2174" rx="13.0208" ry="13.0208" style="stroke:#2196F3;stroke-width:1.5625;" width="55.2083" x="10.4167" y="502.4007"/><text fill="#FFFFFF" font-family="Verdana" font-size="12.5" lengthAdjust="spacing" textLength="13.5417" x="31.25" y="534.8368">cli</text><rect fill="url(#gbsznb9uip6qq0)" filter="url(#fbsznb9uip6qq)" height="56.2174" rx="13.0208" ry="13.0208" style="stroke:#2196F3;stroke-width:1.5625;" width="64.5833" x="117.7083" y="463.8753"/><text fill="#FFFFFF" font-family="Verdana" font-size="12.5" lengthAdjust="spacing" textLength="22.9167" x="138.5417" y="496.3114">dev</text><rect fill="url(#gbsznb9uip6qq0)" filter="url(#fbsznb9uip6qq)" height="56.2174" rx="13.0208" ry="13.0208" style="stroke:#2196F3;stroke-width:1.5625;" width="91.6667" x="234.375" y="59.3587"/><text fill="#FFFFFF" font-family="Verdana" font-size="12.5" lengthAdjust="spacing" textLength="50" x="255.2083" y="91.7948">init/new</text><rect fill="url(#gbsznb9uip6qq0)" filter="url(#fbsznb9uip6qq)" height="56.2174" rx="13.0208" ry="13.0208" style="stroke:#2196F3;stroke-width:1.5625;" width="71.875" x="378.125" y="20.8333"/><text fill="#FFFFFF" font-family="Verdana" font-size="12.5" lengthAdjust="spacing" textLength="30.2083" x="398.9583" y="53.2694">path</text><rect fill="url(#gbsznb9uip6qq0)" filter="url(#fbsznb9uip6qq)" height="56.2174" rx="13.0208" ry="13.0208" style="stroke:#2196F3;stroke-width:1.5625;" width="198.9583" x="502.0833" y="20.8333"/><text fill="#FFFFFF" font-family="Verdana" font-size="12.5" lengthAdjust="spacing" textLength="157.2917" x="522.9167" y="53.2694">create new repo in path</text><path d="M450,48.9421 L460.4167,48.9421 C476.0417,48.9421 476.0417,48.9421 491.6667,48.9421 L502.0833,48.9421 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><path d="M326.0417,87.4674 L336.4583,87.4674 C352.0833,87.4674 352.0833,48.9421 367.7083,48.9421 L378.125,48.9421 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><rect fill="url(#gbsznb9uip6qq0)" filter="url(#fbsznb9uip6qq)" height="56.2174" rx="13.0208" ry="13.0208" style="stroke:#2196F3;stroke-width:1.5625;" width="107.2917" x="378.125" y="97.8841"/><text fill="#FFFFFF" font-family="Verdana" font-size="12.5" lengthAdjust="spacing" textLength="65.625" x="398.9583" y="130.3202">recursive?</text><rect fill="url(#gbsznb9uip6qq0)" filter="url(#fbsznb9uip6qq)" height="56.2174" rx="13.0208" ry="13.0208" style="stroke:#2196F3;stroke-width:1.5625;" width="161.4583" x="537.5" y="97.8841"/><text fill="#FFFFFF" font-family="Verdana" font-size="12.5" lengthAdjust="spacing" textLength="119.7917" x="558.3333" y="130.3202">add all/some files?</text><path d="M485.4167,125.9928 L495.8333,125.9928 C511.4583,125.9928 511.4583,125.9928 527.0833,125.9928 L537.5,125.9928 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><path d="M326.0417,87.4674 L336.4583,87.4674 C352.0833,87.4674 352.0833,125.9928 367.7083,125.9928 L378.125,125.9928 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><path d="M182.2917,491.984 L192.7083,491.984 C208.3333,491.984 208.3333,87.4674 223.9583,87.4674 L234.375,87.4674 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><rect fill="url(#gbsznb9uip6qq0)" filter="url(#fbsznb9uip6qq)" height="56.2174" rx="13.0208" ry="13.0208" style="stroke:#2196F3;stroke-width:1.5625;" width="66.6667" x="234.375" y="232.723"/><text fill="#FFFFFF" font-family="Verdana" font-size="12.5" lengthAdjust="spacing" textLength="25" x="255.2083" y="265.1591">add</text><rect fill="url(#gbsznb9uip6qq0)" filter="url(#fbsznb9uip6qq)" height="56.2174" rx="13.0208" ry="13.0208" style="stroke:#2196F3;stroke-width:1.5625;" width="60.4167" x="353.125" y="213.4603"/><text fill="#FFFFFF" font-family="Verdana" font-size="12.5" lengthAdjust="spacing" textLength="18.75" x="373.9583" y="245.8964">file</text><rect fill="url(#gbsznb9uip6qq0)" filter="url(#fbsznb9uip6qq)" height="56.2174" rx="13.0208" ry="13.0208" style="stroke:#2196F3;stroke-width:1.5625;" width="123.9583" x="465.625" y="174.9349"/><text fill="#FFFFFF" font-family="Verdana" font-size="12.5" lengthAdjust="spacing" textLength="82.2917" x="486.4583" y="207.371">add version?</text><path d="M413.5417,241.569 L423.9583,241.569 C439.5833,241.569 439.5833,203.0436 455.2083,203.0436 L465.625,203.0436 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><rect fill="url(#gbsznb9uip6qq0)" filter="url(#fbsznb9uip6qq)" height="56.2174" rx="13.0208" ry="13.0208" style="stroke:#2196F3;stroke-width:1.5625;" width="145.8333" x="465.625" y="251.9857"/><text fill="#FFFFFF" font-family="Verdana" font-size="12.5" lengthAdjust="spacing" textLength="104.1667" x="486.4583" y="284.4218">update version?</text><path d="M413.5417,241.569 L423.9583,241.569 C439.5833,241.569 439.5833,280.0944 455.2083,280.0944 L465.625,280.0944 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><path d="M301.0417,260.8317 L311.4583,260.8317 C327.0833,260.8317 327.0833,241.569 342.7083,241.569 L353.125,241.569 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><rect fill="url(#gbsznb9uip6qq0)" filter="url(#fbsznb9uip6qq)" height="56.2174" rx="13.0208" ry="13.0208" style="stroke:#2196F3;stroke-width:1.5625;" width="64.5833" x="353.125" y="290.5111"/><text fill="#FFFFFF" font-family="Verdana" font-size="12.5" lengthAdjust="spacing" textLength="22.9167" x="373.9583" y="322.9472">dir?</text><path d="M301.0417,260.8317 L311.4583,260.8317 C327.0833,260.8317 327.0833,318.6198 342.7083,318.6198 L353.125,318.6198 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><path d="M182.2917,491.984 L192.7083,491.984 C208.3333,491.984 208.3333,260.8317 223.9583,260.8317 L234.375,260.8317 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><rect fill="url(#gbsznb9uip6qq0)" filter="url(#fbsznb9uip6qq)" height="56.2174" rx="13.0208" ry="13.0208" style="stroke:#2196F3;stroke-width:1.5625;" width="60.4167" x="234.375" y="367.5618"/><text fill="#FFFFFF" font-family="Verdana" font-size="12.5" lengthAdjust="spacing" textLength="18.75" x="255.2083" y="399.998">list</text><rect fill="url(#gbsznb9uip6qq0)" filter="url(#fbsznb9uip6qq)" height="56.2174" rx="13.0208" ry="13.0208" style="stroke:#2196F3;stroke-width:1.5625;" width="67.7083" x="346.875" y="367.5618"/><text fill="#FFFFFF" font-family="Verdana" font-size="12.5" lengthAdjust="spacing" textLength="26.0417" x="367.7083" y="399.998">files</text><rect fill="url(#gbsznb9uip6qq0)" filter="url(#fbsznb9uip6qq)" height="56.2174" rx="13.0208" ry="13.0208" style="stroke:#2196F3;stroke-width:1.5625;" width="95.8333" x="466.6667" y="367.5618"/><text fill="#FFFFFF" font-family="Verdana" font-size="12.5" lengthAdjust="spacing" textLength="54.1667" x="487.5" y="399.998">versions</text><path d="M414.5833,395.6706 L425,395.6706 C440.625,395.6706 440.625,395.6706 456.25,395.6706 L466.6667,395.6706 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><path d="M294.7917,395.6706 L305.2083,395.6706 C320.8333,395.6706 320.8333,395.6706 336.4583,395.6706 L346.875,395.6706 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><path d="M182.2917,491.984 L192.7083,491.984 C208.3333,491.984 208.3333,395.6706 223.9583,395.6706 L234.375,395.6706 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><rect fill="url(#gbsznb9uip6qq0)" filter="url(#fbsznb9uip6qq)" height="56.2174" rx="13.0208" ry="13.0208" style="stroke:#2196F3;stroke-width:1.5625;" width="83.3333" x="234.375" y="444.6126"/><text fill="#FFFFFF" font-family="Verdana" font-size="12.5" lengthAdjust="spacing" textLength="41.6667" x="255.2083" y="477.0487">status</text><rect fill="url(#gbsznb9uip6qq0)" filter="url(#fbsznb9uip6qq)" height="56.2174" rx="13.0208" ry="13.0208" style="stroke:#2196F3;stroke-width:1.5625;" width="135.4167" x="369.7917" y="444.6126"/><text fill="#FFFFFF" font-family="Verdana" font-size="12.5" lengthAdjust="spacing" textLength="93.75" x="390.625" y="477.0487">diff file version</text><path d="M317.7083,472.7214 L328.125,472.7214 C343.75,472.7214 343.75,472.7214 359.375,472.7214 L369.7917,472.7214 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><path d="M182.2917,491.984 L192.7083,491.984 C208.3333,491.984 208.3333,472.7214 223.9583,472.7214 L234.375,472.7214 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><rect fill="url(#gbsznb9uip6qq0)" filter="url(#fbsznb9uip6qq)" height="56.2174" rx="13.0208" ry="13.0208" style="stroke:#2196F3;stroke-width:1.5625;" width="89.5833" x="234.375" y="598.7142"/><text fill="#FFFFFF" font-family="Verdana" font-size="12.5" lengthAdjust="spacing" textLength="47.9167" x="255.2083" y="631.1503">remove</text><rect fill="url(#gbsznb9uip6qq0)" filter="url(#fbsznb9uip6qq)" height="56.2174" rx="13.0208" ry="13.0208" style="stroke:#2196F3;stroke-width:1.5625;" width="66.6667" x="376.0417" y="521.6634"/><text fill="#FFFFFF" font-family="Verdana" font-size="12.5" lengthAdjust="spacing" textLength="25" x="396.875" y="554.0995">file?</text><path d="M323.9583,626.8229 L334.375,626.8229 C350,626.8229 350,549.7721 365.625,549.7721 L376.0417,549.7721 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><rect fill="url(#gbsznb9uip6qq0)" filter="url(#fbsznb9uip6qq)" height="56.2174" rx="13.0208" ry="13.0208" style="stroke:#2196F3;stroke-width:1.5625;" width="94.7917" x="376.0417" y="598.7142"/><text fill="#FFFFFF" font-family="Verdana" font-size="12.5" lengthAdjust="spacing" textLength="53.125" x="396.875" y="631.1503">version?</text><path d="M323.9583,626.8229 L334.375,626.8229 C350,626.8229 350,626.8229 365.625,626.8229 L376.0417,626.8229 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><rect fill="url(#gbsznb9uip6qq0)" filter="url(#fbsznb9uip6qq)" height="56.2174" rx="13.0208" ry="13.0208" style="stroke:#2196F3;stroke-width:1.5625;" width="113.5417" x="376.0417" y="675.765"/><text fill="#FFFFFF" font-family="Verdana" font-size="12.5" lengthAdjust="spacing" textLength="71.875" x="396.875" y="708.2011">repository?</text><path d="M323.9583,626.8229 L334.375,626.8229 C350,626.8229 350,703.8737 365.625,703.8737 L376.0417,703.8737 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><path d="M182.2917,491.984 L192.7083,491.984 C208.3333,491.984 208.3333,626.8229 223.9583,626.8229 L234.375,626.8229 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><rect fill="url(#gbsznb9uip6qq0)" filter="url(#fbsznb9uip6qq)" height="56.2174" rx="13.0208" ry="13.0208" style="stroke:#2196F3;stroke-width:1.5625;" width="88.5417" x="234.375" y="752.8158"/><text fill="#FFFFFF" font-family="Verdana" font-size="12.5" lengthAdjust="spacing" textLength="46.875" x="255.2083" y="785.2519">commit</text><rect fill="url(#gbsznb9uip6qq0)" filter="url(#fbsznb9uip6qq)" height="56.2174" rx="13.0208" ry="13.0208" style="stroke:#2196F3;stroke-width:1.5625;" width="187.5" x="375" y="752.8158"/><text fill="#FFFFFF" font-family="Verdana" font-size="12.5" lengthAdjust="spacing" textLength="145.8333" x="395.8333" y="785.2519">apply version changes</text><path d="M322.9167,780.9245 L333.3333,780.9245 C348.9583,780.9245 348.9583,780.9245 364.5833,780.9245 L375,780.9245 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><path d="M182.2917,491.984 L192.7083,491.984 C208.3333,491.984 208.3333,780.9245 223.9583,780.9245 L234.375,780.9245 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><rect fill="url(#gbsznb9uip6qq0)" filter="url(#fbsznb9uip6qq)" height="56.2174" rx="13.0208" ry="13.0208" style="stroke:#2196F3;stroke-width:1.5625;" width="82.2917" x="234.375" y="829.8665"/><text fill="#FFFFFF" font-family="Verdana" font-size="12.5" lengthAdjust="spacing" textLength="40.625" x="255.2083" y="862.3027">apply?</text><path d="M182.2917,491.984 L192.7083,491.984 C208.3333,491.984 208.3333,857.9753 223.9583,857.9753 L234.375,857.9753 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><rect fill="url(#gbsznb9uip6qq0)" filter="url(#fbsznb9uip6qq)" height="56.2174" rx="13.0208" ry="13.0208" style="stroke:#2196F3;stroke-width:1.5625;" width="88.5417" x="234.375" y="906.9173"/><text fill="#FFFFFF" font-family="Verdana" font-size="12.5" lengthAdjust="spacing" textLength="46.875" x="255.2083" y="939.3534">version</text><rect fill="url(#gbsznb9uip6qq0)" filter="url(#fbsznb9uip6qq)" height="56.2174" rx="13.0208" ry="13.0208" style="stroke:#2196F3;stroke-width:1.5625;" width="155.2083" x="375" y="906.9173"/><text fill="#FFFFFF" font-family="Verdana" font-size="12.5" lengthAdjust="spacing" textLength="113.5417" x="395.8333" y="939.3534">like git checkout?</text><path d="M322.9167,935.026 L333.3333,935.026 C348.9583,935.026 348.9583,935.026 364.5833,935.026 L375,935.026 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><path d="M182.2917,491.984 L192.7083,491.984 C208.3333,491.984 208.3333,935.026 223.9583,935.026 L234.375,935.026 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><path d="M65.625,530.5094 L76.0417,530.5094 C91.6667,530.5094 91.6667,491.984 107.2917,491.984 L117.7083,491.984 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><rect fill="url(#gbsznb9uip6qq0)" filter="url(#fbsznb9uip6qq)" height="56.2174" rx="13.0208" ry="13.0208" style="stroke:#2196F3;stroke-width:1.5625;" width="81.25" x="117.7083" y="983.9681"/><text fill="#FFFFFF" font-family="Verdana" font-size="12.5" lengthAdjust="spacing" textLength="39.5833" x="138.5417" y="1016.4042">admin</text><rect fill="url(#gbsznb9uip6qq0)" filter="url(#fbsznb9uip6qq)" height="56.2174" rx="13.0208" ry="13.0208" style="stroke:#2196F3;stroke-width:1.5625;" width="154.1667" x="251.0417" y="983.9681"/><text fill="#FFFFFF" font-family="Verdana" font-size="12.5" lengthAdjust="spacing" textLength="112.5" x="271.875" y="1016.4042">use configfiles???</text><path d="M198.9583,1012.0768 L209.375,1012.0768 C225,1012.0768 225,1012.0768 240.625,1012.0768 L251.0417,1012.0768 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><path d="M65.625,530.5094 L76.0417,530.5094 C91.6667,530.5094 91.6667,1012.0768 107.2917,1012.0768 L117.7083,1012.0768 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><!--MD5=[91b642c353537c3d9890951c353b434c]
+@startmindmap cli_mindmap
+!theme materia
+
+* cli
+** dev
+*** init/new
+**** path
+***** create new repo in path
+**** recursive?
+***** add all/some files?
+*** add
+**** file
+***** add version?
+***** update version?
+**** dir?
+*** list
+**** files
+***** versions
+*** status
+**** diff file version
+*** remove
+**** file?
+**** version?
+**** repository?
+*** commit
+**** apply version changes
+*** apply?
+*** version
+**** like git checkout?
+** admin
+*** use configfiles???
+
+@endmindmap
+
+@startmindmap cli_mindmap
+
+
+
+skinparam backgroundColor transparent
+skinparam useBetaStyle false
+
+
+
+
+
+
+
+skinparam defaultFontName       "Verdana"
+skinparam defaultFontSize       12
+skinparam dpi                   100
+skinparam shadowing             true
+skinparam roundcorner           8
+skinparam ParticipantPadding    40
+skinparam BoxPadding            40
+skinparam Padding               10
+skinparam ArrowColor            #666
+skinparam stereotype {
+    CBackgroundColor #fff
+    CBorderColor #cccccc
+    ABackgroundColor #70bf73
+    ABorderColor #3D8C40
+    IBackgroundColor #B7161C
+    IBorderColor #b7161c
+    EBackgroundColor #ffad33
+    EBorderColor #CC7A00
+    NBackgroundColor #b052c0
+    NBorderColor #7D1F8D
+}
+skinparam title {
+	FontColor	                 #2196F3
+	BorderColor	                 #cccccc
+	FontSize	    	         20
+	BorderRoundCorner            8
+	BorderThickness 	         1
+	BackgroundColor              #fff-#fff
+}
+
+skinparam legend {
+	BackgroundColor #fff
+	BorderColor #cccccc
+	FontColor #222
+}
+
+skinparam swimlane {
+	BorderColor #9C27B0
+	BorderThickness 2
+	TitleBackgroundColor  #fff-#fff
+	TitleFontColor #2196F3
+}
+
+
+skinparam activity {
+		FontColor #FFF
+	BorderColor #2196F3
+	BackgroundColor #4dabf5-#2196F3
+	BarColor #4CAF50
+	StartColor #9C27B0
+	EndColor #9C27B0
+	DiamondBackgroundColor #FFF-#fff
+  	DiamondBorderColor #cccccc
+	DiamondFontColor #222
+}
+
+
+skinparam participant {
+		FontColor #FFF
+	BorderColor #2196F3
+	BackgroundColor #4dabf5-#2196F3
+	ParticipantBorderThickness 2
+}
+
+
+skinparam actor {
+		FontColor #FFF
+	BorderColor #2196F3
+	BackgroundColor #4dabf5-#2196F3
+	FontColor #222
+}
+
+
+skinparam arrow {
+	Thickness 3
+	Color #2196F3
+	FontColor #222
+}
+
+
+skinparam sequence {
+	BorderColor #2196F3
+	TitleFontColor #2196F3
+	BackgroundColor transparent
+	StartColor #2196F3
+	EndColor #2196F3
+	BoxBackgroundColor #fff
+	BoxBorderColor #666
+	BoxFontColor #222
+	LifeLineBorderColor #cccccc
+	LifeLineBorderThickness 2
+	LifeLineBackgroundColor #fff
+	GroupBorderColor #666
+	GroupFontColor #222
+	GroupHeaderFontColor #9C27B0
+	DividerBackgroundColor #FFF-#fff
+    DividerBorderColor #666
+    DividerBorderThickness 2
+    DividerFontColor #222
+	ReferenceBackgroundColor transparent
+	ReferenceBorderColor #666
+	ReferenceFontColor #222
+	ReferenceHeaderFontColor #9C27B0
+}
+
+
+skinparam partition {
+	BorderColor #2196F3
+	FontColor #2196F3
+	BackgroundColor transparent
+}
+
+
+skinparam collections {
+		FontColor #FFF
+	BorderColor #2196F3
+	BackgroundColor #4dabf5-#2196F3
+}
+
+
+skinparam control {
+		FontColor #FFF
+	BorderColor #2196F3
+	BackgroundColor #4dabf5-#2196F3
+	FontColor #222
+}
+
+
+skinparam entity {
+		FontColor #FFF
+	BorderColor #2196F3
+	BackgroundColor #4dabf5-#2196F3
+	FontColor #222
+}
+
+
+skinparam boundary {
+		FontColor #FFF
+	BorderColor #2196F3
+	BackgroundColor #4dabf5-#2196F3
+	FontColor #222
+}
+
+
+skinparam agent {
+	BackgroundColor #orange
+	BorderColor #999999
+	FontColor #333333
+}
+
+
+skinparam note {
+	BorderThickness 1
+	BackgroundColor #b052c0-#9C27B0
+	BorderColor #9C27B0
+	FontColor #FFF
+}
+
+
+skinparam artifact {
+	BackgroundColor #FFF-#fff
+	BorderColor #666
+	FontColor #666
+}
+
+
+skinparam component {
+		FontColor #FFF
+	BorderColor #2196F3
+	BackgroundColor #4dabf5-#2196F3
+}
+
+
+skinparam interface {
+	BackgroundColor  #B7161C
+	BorderColor  #e51c23
+	FontColor #222
+}
+
+
+skinparam storage {
+	BackgroundColor #ffad33-#ff9800
+  	BorderColor #ff9800
+	FontColor #FFF
+}
+
+
+skinparam node {
+	BackgroundColor #fff-#fff
+	BorderColor #222
+	FontColor #222
+}
+
+
+skinparam cloud {
+	BackgroundColor #F2FCFE-#eeeeee
+	BorderColor #F2FCFE
+	FontColor #222
+}
+
+
+skinparam database {
+		FontColor #FFF
+	BorderColor #2196F3
+	BackgroundColor #4dabf5-#2196F3
+	FontColor #222
+}
+
+
+skinparam class {
+		FontColor #FFF
+	BorderColor #2196F3
+	BackgroundColor #4dabf5-#2196F3
+	HeaderBackgroundColor #2196F3-#1a78c2
+	StereotypeFontColor #222
+	BorderThickness 1
+	AttributeFontColor #fff
+	AttributeFontSize 11
+}
+
+
+skinparam object {
+		FontColor #FFF
+	BorderColor #2196F3
+	BackgroundColor #4dabf5-#2196F3
+	StereotypeFontColor #222
+	BorderThickness 1
+	AttributeFontColor #222
+	AttributeFontSize 11
+}
+
+
+skinparam usecase {
+		FontColor #FFF
+	BorderColor #2196F3
+	BackgroundColor #4dabf5-#2196F3
+	BorderThickness 2
+	StereotypeFontColor #2196F3
+}
+
+
+skinparam rectangle {
+	FontColor #2196F3
+	BackgroundColor #fff-#fff
+	BorderThickness 2
+	StereotypeFontColor #2196F3
+}
+
+
+skinparam package {
+		FontColor #FFF
+	BorderColor #2196F3
+	BackgroundColor #4dabf5-#2196F3
+	BackgroundColor #fff-#fff
+	BorderThickness 2
+}
+
+
+skinparam folder {
+	BackgroundColor #FFF-#fff
+  	BorderColor #ff9800
+	FontColor #ff9800
+	BorderThickness 2
+}
+
+
+skinparam frame {
+	BackgroundColor #FFF-#fff
+  	BorderColor #9C27B0
+	FontColor #9C27B0
+	BorderThickness 2
+}
+
+
+skinparam state {
+		FontColor #FFF
+	BorderColor #2196F3
+	BackgroundColor #4dabf5-#2196F3
+	BorderColor #1a78c2
+	StartColor #9C27B0
+	EndColor #9C27B0
+	AttributeFontColor #222
+	AttributeFontSize 11
+}
+
+
+skinparam queue {
+		FontColor #FFF
+	BorderColor #2196F3
+	BackgroundColor #4dabf5-#2196F3
+}
+
+
+skinparam card {
+	BackgroundColor #b052c0-#9C27B0
+	BorderColor #9C27B0
+	FontColor #FFF
+}
+
+
+skinparam file {
+	BackgroundColor #fff-#fff
+	BorderColor #666
+	FontColor #666
+
+}
+
+
+
+* cli
+** dev
+*** init/new
+**** path
+***** create new repo in path
+**** recursive?
+***** add all/some files?
+*** add
+**** file
+***** add version?
+***** update version?
+**** dir?
+*** list
+**** files
+***** versions
+*** status
+**** diff file version
+*** remove
+**** file?
+**** version?
+**** repository?
+*** commit
+**** apply version changes
+*** apply?
+*** version
+**** like git checkout?
+** admin
+*** use configfiles???
+
+@endmindmap
+
+PlantUML version 1.2021.7(Sun May 23 14:40:07 CEST 2021)
+(GPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Default Encoding: UTF-8
+Language: en
+Country: US
+--></g></svg>
