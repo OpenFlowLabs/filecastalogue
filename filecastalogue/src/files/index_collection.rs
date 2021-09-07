@@ -85,7 +85,7 @@ impl<
     -> FcResult<String> {
         let hash = index_file.get_hash()?;
         let mut writeable = self.handler.get_file_writeable(
-            &OsString::from(&hash))?;
+            OsStr::new(&hash))?;
         index_file.save(&mut writeable)?;
         Ok(hash)
     }
