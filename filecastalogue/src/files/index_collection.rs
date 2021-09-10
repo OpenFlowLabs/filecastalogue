@@ -10,7 +10,7 @@ pub trait IndexFileCollection {
     fn get_new_index_file(self: &mut Self, index_file: &(dyn RepoIndexFile))
     -> FcResult<&mut(dyn IndexFileCollection)>;
     fn get_index_file(self: &mut Self, index: &str)
-    -> FcResult<Rc<(dyn RepoIndexFile)>>;
+    -> FcResult<Box<(dyn RepoIndexFile)>>;
     fn put_index_file<'putting>(
         self: &mut Self, index_file: &'putting mut (dyn RepoIndexFile))
     -> FcResult<String>;
@@ -52,24 +52,14 @@ impl<
         todo!(); // get_new_file will need a proper name specified, not "".
         // let index_file: = IndexFile::new(self.handler.get_new_file("")?);
     }
-
-    // TODO: Do we really want this to be Rc?
-    //  It's probably going to be cumbersome regarding mutability, and we might
-    //  not want to provide too much flexibility in terms of spraying file
-    //  related references everywhere. At the same time, getting the file,
-    //  loading, getting the index, setting the index and saving ought to be
-    //  straight forward and painless.
-    //  Also, it's too early to tell how fancy things might be getting in Repo
-    //  related code, particularly with journal/staging/consistency related
-    //  things in mind, so maybe we don't want to be too restricting (yet?)
-    //  in order not to shackle the prototyping process too much.
+    
     /// Get an index file from the collection.
     fn get_index_file(self: &mut Self, hash: &str)
-    -> FcResult<Rc<(dyn RepoIndexFile)>> {
+    -> FcResult<Box<(dyn RepoIndexFile)>> {
         let mut reader = self.handler.get_file_readable(
             OsStr::new(hash)
         )?;
-        let index_file: Rc<(dyn RepoIndexFile)> = Rc::new(
+        let index_file: Box<(dyn RepoIndexFile)> = Box::new(
             IndexFile::from_existing(
                 &mut reader
             )?
