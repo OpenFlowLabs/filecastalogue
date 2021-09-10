@@ -8,8 +8,6 @@ pub trait StateProvider {
     fn get_state(self: &mut Self) -> FcResult<&mut State>;
 }
 
-
-
 pub struct StateFile {
 
     /// This is where the state is "cached" when it's loaded or set by

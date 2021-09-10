@@ -22,6 +22,7 @@ pub trait IndexProvider {
 
 pub trait RepoIndexFile: RepoFile + IndexProvider + BlobProvider + Hashable {}
 
+
 /// Represents a blob file holding an index.
 /// 
 /// Index blob files hold their blob in memory as a deserialized Index

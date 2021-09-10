@@ -1,10 +1,10 @@
 use serde::{Serialize, Deserialize};
 use super::aspects::{
-    directory::TrackedDirectoryAspects,
-    non_existing::TrackedNonExistingAspects,
-    ordinary::TrackedOrdinaryAspects,
-    symlink::TrackedSymlinkAspects,
-    // hardlink::TrackedHardlinkAspects
+    directory::{RepoExportedDirectoryAspects, TrackedDirectoryAspects},
+    // hardlink::{RepoExportedHardlinkAspects, TrackedHardlinkAspects},
+    non_existing::{RepoExportedNonExistingAspects, TrackedNonExistingAspects},
+    ordinary::{RepoExportedOrdinaryAspects, TrackedOrdinaryAspects},
+    symlink::{RepoExportedSymlinkAspects,TrackedSymlinkAspects}
 };
 
 /// Encapsulates the various types of file aspects relevant when a file is
@@ -21,7 +21,7 @@ use super::aspects::{
 pub enum TrackedFileAspects {
     NonExisting(TrackedNonExistingAspects),
     Directory(TrackedDirectoryAspects),
-    File(TrackedOrdinaryAspects),
+    Ordinary(TrackedOrdinaryAspects),
     Symlink(TrackedSymlinkAspects),
-    // Hardlink(HardlinkFileKind) // TODO
+    // Hardlink(TrackedHardlinkAspects) // TODO [maybe]
 }

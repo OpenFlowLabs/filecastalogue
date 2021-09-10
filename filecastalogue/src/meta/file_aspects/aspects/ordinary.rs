@@ -3,17 +3,6 @@ use crate::meta::file_aspects::attributes;
 
 use super::super::attributes::Attributes;
 
-/// Aspects of an ordinary file relevant when it's tracked in a Repo.
-/// Besides their attributes, we're only interested in them in their binary form,
-/// particularly the hash of it, which is also what differentiates the Tracked
-/// model from the Trackable one: The Repo is concerned with the hash, whilst
-/// other actors in the filecastalogue ecosystem might not be.
-#[derive(Serialize, Deserialize, Debug, Eq, PartialEq, Clone)]
-pub struct TrackedOrdinaryAspects {
-    pub hash: String,
-    pub attributes: Attributes
-}
-
 /* Notes:
      Leaving the .hash out for the Trackable model enables a separation of
      concern regarding the hash: The Repo needs the hash and will need all
@@ -39,6 +28,17 @@ pub struct TrackedOrdinaryAspects {
 /// relevant might need to be sorted and available right away.
 #[derive(Serialize, Deserialize, Debug, Eq, PartialEq, Clone)]
 pub struct TrackableOrdinaryAspects {
+    pub attributes: Attributes
+}
+
+/// Aspects of an ordinary file relevant when it's tracked in a Repo.
+/// Besides their attributes, we're only interested in them in their binary form,
+/// particularly the hash of it, which is also what differentiates the Tracked
+/// model from the Trackable one: The Repo is concerned with the hash, whilst
+/// other actors in the filecastalogue ecosystem might not be.
+#[derive(Serialize, Deserialize, Debug, Eq, PartialEq, Clone)]
+pub struct TrackedOrdinaryAspects {
+    pub hash: String,
     pub attributes: Attributes
 }
 

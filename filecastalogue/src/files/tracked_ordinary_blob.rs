@@ -13,12 +13,6 @@ use super::{RepoFile, blob::BlobProvider, hashable::Hashable};
 /// Intended for access to the actual binary blob of a Tracked file.
 pub trait TrackedOrdinaryBlobProvider: BlobProvider {}
 
-/* Notes:
-        Technically, this should probably be named "RepoTrackedBlobFile", with
-        everything that's just named "Tracked" getting renamed to "TrackedBlob"
-        However, index files'd be affected by that logic too. Currently, "Blob"
-        is being dropped in the naming for the sake of brevity.
-*/
 /// This is the codified representation of a Tracked blob file, a file
 /// that's stored in the Repo with the purpose of holding the binary blob
 /// of a file we're tracking.
