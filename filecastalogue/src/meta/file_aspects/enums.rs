@@ -25,3 +25,11 @@ pub enum TrackedFileAspects {
     Symlink(TrackedSymlinkAspects),
     // Hardlink(TrackedHardlinkAspects) // TODO [maybe]
 }
+
+pub enum RepoExportedFileAspects {
+    NonExisting(RepoExportedNonExistingAspects),
+    Directory(RepoExportedDirectoryAspects),
+    Ordinary(RepoExportedOrdinaryAspects),
+    Symlink(RepoExportedSymlinkAspects),
+    // Hardlink(RepoExportedHardlinkAspects) // TODO [maybe]
+}

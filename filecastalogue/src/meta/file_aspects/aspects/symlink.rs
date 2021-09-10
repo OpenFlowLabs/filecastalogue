@@ -42,3 +42,18 @@ impl TrackedSymlinkAspects {
         )
     }
 }
+
+impl RepoExportedSymlinkAspects {
+
+    pub fn new(linked_to: String) -> Self {
+        Self {
+            linked_to: linked_to
+        }
+    }
+
+    pub fn from_tracked(tracked_aspects: TrackedSymlinkAspects) -> Self {
+        Self::new(
+            tracked_aspects.linked_to
+        )
+    }
+}

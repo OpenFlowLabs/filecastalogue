@@ -13,3 +13,10 @@ pub struct TrackedHardlinkAspects {
 pub struct TrackableHardlinkAspects {
     // TODO
 }
+
+/// Representation of the tracking of a hardlink in a repo when
+/// exported from it.
+#[derive(Serialize, Deserialize, Debug, Eq, PartialEq, Clone)]
+pub struct RepoExportedHardlinkAspects {
+    // TODO
+}

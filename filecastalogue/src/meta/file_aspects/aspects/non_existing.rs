@@ -30,3 +30,14 @@ impl TrackedNonExistingAspects {
         Self {}
     }
 }
+
+impl RepoExportedNonExistingAspects {
+
+    pub fn new() -> Self {
+        Self {}
+    }
+
+    pub fn from_tracked(tracked_aspects: TrackedNonExistingAspects) -> Self {
+        Self::new()
+    }
+}

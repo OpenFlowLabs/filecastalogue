@@ -1,5 +1,5 @@
 use serde::{Serialize, Deserialize};
-use crate::meta::file_aspects::attributes;
+use crate::meta::{blob::repo_exported::{RepoExportedBlob, SerdeBlob}};
 
 use super::super::attributes::Attributes;
 
@@ -42,6 +42,28 @@ pub struct TrackedOrdinaryAspects {
     pub attributes: Attributes
 }
 
+/// Representation of the Aspects of an ordinary file when exported from a
+/// Repo. Here, the concern is the full and bundled availability of
+/// all the pieces required to fully observe the file's state, namely its
+/// attributes, and if it's an `ordinary` file, its blob.
+///
+/// It also sports `repo_blob_hash`, which is the hash of the blob as the
+/// Repo knows it. This allows tooling consuming this data to compare what
+/// it received to the Repo's truth.
+///
+/// That concern is separated from `hash` in `TrackedOrdinaryAspects` by
+/// design. This may only ever be a one way conversion, from
+/// `hash` of `TrackedOrdinaryAspects` to `repo_blob_hash` of this here
+/// struct, NEVER the other way around. A Repo's hash is ever only
+/// to be calculated by the Repo's own principal means for that particular
+/// concern.
+#[derive(Serialize, Deserialize, Debug, Eq, PartialEq, Clone)]
+pub struct RepoExportedOrdinaryAspects {
+    pub repo_blob_hash: String,
+    pub attributes: Attributes,
+    pub blob: Box<dyn RepoExportedBlob>
+}
+
 impl TrackableOrdinaryAspects {
     pub fn new(attributes: Attributes) -> Self {
         Self {
@@ -69,6 +91,40 @@ impl TrackedOrdinaryAspects {
         Self::new(
             hash,
             trackable_aspects.attributes
+        )
+    }
+}
+
+/* The typing of the `blob` parameters is already of our type, not
+ * of its tracked counter part, which deviates from the general
+ * convention applied to the other "Aspects" struct's `new` and
+ *`from_tracked` methods. That's because it's primarily designed
+ * with something wrapping it in mind that'll already handle
+ * all the blob matters, something that lends itself more easily
+ * to getting (re-)implemented downstream.
+ */
+impl RepoExportedOrdinaryAspects {
+
+    pub fn new(
+        repo_blob_hash: &str,
+        attributes: Attributes,
+        blob: Box<dyn RepoExportedBlob>
+    )-> Self {
+        Self::new(
+            repo_blob_hash,
+            attributes,
+            blob
+        )
+    }
+
+    pub fn from_tracked(
+        tracked_aspects: TrackedOrdinaryAspects,
+        blob: Box<dyn RepoExportedBlob>
+    ) -> Self {
+        Self::new(
+            &tracked_aspects.hash,
+            tracked_aspects.attributes,
+            blob
         )
     }
 }

@@ -43,3 +43,18 @@ impl TrackedDirectoryAspects {
         )
     }
 }
+
+impl RepoExportedDirectoryAspects {
+
+    pub fn new(attributes: Attributes) -> Self {
+        Self {
+            attributes
+        }
+    }
+
+    pub fn from_tracked(tracked_aspects: TrackedDirectoryAspects) -> Self {
+        Self::new(
+            tracked_aspects.attributes
+        )
+    }
+}
