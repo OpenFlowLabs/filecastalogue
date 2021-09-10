@@ -42,6 +42,14 @@ pub struct TrackedOrdinaryAspects {
     pub attributes: Attributes
 }
 
+impl TrackableOrdinaryAspects {
+    pub fn new(attributes: Attributes) -> Self {
+        Self {
+            attributes: attributes
+        }
+    }
+}
+
 impl TrackedOrdinaryAspects {
 
     pub fn new(hash: &str, attributes: Attributes) -> Self {
