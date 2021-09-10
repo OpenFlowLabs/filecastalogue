@@ -1,7 +1,5 @@
 use std::{ffi::OsStr, io::Read};
-
-use crate::{error::FcResult, files::{RepoFile, tracked_ordinary_blob_collection::TrackedOrdinaryBlobFileCollection, 
-    index_collection::IndexFileCollection, state::StateProvider}, journal, meta::{file_aspects::aspects::{directory::TrackableDirectoryAspects, non_existing::TrackableNonExistingAspects, ordinary::TrackableOrdinaryAspects, symlink::TrackableSymlinkAspects}, state::accessor::Accessor, version::{accessor::VersionAccessor, model::Version}}};
+use crate::{error::{Error, ErrorKind, FcResult}, files::{RepoFile, blob::BlobProvider, index_collection::IndexFileCollection, state::StateProvider, tracked_ordinary_blob::TrackedOrdinaryBlobProvider, tracked_ordinary_blob_collection::TrackedOrdinaryBlobFileCollection}, journal, meta::{file_aspects::{aspects::{directory::TrackableDirectoryAspects, non_existing::TrackableNonExistingAspects, ordinary::TrackableOrdinaryAspects, symlink::TrackableSymlinkAspects}, enums::TrackedFileAspects}, repo_exported_file_list::model::RepoExportedFileList, state::{accessor::Accessor, error::VersionEntryDoesNotExistErrorPayload}, version::{accessor::VersionAccessor, model::Version}}};
 
 pub struct Repo<
     // Handler: FiniteStreamHandler,
@@ -136,6 +134,82 @@ impl<
             trackable_aspects: TrackableSymlinkAspects,
         ) -> FcResult<&'rpo mut Self> {
             todo!();
+        }
+        
+        pub fn get_files(
+            &'rpo mut self,
+            version_id: &str,
+            file_list: &mut (dyn RepoExportedFileList)
+        ) -> FcResult<&'rpo mut Self> {
+            // todo!()
+
+            let version = self.state_file
+                .get_state()?
+                .get_version(version_id)?;
+            let index_id = match version.get_index_id() {
+                Some(index_id) => index_id,
+                // No index, no files to add to the file list.
+                None => return Ok(self),
+            };
+            let mut index_file = self.indexes.get_index_file(&index_id)?;
+            let index = index_file.get_index()?;
+
+            for (path, tracked_file_aspects) in &index.files {
+                match tracked_file_aspects {
+                    
+                    TrackedFileAspects::NonExisting(
+                        tracked_non_existing_aspects
+                    ) => {
+                        file_list.add_non_existing(
+                            // TODO [clone]: Evaluate and possibly refactor.
+                            path.clone(),
+                            // TODO [clone]: Evaluate and possibly refactor.
+                            tracked_non_existing_aspects.clone()
+                        )?;
+                    }
+                    
+                    TrackedFileAspects::Directory(
+                        tracked_directory_aspects
+                    ) => {
+                        file_list.add_directory(
+                            // TODO [clone]: Evaluate and possibly refactor.
+                            path.clone(),
+                            // TODO [clone]: Evaluate and possibly refactor.
+                            tracked_directory_aspects.clone()
+                        )?;
+                    }
+                    
+                    TrackedFileAspects::Ordinary(
+                        tracked_ordinary_aspects
+                    ) => {
+                        let blob_provider_file = self.blobs.get_file(
+                            &tracked_ordinary_aspects.hash
+                        )?;
+                        let blob_provider =
+                            blob_provider_file.as_tracked_ordinary_blob_provider_ref();
+                        file_list.add_ordinary(
+                            // TODO [clone]: Evaluate and possibly refactor.
+                            path.clone(),
+                            // TODO [clone]: Evaluate and possibly refactor.
+                            tracked_ordinary_aspects.clone(),
+                            blob_provider
+                        )?;
+                    }
+
+                    TrackedFileAspects::Symlink(
+                        tracked_symlink_aspects
+                    ) => {
+                        file_list.add_symlink(
+                            // TODO [clone]: Evaluate and possibly refactor.
+                            path.clone(),
+                            // TODO [clone]: Evaluate and possibly refactor.
+                            tracked_symlink_aspects.clone()
+                        )?;
+                    }
+                }
+            }
+            
+            Ok(self)
         }
     }
 
