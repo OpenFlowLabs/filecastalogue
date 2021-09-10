@@ -8,6 +8,7 @@ use std::ops::{Deref, DerefMut};
 /// related functionality.
 /// 
 /// A Default implementation based on vec!() is also provided.
+#[derive(Debug)]
 pub struct Blob {
     inner: Vec<u8>
 }
