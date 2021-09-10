@@ -12,3 +12,34 @@ pub struct TrackableDirectoryAspects {
 pub struct TrackedDirectoryAspects {
     pub attributes: Attributes
 }
+
+/// Representation of the tracking of a directory in a repo when
+/// exported from it.
+#[derive(Serialize, Deserialize, Debug, Eq, PartialEq, Clone)]
+pub struct RepoExportedDirectoryAspects {
+    pub attributes: Attributes
+}
+
+impl TrackableDirectoryAspects {
+
+    pub fn new(attributes: Attributes) -> Self {
+        Self {
+            attributes
+        }
+    }
+}
+
+impl TrackedDirectoryAspects {
+
+    pub fn new(attributes: Attributes) -> Self {
+        Self {
+            attributes
+        }
+    }
+
+    pub fn from_trackable(trackable_aspects: TrackableDirectoryAspects) -> Self {
+        Self::new(
+            trackable_aspects.attributes
+        )
+    }
+}
