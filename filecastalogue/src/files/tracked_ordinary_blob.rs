@@ -17,7 +17,10 @@ pub trait TrackedOrdinaryBlobProvider: BlobProvider {}
 /// that's stored in the Repo with the purpose of holding the binary blob
 /// of a file we're tracking.
 pub trait RepoTrackedOrdinaryBlobFile: RepoFile + TrackedOrdinaryBlobProvider
-+ BlobProvider+ Hashable {}
++ BlobProvider + Hashable {
+    fn as_tracked_ordinary_blob_provider_ref(&self)
+    -> &dyn TrackedOrdinaryBlobProvider;
+}
 
 pub struct TrackedOrdinaryBlobFile {
     pub blob: Blob
@@ -57,4 +60,14 @@ impl Hashable for TrackedOrdinaryBlobFile {
 
 impl TrackedOrdinaryBlobProvider for TrackedOrdinaryBlobFile {}
 
-impl RepoTrackedOrdinaryBlobFile for TrackedOrdinaryBlobFile {}
+impl RepoTrackedOrdinaryBlobFile for TrackedOrdinaryBlobFile {
+    // TODO [typing]: This is a cheap solution to upcasting.
+    //  Find a better way. ^^"
+    /// Upcasts from the `RepoTrackedOrdinaryBlobFile` trait
+    /// into `TrackedOrdinaryBlobProvider`, which is a super-trait 
+    /// of the former.
+    fn as_tracked_ordinary_blob_provider_ref(&self)
+    -> &dyn TrackedOrdinaryBlobProvider {
+        self
+    }
+}
