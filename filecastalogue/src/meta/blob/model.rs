@@ -14,11 +14,17 @@ pub struct Blob {
 }
 
 impl Blob {
+    
     pub fn from_vec(blob: Vec<u8>) -> Self {
         Self {
             inner: blob
         }
     }
+
+    pub fn into_vec(self) -> Vec<u8> {
+        self.inner
+    }
+
 }
 
 impl Default for Blob {

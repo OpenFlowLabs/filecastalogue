@@ -37,3 +37,16 @@ impl From<Vec<u8>> for Blob {
         Blob::from_vec(blob_vec)
     }
 }
+
+impl From<Blob> for Vec<u8> {
+
+    /// Principal conversion from Blob to Vec<u8> .
+    /// 
+    /// This is the one way which should be used to obtain a
+    /// Vec<u8> directly from a Blob.
+    /// 
+    /// This simply returns the Blob's inner field.
+    fn from(blob: Blob) -> Self {
+        blob.into_vec()
+    }
+}
