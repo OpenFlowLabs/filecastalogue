@@ -20,6 +20,9 @@ pub trait RepoTrackedOrdinaryBlobFile: RepoFile + TrackedOrdinaryBlobProvider
 + BlobProvider + Hashable {
     fn as_tracked_ordinary_blob_provider_ref(&self)
     -> &dyn TrackedOrdinaryBlobProvider;
+
+    fn as_tracked_ordinary_blob_provider_box(self: Box<Self>)
+    -> Box<dyn TrackedOrdinaryBlobProvider>;
 }
 
 pub struct TrackedOrdinaryBlobFile {
@@ -75,6 +78,11 @@ impl RepoTrackedOrdinaryBlobFile for TrackedOrdinaryBlobFile {
     /// of the former.
     fn as_tracked_ordinary_blob_provider_ref(&self)
     -> &dyn TrackedOrdinaryBlobProvider {
+        self
+    }
+
+    fn as_tracked_ordinary_blob_provider_box(self: Box<Self>)
+    -> Box<dyn TrackedOrdinaryBlobProvider> {
         self
     }
 }
