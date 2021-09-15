@@ -116,7 +116,7 @@ impl IndexProvider for IndexFile {
 }
 
 impl BlobProvider for IndexFile {
-    fn get_blob(&self) -> FcResult<Blob> {
+    fn clone_blob(&self) -> FcResult<Blob> {
         Ok(self.index.clone().try_into()?)
     }
 }

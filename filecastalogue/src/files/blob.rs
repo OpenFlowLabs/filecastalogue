@@ -4,7 +4,7 @@ use super::hashable::Hashable;
 /// Intended for access to the actual binary of either a tracked
 /// or an index file, e.g. for hashing or applying state.
 pub trait BlobProvider {
-    fn get_blob(&self) -> FcResult<Blob>;
+    fn clone_blob(&self) -> FcResult<Blob>;
 }
 
 /*
@@ -44,6 +44,6 @@ pub trait BlobProvider {
 /// gain access to the herein implemented method get_hash.
 impl<'maybe_not_static> Hashable for dyn BlobProvider + 'maybe_not_static {
     fn get_hash(&self) -> FcResult<String> {
-        Ok(blake3::hash(&self.get_blob()?).to_hex().to_string())
+        Ok(blake3::hash(&self.clone_blob()?).to_hex().to_string())
     }
 }

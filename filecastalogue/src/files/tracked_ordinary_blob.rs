@@ -47,7 +47,7 @@ impl RepoFile for TrackedOrdinaryBlobFile {
 }
 
 impl BlobProvider for TrackedOrdinaryBlobFile {
-    fn get_blob(&self) -> FcResult<Blob> {
+    fn clone_blob(&self) -> FcResult<Blob> {
         Ok(self.blob.clone())
     }
 }
