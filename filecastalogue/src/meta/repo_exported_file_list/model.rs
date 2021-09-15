@@ -1,5 +1,18 @@
 use std::{ffi::{OsStr, OsString}, vec};
-use crate::{error::FcResult, files::tracked_ordinary_blob::TrackedOrdinaryBlobProvider, meta::{file_aspects::{aspects::{directory::{RepoExportedDirectoryAspects, TrackedDirectoryAspects}, non_existing::{RepoExportedNonExistingAspects, TrackedNonExistingAspects}, ordinary::{RepoExportedOrdinaryAspects, TrackedOrdinaryAspects}, symlink::{RepoExportedSymlinkAspects, TrackedSymlinkAspects}}, enums::RepoExportedFileAspects}}};
+use crate::{
+    error::FcResult,
+    files::tracked_ordinary_blob::TrackedOrdinaryBlobProvider,
+    meta::{
+        blob::repo_exported::RepoExportedHeapOrdinaryBlobProvider,
+        file_aspects::{
+            aspects::{directory::{RepoExportedDirectoryAspects, TrackedDirectoryAspects},
+            non_existing::{RepoExportedNonExistingAspects, TrackedNonExistingAspects},
+            ordinary::{RepoExportedOrdinaryAspects, TrackedOrdinaryAspects},
+            symlink::{RepoExportedSymlinkAspects, TrackedSymlinkAspects}},
+            enums::RepoExportedFileAspects
+        }
+    }
+};
 
 // TODO [doc]: Needs documentation.
 // TODO [directory-structure]: Evaluate how well this really fits into `meta`.

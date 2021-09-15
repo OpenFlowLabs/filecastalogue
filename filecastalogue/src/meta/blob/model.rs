@@ -1,4 +1,5 @@
 use std::ops::{Deref, DerefMut};
+use serde::{Deserialize, Serialize};
 
 /// Represents the blob portion of an ordinary file.
 /// 

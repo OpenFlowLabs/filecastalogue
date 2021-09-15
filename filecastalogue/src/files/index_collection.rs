@@ -1,9 +1,9 @@
 use core::fmt;
-use std::{error::Error, ffi::OsString, rc::Rc};
+use std::error::Error;
 use crate::error::FcResult;
 use super::{index::{IndexFile, RepoIndexFile}};
 use std::ffi::OsStr;
-use crate::{opaque_collection_handlers::OpaqueCollectionHandler};
+use crate::opaque_collection_handlers::OpaqueCollectionHandler;
 
 pub trait IndexFileCollection {
     fn has_index(self: &mut Self, index: &str) -> FcResult<bool>;

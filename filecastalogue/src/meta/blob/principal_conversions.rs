@@ -1,4 +1,4 @@
-use std::{convert::{TryFrom, TryInto}, io::Read};
+use std::{convert::TryFrom, io::Read};
 use crate::error::Error;
 use super::model::Blob;
 

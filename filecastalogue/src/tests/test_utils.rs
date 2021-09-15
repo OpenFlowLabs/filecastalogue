@@ -1,6 +1,6 @@
-use std::{env::current_dir, fs::{File, create_dir, create_dir_all}, io::Write,
+use std::{env::current_dir, fs::{File, create_dir_all}, io::Write,
 path::{Path, PathBuf}};
-use crate::{error::{ErrorKind, Error, FcResult}};
+use crate::error::{ErrorKind, Error, FcResult};
 
 
 /// A way to join paths so that the joined element won't overwrite the base.
