@@ -9,7 +9,7 @@ use serde::{Deserialize, Serialize};
 /// related functionality.
 /// 
 /// A Default implementation based on vec!() is also provided.
-#[derive(Debug)]
+#[derive(Debug, Eq, PartialEq, Serialize, Deserialize)]
 pub struct Blob {
     inner: Vec<u8>
 }
