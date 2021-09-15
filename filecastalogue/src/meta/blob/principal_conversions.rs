@@ -24,8 +24,7 @@ impl TryFrom<&mut (dyn Read)> for Blob {
     }
 }
 
-impl TryFrom<Vec<u8>> for Blob {
-    type Error = Error;
+impl From<Vec<u8>> for Blob {
 
     /// Principal conversion from Vec<u8> to Blob.
     /// 
@@ -34,7 +33,7 @@ impl TryFrom<Vec<u8>> for Blob {
     /// 
     /// This does nothing else but wrap the specified Vec<u8>
     /// blob in a Blob.
-    fn try_from(blob_vec: Vec<u8>) -> Result<Self, Self::Error> {
-        Ok(Blob::from_vec(blob_vec))
+    fn from(blob_vec: Vec<u8>) -> Self {
+        Blob::from_vec(blob_vec)
     }
 }

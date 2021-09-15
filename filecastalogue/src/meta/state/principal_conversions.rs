@@ -51,6 +51,6 @@ impl TryFrom<State> for Blob {
     /// This is the one way which should be used to obtain a Blob from
     /// the deserialized form of the State.
     fn try_from(state: State) -> Result<Self, Self::Error> {
-        Ok(serde_json::to_vec_pretty(&state)?.try_into()?)
+        Ok(serde_json::to_vec_pretty(&state)?.into())
     }
 }

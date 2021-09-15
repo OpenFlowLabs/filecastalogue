@@ -52,6 +52,6 @@ impl TryFrom<Index> for Blob {
     /// This is the one way which should be used to obtain a Blob from
     /// an Index.
     fn try_from(index: Index) -> Result<Self, Self::Error> {
-        Ok(serde_json::to_vec_pretty(&index)?.try_into()?)
+        Ok(serde_json::to_vec_pretty(&index)?.into())
     }
 }
