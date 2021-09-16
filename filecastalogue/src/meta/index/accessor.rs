@@ -1,4 +1,4 @@
-use std::{ffi::{OsStr}};
+use std::{ffi::{OsStr, OsString}};
 use crate::{error::{Error, ErrorKind, FcResult}};
 use super::super::file_aspects::enums::TrackedFileAspects;
 use super::{
@@ -10,7 +10,7 @@ pub trait Accessor {
         // fn get_all_file_paths(&mut self) -> Keys<String, FileAspects>;
     fn tracks_files(&mut self) -> bool;
     fn tracks_file(&mut self, path: &OsStr) -> bool;
-    fn track_file(&mut self, path: &OsStr, aspects: &TrackedFileAspects)
+    fn track_file(&mut self, path: OsString, aspects: TrackedFileAspects)
     -> FcResult<&mut Self>;
     fn untrack_file(&mut self, path: &OsStr) -> FcResult<&mut Self>;
     fn get_aspects(&mut self, path: &OsStr) -> FcResult<TrackedFileAspects>;
@@ -38,15 +38,16 @@ impl Accessor for Index {
         }
     }
     
-    fn track_file(&mut self, path: &OsStr, aspects: &TrackedFileAspects)
+    fn track_file(&mut self, path: OsString, aspects: TrackedFileAspects)
     -> FcResult<&mut Self> {
-        match self.files.insert(path.to_owned(), aspects.to_owned()) {
+        let path_for_error = path.clone();
+        match self.files.insert(path, aspects) {
             None => Ok(self),
             Some(_) => Err(error!(
                 ErrorKind::FileAlreadyTracked,
                 "Adding new file to track.",
                 payload => FileAlreadyTrackedErrorPayload {
-                    path: path.to_owned(),
+                    path: path_for_error,
                     index_struct: self.to_owned()
                 }
             ))
