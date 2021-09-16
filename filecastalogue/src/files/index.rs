@@ -15,7 +15,7 @@ persistent or anything like that.
 Other means will have to provide for that (e.g. another trait).
 */
 pub trait IndexProvider {
-    fn get_index(self: &mut Self) -> FcResult<&crate::meta::index::model::Index>;
+    fn get_index(self: &mut Self) -> FcResult<&mut crate::meta::index::model::Index>;
     fn set_index(self: &mut Self, index: &dyn AsRef<Index>)
     -> FcResult<()>;
 }
@@ -105,8 +105,8 @@ impl RepoFile for IndexFile {
 /// to the actual index data. That's its main mission, not persistence or
 /// storage/file backend management.
 impl IndexProvider for IndexFile {
-    fn get_index(self: &mut Self) -> FcResult<&Index> {
-        Ok(&self.index)
+    fn get_index(self: &mut Self) -> FcResult<&mut Index> {
+        Ok(&mut self.index)
     }
     fn set_index(self: &mut Self, index: &dyn AsRef<Index>)
     -> FcResult<()> {
