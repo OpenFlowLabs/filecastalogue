@@ -19,15 +19,16 @@ impl TrackableNonExistingAspects {
         Self {}
     }
 
-    pub fn from_tracked(tracked_aspects: TrackableNonExistingAspects) -> Self {
-        Self::new()
-    }
 }
 
 impl TrackedNonExistingAspects {
 
     pub fn new() -> Self {
         Self {}
+    }
+
+    pub fn from_trackable(trackable_aspects: TrackableNonExistingAspects) -> Self {
+        Self::new()
     }
 }
 
