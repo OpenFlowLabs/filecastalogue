@@ -5,6 +5,7 @@ use super::hashable::Hashable;
 /// or an index file, e.g. for hashing or applying state.
 pub trait BlobProvider {
     fn clone_blob(&self) -> FcResult<Blob>;
+    fn into_blob(self: Box<Self>) -> FcResult<Blob>;
 }
 
 /*

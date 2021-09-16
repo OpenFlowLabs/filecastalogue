@@ -47,9 +47,16 @@ impl RepoFile for TrackedOrdinaryBlobFile {
 }
 
 impl BlobProvider for TrackedOrdinaryBlobFile {
+
     fn clone_blob(&self) -> FcResult<Blob> {
         Ok(self.blob.clone())
     }
+
+    fn into_blob(self: Box<Self>) -> FcResult<Blob> {
+        Ok(self.blob)
+    }
+
+    
 }
 
 impl Hashable for TrackedOrdinaryBlobFile {

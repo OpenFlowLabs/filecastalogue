@@ -116,9 +116,15 @@ impl IndexProvider for IndexFile {
 }
 
 impl BlobProvider for IndexFile {
+
     fn clone_blob(&self) -> FcResult<Blob> {
         Ok(self.index.clone().try_into()?)
     }
+
+    fn into_blob(self: Box<Self>) -> FcResult<Blob> {
+        Ok(self.index.try_into()?)
+    }
+    
 }
 
 impl Hashable for IndexFile {
