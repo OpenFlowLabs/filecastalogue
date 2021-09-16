@@ -8,11 +8,13 @@ default-run = "filecastaloguer"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-clap = "2.33.3"
+clap = "2.*"
+#clap-nested = "0.4.0"
+#clap_generate = "3.0.0-beta.4"
 filecastalogue = { path = "../filecastalogue" }
 
 [dev-dependencies]
-assert_cmd = "0.10"
-predicates = "1"
-tempfile = "3"
-tempdir = "0.3.7"
+assert_cmd = "2.*"
+predicates = "2.*"
+tempfile = "3.*"
+tempdir = "0.*"
