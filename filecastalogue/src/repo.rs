@@ -1,3 +1,4 @@
+use std::ffi::OsString;
 use std::{ffi::OsStr, io::Read};
 use crate::error::FcResult;
 use crate::journal;
@@ -6,6 +7,8 @@ use crate::files::index_collection::IndexFileCollection;
 use crate::files::state::StateProvider;
 use crate::files::tracked_ordinary_blob_collection::TrackedOrdinaryBlobFileCollection;
 use crate::meta::file_aspects::aspects::directory::TrackableDirectoryAspects;
+use crate::meta::file_aspects::aspects::non_existing::TrackableNonExistingAspects;
+use crate::meta::file_aspects::aspects::non_existing::TrackedNonExistingAspects;
 use crate::meta::file_aspects::aspects::ordinary::TrackableOrdinaryAspects;
 use crate::meta::file_aspects::aspects::symlink::TrackableSymlinkAspects;
 use crate::meta::file_aspects::enums::TrackedFileAspects;
@@ -100,10 +103,27 @@ impl<
         pub fn track_non_existing(
             &'rpo mut self,
             version_id: &str,
-            file_path: &OsStr,
-            // trackable_aspects: TrackableNonExistingAspects,
+            file_path: OsString,
+            trackable_aspects: TrackableNonExistingAspects,
         ) -> FcResult<&'rpo mut Self> {
-            todo!();
+            let version = self.state_file
+                .get_state()?
+                .get_version(version_id)?;
+            let index_id = match version.get_index_id() {
+                Some(index_id) => index_id,
+                None => return Ok(self)
+            };
+            let mut index_file = self.indexes.get_index_file(&index_id)?;
+            let index = index_file.get_index()?;
+
+            index.track_file(
+                file_path, 
+                TrackedFileAspects::NonExisting(
+                    TrackedNonExistingAspects::from_trackable(trackable_aspects)
+                )
+            )?;
+
+            Ok(self)
         }
 
         /// Track a directory.
