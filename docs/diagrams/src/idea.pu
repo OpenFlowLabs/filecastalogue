@@ -1,30 +1,106 @@
+@startmindmap filecastalogue diagram
+!theme materia
+
+* cli
+** fcastadm
+*** list
+**** files
+*****_ if version_id: only show for that version
+*****_ if nothing: show all?
+*****_ (optional) version_id
+*****_ (optional) --opts
+******_ Opts
+*** report
+*** apply
+*** flags
+**** (optional) --repo (-r)
+*****_ location (e.g. a filesystem path)
+**** (optional) --help
+***** repo
+***** add
+****** ordinary
+** fcastdev
+*** repo
+**** tar?
+*****_ tar_archive_target_path
+**** delete 
+**** new
+*** add
+**** ordinary
+*****_ version_id
+*****_ tracked_path
+*****_ (optional) Attributes
+***** (optional) --blob
+******_ location (e.g. a filesystem path)
+**** dir
+*****_ version_id
+*****_ tracked_path
+*****_ (optional) Attributes
+**** symlink
+*****_ version_id
+*****_ tracked_path
+*****_ (optional) Attributes
+**** nonExisting
+*****_ version_id
+*****_ tracked_path
+*****_ (optional) Attributes
+**** scan?
+*****_ directory_path
+*** list
+**** files
+*****_ if version_id: only show for that version
+*****_ if nothing: show all?
+*****_ (optional) version_id
+*****_ (optional) --opts
+******_ Opts
+*** report
+*** version
+**** remove
+*****_ version_id
+**** add
+*****_ version_id
+**** list
+**** insert
+*****_ before?
+*****_ after
+*****_ version_id
+****** maybe
+*******_ position (according to list) ?
+*******_ other_version_id
+*** flags
+**** (optional) --repo (-r)
+*****_ location (e.g. a filesystem path)
+**** (optional) --config (-c)
+*****_ location (e.g. a filesystem path)
+**** (optional) --help
+***** repo
+***** add
+****** ordinary
+@endmindmap
+
 @startmindmap cli_mindmap
 !theme materia
 
 * cli
 ** dev
-*** init/new
-**** path
-***** create new repo in path
+*** new
+**** (optional)path
 **** recursive?
-***** add all/some files?
 *** add
-**** file
-***** add version?
-***** update version?
-**** dir?
+**** version
+**** file(ordinary)
+**** dir
 *** list
 **** files
-***** versions
-*** status
-**** diff file version
-*** remove
-**** file?
-**** version?
-**** repository?
-*** commit
-**** apply version changes
-*** apply?
+**** versions
+*** status/report
+****_ diff file version
+*** remove/delete
+**** file
+**** version
+**** repository
+*** commit/apply
+****_ apply version changes
 *** version
 **** like git checkout?
 ** admin
@@ -32,7 +108,7 @@
 
 @endmindmap
 
-@startuml workflow Cli
+@startuml cli_workflow
 !theme materia
 
 title Workflow Cli
@@ -43,10 +119,35 @@ participant Filecastalogue as fcl
 database "Persistent Data" as data
 
 term --> cli: commands
+cli --> term: status information
 cli --> term: errors
+
+term -> cli: config????
+
+term -> cli: help
+
 term -> cli: init /path
 cli -> fcl: new repo
 fcl -> data: create repo in /path
+
+term -> cli: add /path/to/file ?path/to/repo?
+cli -> term: /path/to/file added to repo
+
+term -> cli: list files
+cli -> term: show list of tracked files
+
+term -> cli: list file verions
+
+term -> cli: list repos?
+
+term -> cli: delete path/to/repo
+
+term -> cli: remove /path/to/file ?-version version_id?
+cli -> term: /path/to/file removed from /path/to/repo
+
+term -> cli: ?commit changes to file? + ?add version?
+
+term -> cli: ?new version of file?
 
 cli --> fcl: stuff
 
