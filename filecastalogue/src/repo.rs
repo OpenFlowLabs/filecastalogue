@@ -155,7 +155,6 @@ impl<
             version_id: &str,
             file_list: &mut (dyn RepoExportedFileList)
         ) -> FcResult<&'rpo mut Self> {
-            // todo!()
 
             let version = self.state_file
                 .get_state()?
@@ -200,7 +199,7 @@ impl<
                             &tracked_ordinary_aspects.hash
                         )?;
                         let blob_provider =
-                            blob_provider_file.as_tracked_ordinary_blob_provider_ref();
+                            blob_provider_file.as_tracked_ordinary_blob_provider_box();
                         file_list.add_ordinary(
                             // TODO [clone]: Evaluate and possibly refactor.
                             path.clone(),

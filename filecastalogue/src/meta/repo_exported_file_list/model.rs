@@ -37,7 +37,7 @@ pub trait RepoExportedFileList {
         &mut self,
         path: OsString,
         tracked_aspects: TrackedOrdinaryAspects,
-        blob_provider: &dyn TrackedOrdinaryBlobProvider
+        blob_provider: Box<dyn TrackedOrdinaryBlobProvider>
     ) -> FcResult<&mut dyn RepoExportedFileList>;
 
     fn add_symlink(
@@ -99,15 +99,20 @@ impl RepoExportedFileList for RepoExportedVecFileList {
         &mut self,
         path: OsString,
         tracked_aspects: TrackedOrdinaryAspects,
-        blob_provider: &dyn TrackedOrdinaryBlobProvider
+        tracked_blob_provider: Box<dyn TrackedOrdinaryBlobProvider>
     ) -> FcResult<&mut dyn RepoExportedFileList> {
+        let repo_exported_blob_provider = Box::new(
+            RepoExportedHeapOrdinaryBlobProvider::from_tracked_ordinary_blob_provider(
+                tracked_blob_provider
+            )?
+        );
         let file: Box<dyn RepoExportedFile> = Box::new(
             RepoExportedHeapFile::new(
                 path,
                 RepoExportedFileAspects::Ordinary(
                     RepoExportedOrdinaryAspects::from_tracked(
                         tracked_aspects,
-                        Box::new(blob_provider.get_blob()?)
+                        repo_exported_blob_provider
                     )
                 )
             )

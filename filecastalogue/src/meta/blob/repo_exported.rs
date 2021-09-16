@@ -1,46 +1,49 @@
-use std::fmt::Debug;
+use std::{convert::TryFrom, fmt::Debug};
 use serde::{Deserialize, Serialize};
+use crate::{error::{Error, FcResult}, files::{blob::BlobProvider, tracked_ordinary_blob::TrackedOrdinaryBlobProvider}};
 use super::model::Blob;
 
-pub trait RepoExportedBlob: Debug {}
+pub trait SerdeBlob: Debug {}
+// pub trait RepoExportedBlobProvider: BlobProvider + SerdeBlob {}
+pub trait RepoExportedOrdinaryBlobProvider: BlobProvider {}
 
-pub trait SerdeBlob {}
+#[derive(Debug, Eq, PartialEq, Serialize, Deserialize)]
+pub struct RepoExportedHeapOrdinaryBlobProvider {
+    blob: Blob
+}
 
-impl PartialEq for Box<dyn RepoExportedBlob> {
-    fn eq(&self, other: &Self) -> bool {
-        todo!()
+impl RepoExportedHeapOrdinaryBlobProvider {
+
+    pub fn new(blob: Blob) -> Self {
+        Self {
+            blob: blob
+        }
+    }
+
+    pub fn from_tracked_ordinary_blob_provider(blob_provider: Box<dyn TrackedOrdinaryBlobProvider>) -> FcResult<Self> {
+        Ok(Self::new(
+            blob_provider.into_blob()?
+        ))
     }
 }
 
-impl PartialEq<&Self> for Box<dyn RepoExportedBlob> {
-    fn eq(&self, other: &&Self) -> bool {
-        todo!()
+impl TryFrom<Box<dyn RepoExportedOrdinaryBlobProvider>> for Blob {
+    type Error = Error;
+
+    fn try_from(blob_provider: Box<dyn RepoExportedOrdinaryBlobProvider>) -> FcResult<Self> {
+            Ok(blob_provider.into_blob()?)
     }
 }
 
-impl Eq for Box<dyn RepoExportedBlob> {}
+impl BlobProvider for RepoExportedHeapOrdinaryBlobProvider {
 
-impl Clone for Box<dyn RepoExportedBlob> {
-    fn clone(&self) -> Self {
-        // Self(self.0.clone(), self.1.clone())
-        todo!()
+    fn clone_blob(&self) -> crate::error::FcResult<Blob> {
+        Ok(self.blob.clone())
+    }
+
+    fn into_blob(self: Box<Self>) -> crate::error::FcResult<Blob> {
+        Ok(self.blob)
     }
 }
 
-impl Serialize for Box<dyn RepoExportedBlob> {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
-    where
-        S: serde::Serializer {
-        todo!()
-    }
-}
-
-impl<'de> Deserialize<'de> for Box<dyn RepoExportedBlob> {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
-    where
-        D: serde::Deserializer<'de> {
-        todo!()
-    }
-}
-
-impl RepoExportedBlob for Blob {}
+impl RepoExportedOrdinaryBlobProvider for RepoExportedHeapOrdinaryBlobProvider {}

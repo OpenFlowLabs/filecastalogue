@@ -3,6 +3,9 @@ use super::hashable::Hashable;
 
 /// Intended for access to the actual binary of either a tracked
 /// or an index file, e.g. for hashing or applying state.
+/// It's also used to provide access to the blob packaged or
+/// referenced in the data returned from file getter functions
+/// of Repo.
 pub trait BlobProvider {
     fn clone_blob(&self) -> FcResult<Blob>;
     fn into_blob(self: Box<Self>) -> FcResult<Blob>;

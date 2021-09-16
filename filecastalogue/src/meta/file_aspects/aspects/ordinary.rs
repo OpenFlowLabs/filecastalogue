@@ -1,5 +1,5 @@
 use serde::{Serialize, Deserialize};
-use crate::meta::{blob::repo_exported::{RepoExportedBlob, SerdeBlob}};
+use crate::meta::blob::repo_exported::RepoExportedOrdinaryBlobProvider;
 
 use super::super::attributes::Attributes;
 
@@ -57,11 +57,14 @@ pub struct TrackedOrdinaryAspects {
 /// struct, NEVER the other way around. A Repo's hash is ever only
 /// to be calculated by the Repo's own principal means for that particular
 /// concern.
-#[derive(Serialize, Deserialize, Debug, Eq, PartialEq, Clone)]
 pub struct RepoExportedOrdinaryAspects {
     pub repo_blob_hash: String,
     pub attributes: Attributes,
-    pub blob: Box<dyn RepoExportedBlob>
+    // pub blob: Box<dyn RepoExportedBlob>
+    // This allows for the implementation of non-memory blob storage, e.g.
+    // for caching purposes or partial reads (say, when implementing
+    // a custom serializer or a custom way to network-transfer blobs).
+    pub blob_provider: Box<dyn RepoExportedOrdinaryBlobProvider>
 }
 
 impl TrackableOrdinaryAspects {
@@ -108,23 +111,23 @@ impl RepoExportedOrdinaryAspects {
     pub fn new(
         repo_blob_hash: &str,
         attributes: Attributes,
-        blob: Box<dyn RepoExportedBlob>
+        blob_provider: Box<dyn RepoExportedOrdinaryBlobProvider>
     )-> Self {
         Self::new(
             repo_blob_hash,
             attributes,
-            blob
+            blob_provider
         )
     }
 
     pub fn from_tracked(
         tracked_aspects: TrackedOrdinaryAspects,
-        blob: Box<dyn RepoExportedBlob>
+        blob_provider: Box<dyn RepoExportedOrdinaryBlobProvider>
     ) -> Self {
         Self::new(
             &tracked_aspects.hash,
             tracked_aspects.attributes,
-            blob
+            blob_provider
         )
     }
 }
