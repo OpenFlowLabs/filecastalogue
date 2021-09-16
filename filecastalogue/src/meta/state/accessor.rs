@@ -4,7 +4,7 @@ use super::{
         VersionEntryDoesNotExistErrorPayload},
     model::State};
 
-pub trait Accessor<'acc> {
+pub trait StateAccessor<'acc> {
     fn has_version(self: &mut Self, id: &str) -> bool;
     fn get_version(self: &mut Self, id: &str)
     -> FcResult<Version>;
@@ -17,7 +17,7 @@ pub trait Accessor<'acc> {
     -> FcResult<&mut Self>;
 }
 
-impl<'acc> Accessor<'acc> for State {
+impl<'acc> StateAccessor<'acc> for State {
 
     fn has_version(self: &mut Self, id: &str) -> bool {
         if self.versions.contains_key(id) {

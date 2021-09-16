@@ -1,4 +1,4 @@
-use crate::{error::FcResult, meta::state, meta::{state::accessor::Accessor, version::model::Version}, meta::version, tests::test_fixtures::{
+use crate::{error::FcResult, meta::state, meta::{state::accessor::StateAccessor, version::model::Version}, meta::version, tests::test_fixtures::{
         self,
         models::{NON_EXISTENT_VERSION_ID}
     }};

@@ -5,7 +5,7 @@ use super::{
     error::{FileAlreadyTrackedErrorPayload, UntrackedFileErrorPayload},
     model::Index};
     
-pub trait Accessor {
+pub trait IndexAccessor {
     fn is_empty(&mut self) -> bool;
         // fn get_all_file_paths(&mut self) -> Keys<String, FileAspects>;
     fn tracks_files(&mut self) -> bool;
@@ -16,7 +16,7 @@ pub trait Accessor {
     fn get_aspects(&mut self, path: &OsStr) -> FcResult<TrackedFileAspects>;
 }
 
-impl Accessor for Index {
+impl IndexAccessor for Index {
     fn is_empty(&mut self) -> bool {
         self.files.len() == 0
     }

@@ -9,9 +9,9 @@ use crate::meta::file_aspects::aspects::directory::TrackableDirectoryAspects;
 use crate::meta::file_aspects::aspects::ordinary::TrackableOrdinaryAspects;
 use crate::meta::file_aspects::aspects::symlink::TrackableSymlinkAspects;
 use crate::meta::file_aspects::enums::TrackedFileAspects;
+use crate::meta::index::accessor::IndexAccessor;
 use crate::meta::repo_exported_file_list::model::RepoExportedFileList;
-use crate::meta::repo_exported_file_list::model::RepoExportedHeapFile;
-use crate::meta::state::accessor::Accessor;
+use crate::meta::state::accessor::StateAccessor;
 use crate::meta::version::accessor::VersionAccessor;
 use crate::meta::version::model::Version;
 
