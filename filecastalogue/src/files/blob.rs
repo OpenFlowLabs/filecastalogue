@@ -31,7 +31,11 @@ pub trait BlobProvider {
 /// 
 /// struct Example {}
 /// impl BlobProvider for Example {
-///     fn get_blob(&self) -> FcResult<Blob> {
+///     fn clone_blob(&self) -> FcResult<Blob> {
+///         let example_blob = Blob::default();
+///         Ok(example_blob)
+///     }
+///     fn into_blob(self: Box<Self>) -> FcResult<Blob> {
 ///         let example_blob = Blob::default();
 ///         Ok(example_blob)
 ///     }

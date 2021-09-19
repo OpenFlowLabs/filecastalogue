@@ -2,7 +2,6 @@ use std::{env::current_dir, fs::{File, create_dir_all}, io::Write,
 path::{Path, PathBuf}};
 use crate::error::{ErrorKind, Error, FcResult};
 
-
 /// A way to join paths so that the joined element won't overwrite the base.
 pub trait SafeTestPathJoin {
     fn safe_join<P: AsRef<Path>>(&self, path: P) -> FcResult<PathBuf>;
@@ -102,16 +101,6 @@ impl<Base: BaseTestDir> RepoTestSite<Base> {
         self.conf.get_blob_dir_path(&self.base_dir.get_path()?)
     }
 
-    // /// Create our state file.
-    // /// 
-    // /// Calling this assumes that our .set_up method has already been called.
-    // /// Without that, the repo dir we'll create our state file in might not
-    // /// yet exist, which will cause an error.
-    // pub(crate) fn create_state_file(&self) -> FcResult<()> {
-    //     File::create(self.get_state_file_path()?)?;
-    //     Ok(())
-    // }
-
     /// Get a Write for the state file for this RepoTestSite.
     /// 
     /// Calling this assumes that our .set_up method has already
@@ -137,7 +126,7 @@ impl<Base: BaseTestDir> RepoTestSite<Base> {
 /// A directory to house various volatile test directories and files.
 /// 
 /// Currently, the path is determined in its implementation and not
-/// directly configurable. In order to change that, start with 
+/// directly configurable.
 pub(crate) struct TmpTestDir {}
 
 pub trait BaseTestDir {
