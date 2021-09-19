@@ -51,6 +51,14 @@ pub struct RepoExportedVecFileList {
     pub vec: Vec<Box<dyn RepoExportedFile>>
 }
 
+impl RepoExportedVecFileList {
+    pub fn new() -> Self {
+        Self {
+            vec: vec!()
+        }
+    }
+}
+
 impl RepoExportedFileList for RepoExportedVecFileList {
 
     fn consume_as_vec(self: Box<Self>) -> Vec<Box<dyn RepoExportedFile>> {
