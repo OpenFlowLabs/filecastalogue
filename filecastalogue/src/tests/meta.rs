@@ -42,10 +42,10 @@ fn get_version_returns_error_when_state_does_not_have_version() -> () {
         NON_EXISTENT_VERSION_ID
     );
     let is_err = result.is_err();
-    assert!(is_err, format!(
+    assert!(is_err,
         "{}. Result: {:?}",
         ".get_version() did not return an error when it should have",
-        result)
+        result
     );
 }
 
