@@ -47,8 +47,8 @@ pub trait RepoExportedFileList {
     ) -> FcResult<&mut dyn RepoExportedFileList>;
 }
 
-struct RepoExportedVecFileList {
-    vec: Vec<Box<dyn RepoExportedFile>>
+pub struct RepoExportedVecFileList {
+    pub vec: Vec<Box<dyn RepoExportedFile>>
 }
 
 impl RepoExportedFileList for RepoExportedVecFileList {
