@@ -2,13 +2,19 @@ use serde::{Serialize, Deserialize};
 
 #[derive(Serialize, Deserialize, Debug, Eq, PartialEq, Clone)]
 pub struct Version {
-    pub index: String
+    pub index: Option<String>
 }
 
 impl Version {
-    pub fn new(index: &str) -> Self {
+    pub fn new_with_index(index: &str) -> Self {
         Self {
-            index: index.to_owned()
+            index: Some(index.to_owned())
+        }
+    }
+
+    pub fn new() -> Self {
+        Self {
+            index: None
         }
     }
 }

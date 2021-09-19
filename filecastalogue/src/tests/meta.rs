@@ -58,7 +58,7 @@ fn put_version() -> () {
         "Preparation failed: State shouldn't have the version ({}) we're about to insert yet.",
         new_id
     );
-    state.put_version(new_id, Version::new(new_hash));
+    state.put_version(new_id, Version::new_with_index(new_hash));
     assert_eq!(state.has_version(new_id), true);
 }
 
@@ -72,7 +72,7 @@ fn add_version() -> () {
         new_id
     );
     let result = state.add_version(
-        new_id, Version::new( new_hash)
+        new_id, Version::new_with_index( new_hash)
     );
     assert_ne!(result.is_err(), true, 
         "Preparation failed: .has_version() shouldn't return an error here. Version ID: {}",

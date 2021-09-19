@@ -15,7 +15,7 @@ impl<'acc> VersionAccessor<'acc> for Version {
     /// 
     /// Returns false otherwise.
     fn has_index(&self) -> bool {
-        self.index != ""
+        self.index != None
     }
 
     /// Returns the stored hash of the index for this version if it has one.
@@ -24,7 +24,7 @@ impl<'acc> VersionAccessor<'acc> for Version {
     /// None.
     fn get_index_id(&self) -> Option<String> {
         if self.has_index() {
-            Some(self.index.to_owned())
+            self.index.to_owned()
         }
         else {
             None
@@ -35,7 +35,7 @@ impl<'acc> VersionAccessor<'acc> for Version {
     /// 
     /// Returns the newly set index hash.
     fn set_index_id(&mut self, index_id: &str) -> String {
-        self.index = index_id.to_owned();
+        self.index = Some(index_id.to_owned());
         index_id.to_owned()
     }
 }

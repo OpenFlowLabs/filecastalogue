@@ -27,9 +27,7 @@ pub(in crate::tests) fn create_minimal_state_struct() -> State {
     let mut mock_versions: HashMap<String, Version> = HashMap::new();
     mock_versions.insert(
         String::from(MINIMAL_STATE_VERSION_ID),
-        Version {
-            index: String::from("MOCKHASH")
-        }
+        Version::new_with_index("MOCKHASH")
     );
     State {
         versions: mock_versions
@@ -43,9 +41,7 @@ pub(in crate::tests) fn create_minimal_state_VersionEntryAlreadyExistsError()
         VERSION_ENTRY_ALREADY_EXISTS_ERROR_CONTEXT_DESCRIPTION,
         payload => VersionEntryAlreadyExistsErrorPayload {
             version_id: String::from(MINIMAL_STATE_VERSION_ID),
-            version_struct: Version {
-                index: String::from("MOCKHASH")
-            }
+            version_struct: Version::new_with_index("MOCKHASH")
         }
     )
 }
