@@ -16,6 +16,7 @@ Other means will have to provide for that (e.g. another trait).
 */
 pub trait IndexProvider {
     fn get_index_ref(self: &mut Self) -> FcResult<&mut crate::meta::index::model::Index>;
+    fn set_index(self: &mut Self, index: Index)
     -> FcResult<()>;
 }
 
@@ -107,9 +108,9 @@ impl IndexProvider for IndexFile {
     fn get_index_ref(self: &mut Self) -> FcResult<&mut Index> {
         Ok(&mut self.index)
     }
-    fn set_index(self: &mut Self, index: &dyn AsRef<Index>)
+    fn set_index(self: &mut Self, index: Index)
     -> FcResult<()> {
-        self.index = index.as_ref().to_owned();
+        self.index = index;
         Ok(())
     }
 }
