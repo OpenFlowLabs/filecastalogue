@@ -59,6 +59,18 @@ pub struct IndexFile {
 
 impl IndexFile {
 
+    /// Construct with an empty Index.
+    pub fn new() -> Self {
+        Self::from_index(Index::new())
+    }
+
+    /// Construct directly from an Index.
+    pub fn from_index(index: Index) -> Self {
+        Self {
+            index: index
+        }
+    }
+
     /// Create an IndexFile struct from a blob provided by a Read.
     /// 
     /// The blob needs to be JSON deserializable by serde_json.
