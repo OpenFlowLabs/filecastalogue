@@ -89,6 +89,12 @@ impl LocalDir {
         }
     }
 
+    fn create_file<NameRef: AsRef<OsStr>>(&self, name: NameRef) -> FcResult<()> {
+        let path = self.get_file_path(name)?;
+        File::create(path)?;
+        Ok(())
+    }
+
     fn exists(&self) -> bool {
         self.path.exists()
     }
@@ -127,6 +133,8 @@ impl LocalDir {
 pub trait OpaqueCollectionHandler {
     fn has_file<NameRef: AsRef<OsStr>>(self: &mut Self, name: NameRef)
     -> FcResult<bool>;
+    fn create_file<NameRef: AsRef<OsStr>>(&self,name: NameRef)
+    -> FcResult<()>;
     fn get_file_readable(&self, name: &OsStr)
     -> FcResult<Box<(dyn Read)>>;
     fn get_file_writeable(&self, name: &OsStr)
@@ -141,6 +149,14 @@ impl OpaqueCollectionHandler for LocalDir
     fn has_file<NameRef: AsRef<OsStr>>(self: &mut Self, name: NameRef)
     -> FcResult<bool> {
         Ok(self.get_file_path(name)?.exists())
+    }
+
+    fn create_file<NameRef: AsRef<OsStr>>(&self, name: NameRef)
+    -> FcResult<()> {
+        self.create_file(name)?;
+        // It's somewhat coincidental that our return value is the same
+        // as that of `LocalDir::create_file`. It doesn't have to be.
+        Ok(())
     }
 
     fn get_file_readable(&self, name: &OsStr)
