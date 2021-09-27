@@ -8,8 +8,8 @@ use super::{RepoFile, blob::BlobProvider};
 /**
 Somehow provides index data and a means to set the index data
 it provides, at least for as long as it's alive. Unless specifically
-pointed out, the methods on the provier aren't concerned with
-with where the data is coming from, where it goes, whether it's
+pointed out, the methods on the provider aren't concerned with
+where the data is coming from, where it goes, whether it's
 persistent or anything like that.
 
 Other means will have to provide for that (e.g. another trait).
@@ -71,7 +71,7 @@ impl IndexFile {
         }
     }
 
-    /// Create an IndexFile struct from a blob provided by a Read.
+    /// Construct an IndexFile struct from a blob provided by a Read.
     /// 
     /// The blob needs to be JSON deserializable by serde_json.
     pub fn from_existing(readable: &mut (dyn Read)) -> FcResult<Self> {
