@@ -76,7 +76,7 @@ impl<
                     - Add new version to state file.
                     - Make sure index file exists.
             */
-            
+
             let mut version = Version::new();
             let index_file = self.indexes.create_unwritten_empty_index_file_box();
             // TODO [api]: `&mut *index_file` definitely leaves room for improvement.
@@ -105,21 +105,25 @@ impl<
             file_path: OsString,
             trackable_aspects: TrackableNonExistingAspects,
         ) -> FcResult<&'rpo mut Self> {
+            let mut version = self.state_file
                 .get_state_ref()?
                 .get_version(version_id)?;
-            let index_id = match version.get_index_id() {
-                Some(index_id) => index_id,
-                None => return Ok(self)
+            let mut index_file = match version.get_index_id() {
+                Some(index_id) => self.indexes.get_index_file(&index_id)?,
+                None => self.indexes.create_unwritten_empty_index_file_box()
             };
-            let mut index_file = self.indexes.get_index_file(&index_id)?;
-            let index = index_file.get_index()?;
-
+            
             index_file.get_index_ref()?.track_file(
                 file_path, 
                 TrackedFileAspects::NonExisting(
                     TrackedNonExistingAspects::from_trackable(trackable_aspects)
                 )
             )?;
+            let hash = self.indexes.put_index_file(index_file)?;
+            version.set_index_id(&hash);
+            self.state_file.get_state_ref()?.put_version(version_id, version);
+
+            // TODO: Saving state?
 
             Ok(self)
         }
