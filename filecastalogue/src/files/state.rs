@@ -5,7 +5,7 @@ use crate::{access_repo_file_error, error::{Error, ErrorKind,
 use crate::{files::{RepoFile}};
 
 pub trait StateProvider {
-    fn get_state(self: &mut Self) -> FcResult<&mut State>;
+    fn get_state_ref(self: &mut Self) -> FcResult<&mut State>;
 }
 
 pub struct StateFile {
@@ -93,7 +93,7 @@ impl RepoFile for StateFile {
 }
 
 impl StateProvider for StateFile {
-    fn get_state(self: &mut Self) -> FcResult<&mut State> {
+    fn get_state_ref(self: &mut Self) -> FcResult<&mut State> {
         Ok(&mut self.state)
     }
 }

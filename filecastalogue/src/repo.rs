@@ -66,7 +66,7 @@ impl<
             }
         }
         pub fn has_version(self: &'rpo mut Self, id: &str) -> FcResult<bool> {
-            Ok(self.state_file.get_state()?.clone().has_version(id))
+            Ok(self.state_file.get_state_ref()?.clone().has_version(id))
         }
         // version is consumed here, in order to force explicit handling of
         // situations where the version has to continue being available in the
@@ -106,8 +106,7 @@ impl<
             file_path: OsString,
             trackable_aspects: TrackableNonExistingAspects,
         ) -> FcResult<&'rpo mut Self> {
-            let version = self.state_file
-                .get_state()?
+                .get_state_ref()?
                 .get_version(version_id)?;
             let index_id = match version.get_index_id() {
                 Some(index_id) => index_id,
@@ -116,7 +115,7 @@ impl<
             let mut index_file = self.indexes.get_index_file(&index_id)?;
             let index = index_file.get_index()?;
 
-            index.track_file(
+            index_file.get_index_ref()?.track_file(
                 file_path, 
                 TrackedFileAspects::NonExisting(
                     TrackedNonExistingAspects::from_trackable(trackable_aspects)
@@ -177,7 +176,7 @@ impl<
         ) -> FcResult<&'rpo mut Self> {
 
             let version = self.state_file
-                .get_state()?
+                .get_state_ref()?
                 .get_version(version_id)?;
             let index_id = match version.get_index_id() {
                 Some(index_id) => index_id,
@@ -185,7 +184,7 @@ impl<
                 None => return Ok(self),
             };
             let mut index_file = self.indexes.get_index_file(&index_id)?;
-            let index = index_file.get_index()?;
+            let index = index_file.get_index_ref()?;
 
             for (path, tracked_file_aspects) in &index.files {
                 match tracked_file_aspects {
