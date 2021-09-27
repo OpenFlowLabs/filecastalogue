@@ -25,7 +25,7 @@ fn add_version_succeeds() -> FcResult<()> {
     let version = Version::new();
     
     let mut repo = test_fixtures::repo::create_minimal_repo_struct()?;
-    repo.add_version(version_id, version)?;
+    repo.add_version(version_id)?;
     
     assert_eq!(repo.has_version(version_id)?, true);
     Ok(())
@@ -40,7 +40,7 @@ fn track_non_existing_succeeds() -> FcResult<()> {
     let trackable_aspects = TrackableNonExistingAspects::new();
     
     let mut repo = test_fixtures::repo::create_minimal_repo_struct()?;
-    repo.add_version(version_id, version)?;
+    repo.add_version(version_id)?;
     repo.track_non_existing(version_id, file_path, trackable_aspects)?;
 
     let mut file_list = RepoExportedVecFileList::new();

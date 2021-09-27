@@ -68,28 +68,27 @@ impl<
         pub fn has_version(self: &'rpo mut Self, id: &str) -> FcResult<bool> {
             Ok(self.state_file.get_state_ref()?.clone().has_version(id))
         }
-        // version is consumed here, in order to force explicit handling of
-        // situations where the version has to continue being available in the
-        // calling context.
-        pub fn add_version(self: &'rpo mut Self, id: &str, version: Version)
+
+        pub fn add_version(self: &'rpo mut Self, id: &str)
         -> FcResult<&'rpo mut Self> {
-            self.state_file.get_state()?.clone().add_version(id, version.clone())?;
             /*
                 Has to do these things:
                     - Add new version to state file.
                     - Make sure index file exists.
             */
             
-            let index_id = match version.get_index_id() {
-                Some(index_id) => index_id,
-                None => todo!(),
-            };
-            if self.indexes.has_index(&index_id)? {
-                todo!()
-            }
-            else {
-                todo!()
-            }
+            let mut version = Version::new();
+            let index_file = self.indexes.create_unwritten_empty_index_file_box();
+            // TODO [api]: `&mut *index_file` definitely leaves room for improvement.
+            let hash = self.indexes.put_index_file(index_file)?;
+            // TODO [api]: `&hash`, even though the hash is consumed by `set_index_id`. Either
+            //  take a value only or decide whether AsRef is appropriate, or some other sugar.
+            version.set_index_id(&hash);
+            self.state_file.get_state_ref()?.add_version(id, version)?;
+
+            // TODO: Saving state?
+
+            Ok(self)
         }
 
         /// Track a file that doesn't exist.
