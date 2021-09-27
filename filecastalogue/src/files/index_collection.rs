@@ -7,8 +7,8 @@ use crate::opaque_collection_handlers::OpaqueCollectionHandler;
 
 pub trait IndexFileCollection {
     fn has_index(self: &mut Self, index: &str) -> FcResult<bool>;
-    fn get_new_index_file(self: &mut Self, index_file: &(dyn RepoIndexFile))
-    -> FcResult<&mut(dyn IndexFileCollection)>;
+    fn create_unwritten_empty_index_file_box(&self)
+    -> Box<(dyn RepoIndexFile)>;
     fn get_index_file(self: &mut Self, index: &str)
     -> FcResult<Box<(dyn RepoIndexFile)>>;
     fn put_index_file<'putting>(
@@ -46,11 +46,10 @@ impl<
         self.handler.has_file(index)
     }
 
-    fn get_new_index_file(self: &mut Self, index_file: &(dyn RepoIndexFile))
+    fn create_unwritten_empty_index_file_box(&self)
     // This returning "IndexFileCollection" doesn't look quite right.. :p
-    -> FcResult<&mut(dyn IndexFileCollection)> {
-        todo!(); // get_new_file will need a proper name specified, not "".
-        // let index_file: = IndexFile::new(self.handler.get_new_file("")?);
+    -> Box<(dyn RepoIndexFile)> {
+        Box::new(IndexFile::new())
     }
     
     /// Get an index file from the collection.
