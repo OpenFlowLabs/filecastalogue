@@ -6,3 +6,11 @@ use super::super::file_aspects::enums::TrackedFileAspects;
 pub struct Index {
     pub files: HashMap<OsString, TrackedFileAspects>
 }
+
+impl Index {
+    pub fn new() -> Self {
+        Self {
+            files: HashMap::new()
+        }
+    }
+}
