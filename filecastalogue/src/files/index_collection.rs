@@ -12,7 +12,7 @@ pub trait IndexFileCollection {
     fn get_index_file(self: &mut Self, index: &str)
     -> FcResult<Box<(dyn RepoIndexFile)>>;
     fn put_index_file<'putting>(
-        self: &mut Self, index_file: &'putting mut (dyn RepoIndexFile))
+        self: &mut Self, index_file: Box<dyn RepoIndexFile>)
     -> FcResult<String>;
 }
 
@@ -70,11 +70,16 @@ impl<
     /// This will get the hash of the file's contents, write them to
     /// to a file with the hash for a name and return the hash.
     fn put_index_file(
-        self: &mut Self, index_file: &mut (dyn RepoIndexFile))
+        self: &mut Self, index_file: Box<dyn RepoIndexFile>)
     -> FcResult<String> {
         let hash = index_file.get_hash()?;
+        if !self.handler.has_file(&hash)? {
+            self.handler.create_file(&hash)?
+        };
         let mut writeable = self.handler.get_file_writeable(
             OsStr::new(&hash))?;
+        // TODO: This doesn't look right. ^^"
+        let mut index_file = index_file;
         index_file.save(&mut writeable)?;
         Ok(hash)
     }
