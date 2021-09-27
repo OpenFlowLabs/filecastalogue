@@ -6,6 +6,8 @@ use crate::{files::{RepoFile}};
 
 pub trait StateProvider {
     fn get_state_ref(self: &mut Self) -> FcResult<&mut State>;
+    fn set_state(self: &mut Self, state: State)
+    -> FcResult<()>;
 }
 
 pub struct StateFile {
@@ -93,7 +95,15 @@ impl RepoFile for StateFile {
 }
 
 impl StateProvider for StateFile {
+
     fn get_state_ref(self: &mut Self) -> FcResult<&mut State> {
         Ok(&mut self.state)
     }
+
+    fn set_state(self: &mut Self, state: State)
+    -> FcResult<()> {
+        self.state = state;
+        Ok(())
+    }
+
 }
