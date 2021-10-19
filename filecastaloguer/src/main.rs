@@ -22,8 +22,14 @@ const ABOUT_ADD_VERSION: &str = "Add a new version with the specified ID to the 
 
 // impl Error::error for clap{
 
-// } 
+// }
+
+// impl std::fmt::Display for Option<&str> {
+
+// }
+
 // Maybe push this into the library later, in some form.
+/// Doc goes here, example, variants
 fn create_local_repo(
     repo_path: PathBuf,
 ) -> Result<
@@ -49,14 +55,20 @@ fn create_local_repo(
     ))
 }
 
+// #[derive(Display)];
+// let default_repo_path = current_dir().unwrap().as_os_str().to_owned();
+
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     //test
     println!("{:?}", args());
 
+    // #[derive(Display)];
     let default_repo_path = current_dir().unwrap().as_os_str().to_owned();
 
     //let default_path: PathBuf = PathBuf::new();
+
+    //TODO cli autocompletion
 
     let matches = App::new(crate_name!())
         .version(crate_version!())
@@ -93,22 +105,70 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         //         .arg(Arg::with_name("id")),
         // )
         .subcommand(SubCommand::with_name("new")
-            .subcommand(SubCommand::with_name("repository")  
+            .subcommand(SubCommand::with_name("repository")
                 .arg(Arg::with_name("path")
-                    .short("p")
+                    //.short("p")
                     .takes_value(true)
                 )
             )
-            .subcommand(SubCommand::with_name("test")
+            //start test area
+            // .subcommand(SubCommand::with_name("test")
+            //     .arg(Arg::with_name("path")
+            //         .short("p")
+            //         .takes_value(true)
+            //     )
+            //     .arg(Arg::with_name("test")
+            //         .short("t")
+            //     )
+            // )
+            //end test area
+        )
+        //todo
+        //symlink
+        //
+        .subcommand(SubCommand::with_name("add")
+            .subcommand(SubCommand::with_name("version")
+                .arg(Arg::with_name("version_id")
+                    .short("id") //???
+                    .takes_value(true)
+                    //.required(true) //???
+                )
+            )
+            .subcommand(SubCommand::with_name("file")
                 .arg(Arg::with_name("path")
                     .short("p")
                     .takes_value(true)
+                    .required(true)
                 )
-                .arg(Arg::with_name("test")
-                .short("t")
+            )
+            .subcommand(SubCommand::with_name("directory")
+                .arg(Arg::with_name("path")
+                    //.short("p")
+                    .takes_value(true)
+                    .required(true)
                 )
             )
         )
+        .subcommand(SubCommand::with_name("update")
+            .subcommand(SubCommand::with_name("version")
+                .arg(Arg::with_name("version_id")
+                    //.short("id")
+                    .takes_value(true)
+                    .required(true)
+                    //.validator(String::from(""))
+                )
+            )
+        )
+        .subcommand(SubCommand::with_name("report"))
+        .subcommand(SubCommand::with_name("remove")
+            .subcommand(SubCommand::with_name("version")
+                .arg(Arg::with_name("version_id")
+                    .takes_value(true)
+                    .required(true)
+                )
+            )
+        )
+        .subcommand(SubCommand::with_name("apply"))
         .subcommand(SubCommand::with_name("list")
             //.subcommand(SubCommand::with_name("versions"))
             .subcommands(vec![
@@ -116,9 +176,21 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                 SubCommand::with_name("files"),
             ])
         )
+        .subcommand(SubCommand::with_name("dublicate")
+            .subcommand(SubCommand::with_name("version")
+                .arg(Arg::with_name("version_id")
+                    .takes_value(true)
+                    .required(true)
+                )
+                .arg(Arg::with_name("new_version_id")
+                    .takes_value(true)
+                    .required(true)
+                )
+            )
+        )
             //.takes_value(false)
             // .subcommand(SubCommand::with_name("files"))
-            
+
             // .subcommand(SubCommand::with_name("versions"))
     .get_matches();
 
@@ -133,32 +205,63 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         }
     }
 
+    // if let Some(matches) is needed except for the last "branch"
     if let Some(matches) = matches.subcommand_matches("new") {
         if let Some(matches) = matches.subcommand_matches("repository"){
             if matches.is_present("path"){
                 //value_of("path") should be validated somewhere
                 let path = matches.value_of("path").unwrap();
-                create_local_repo(PathBuf::from(path));
-                println!("create new repository in {:#?} ", matches.value_of("path"));
+                create_local_repo(PathBuf::from(path))?;
+
+                println!("create new repository in {} ", path);
             } else {
-                create_local_repo(PathBuf::from(&default_repo_path));
+                create_local_repo(PathBuf::from(&default_repo_path))?;
                 println!("create new repository in {:?} ", default_repo_path);
             }
-        } else if let Some(matches) = matches.subcommand_matches("test"){ //start test area
-            if matches.is_present("path"){
-                if matches.is_present("test"){
-                    println!("test!!")
-                }
-                println!("create new repository in {:#?} ", matches.value_of("path"));
-            } else {
-                if matches.is_present("test"){
-                    println!("test!!")
-                }
+        }
+        //start test area
+        // else if let Some(matches) = matches.subcommand_matches("test"){
+        //     if matches.is_present("path"){
+        //         if matches.is_present("test"){
+        //             println!("test!!")
+        //         }
+        //         println!("create new repository in {:#?} ", matches.value_of("path"));
+        //     } else {
+        //         if matches.is_present("test"){
+        //             println!("test!!")
+        //         }
+        //         println!("create new repository in {:#?} ", default_repo_path);
+        //     }
+        // }
+        //end test area
+    }
 
-                println!("create new repository in {:#?} ", default_repo_path);
+    if let Some(matches) = matches.subcommand_matches("add") {
+        if let Some(matches) = matches.subcommand_matches("version"){
+            if matches.is_present("version_id"){
+                //let version_id = matches.value_of("version_id").unwrap();
+                println!("add new version with id: {:?} ", matches.value_of("version_id"));
+            } else {
+                println!("add new version with id: {:?} ", "default_version_id");
             }
-        } //end test area
-    } 
+        }
+        if let Some(matches) = matches.subcommand_matches("file"){
+            if matches.is_present("version_id"){
+                let path = matches.value_of("version_id").unwrap();
+                println!("add new version with id: {:#?} ", matches.value_of("version_id"));
+            } else {
+                println!("add new version with id: {:?} ", "default_version_id");
+            }
+        }
+        if let Some(matches) = matches.subcommand_matches("directory"){
+            if matches.is_present("version_id"){
+                let path = matches.value_of("version_id").unwrap();
+                println!("add new version with id: {:#?} ", matches.value_of("version_id"));
+            } else {
+                println!("add new version with id: {:?} ", "default_version_id");
+            }
+        }
+    }
 
     match matches.subcommand(){
         _ => {}
@@ -184,18 +287,18 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     //     None => Ok(()),
     // }
 
-    match matches.subcommand_matches("version"){
-        Some(version_subcommand) => match version_subcommand.subcommand_matches("add"){
-            none => (),
-            version_id =>{
-                let repo_path = matches.value_of_os("repo").unwrap(); //+default
-                create_local_repo(PathBuf::from(repo_path));
-                println!("repo added");
-            } ,
-            _ => ()
-        } 
-        _ => ()
-    } 
+    // match matches.subcommand_matches("version"){
+    //     Some(version_subcommand) => match version_subcommand.subcommand_matches("add"){
+    //         none => (),
+    //         version_id =>{
+    //             let repo_path = matches.value_of_os("repo").unwrap(); //+default
+    //             create_local_repo(PathBuf::from(repo_path));
+    //             println!("repo added");
+    //         } ,
+    //         _ => ()
+    //     }
+    //     _ => ()
+    // }
 
     // if matches.is_present("init"){
     //     println!("test {:?}", matches);//.value_of("init"));
