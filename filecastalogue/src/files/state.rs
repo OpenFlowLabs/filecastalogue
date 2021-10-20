@@ -4,6 +4,8 @@ use crate::{access_repo_file_error, error::{Error, ErrorKind,
         OffendingAction}, meta::{blob::model::Blob, state::model::State}};
 use crate::{files::{RepoFile}};
 
+pub trait RepoStateFile: RepoFile + StateProvider {}
+
 pub trait StateProvider {
     fn get_state_ref(self: &mut Self) -> FcResult<&mut State>;
     fn set_state(self: &mut Self, state: State)
@@ -39,6 +41,18 @@ pub struct StateFile {
 }
 
 impl StateFile {
+
+    /// Construct with an empty State.
+    pub fn new() -> Self {
+        Self::from_state(State::new())
+    }
+
+    /// Construct directly from the specified State.
+    pub fn from_state(state: State) -> Self {
+        Self {
+            state: state
+        }
+    }
 
     /// Create a StateFile struct from a blob provided by a Read.
     ///
@@ -107,3 +121,5 @@ impl StateProvider for StateFile {
     }
 
 }
+
+impl RepoStateFile for StateFile {}

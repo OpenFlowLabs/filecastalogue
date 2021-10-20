@@ -8,6 +8,7 @@ pub mod state;
 pub mod hashable;
 pub mod tracked_ordinary_blob_collection;
 pub mod index_collection;
+pub mod state_collection;
 
 pub struct AccessRepoFileErrorPayload {
     pub offending_action: OffendingAction,

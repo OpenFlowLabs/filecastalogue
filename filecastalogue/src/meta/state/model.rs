@@ -6,3 +6,11 @@ use super::super::version::model::Version;
 pub struct State {
     pub versions: HashMap<String, Version>
 }
+
+impl State {
+    pub fn new() -> Self {
+        Self {
+            versions: HashMap::new(),
+        }
+    }
+}
