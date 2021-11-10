@@ -1,3 +1,9 @@
+use crate::access_repo_file_error;
+use crate::error::WrappedError;
+use crate::error::Error;
+use crate::error::ErrorKind;
+use crate::files::AccessRepoFileErrorPayload;
+use crate::files::OffendingAction;
 use crate::meta::blob::model::Blob;
 use crate::{error::FcResult, meta::index::model::Index};
 use std::convert::TryInto;
@@ -108,8 +114,15 @@ impl RepoFile for IndexFile {
     /// Serialize the index as we're currently holding it to a Write.
     fn save(self: &mut Self, writeable: &mut (dyn Write)) -> FcResult<()> {
         let blob: Blob = self.index.clone().try_into()?;
-        writeable.write(&blob)?;
-        Ok(())
+        match writeable.write(&blob) {
+            Ok(_) => Ok(()),
+            Err(error) => Err(access_repo_file_error!(
+                OffendingAction::SavingRepoFile,
+                context => "Trying to save index to a writeable.",
+                variety => "Index",
+                wrapped => WrappedError::Io(error)
+            ))
+        }
     }
 }
 
