@@ -1,10 +1,9 @@
 use std::ffi::OsString;
 use std::{ffi::OsStr, io::Read};
 use crate::error::FcResult;
+use crate::files::state_collection::StateFileCollection;
 use crate::journal;
-use crate::files::RepoFile;
 use crate::files::index_collection::IndexFileCollection;
-use crate::files::state::StateProvider;
 use crate::files::tracked_ordinary_blob_collection::TrackedOrdinaryBlobFileCollection;
 use crate::meta::file_aspects::aspects::directory::TrackableDirectoryAspects;
 use crate::meta::file_aspects::aspects::non_existing::TrackableNonExistingAspects;
@@ -20,13 +19,13 @@ use crate::meta::version::model::Version;
 
 pub struct Repo<
     // Handler: FiniteStreamHandler,
-    StateFile: RepoFile + StateProvider,
+    StateFile: StateFileCollection,
     Indexes: IndexFileCollection,
     Blobs: TrackedOrdinaryBlobFileCollection,
     Journal: journal::Journal
     >
     {
-        pub state_file: StateFile,
+        pub state_collection: StateFile,
         pub indexes: Indexes,
         pub blobs: Blobs,
         pub journal: Journal
@@ -47,26 +46,27 @@ pub struct Repo<
 impl<
     'rpo,
     // Handler: FiniteStreamHandler,
-    StateFile: RepoFile + StateProvider,
+    StateCollection: StateFileCollection,
     Indexes: IndexFileCollection,
     Blobs: TrackedOrdinaryBlobFileCollection,
     Journal: journal::Journal
-    > Repo<StateFile, Indexes, Blobs, Journal> {
+    > Repo<StateCollection, Indexes, Blobs, Journal> {
         pub fn new(
-            state_file: StateFile,
+            state_collection: StateCollection,
             indexes: Indexes,
             blobs: Blobs,
             journal: Journal,
-        ) -> Repo<StateFile, Indexes, Blobs, Journal> {
+        ) -> Repo<StateCollection, Indexes, Blobs, Journal> {
             Repo {
-                state_file: state_file,
+                state_collection,
                 indexes: indexes,
                 blobs: blobs,
                 journal: journal
             }
         }
         pub fn has_version(self: &'rpo mut Self, id: &str) -> FcResult<bool> {
-            Ok(self.state_file.get_state_ref()?.clone().has_version(id))
+            let mut state_file = self.state_collection.get_state_file()?;
+            Ok(state_file.get_state_ref()?.clone().has_version(id))
         }
 
         pub fn add_version(self: &'rpo mut Self, id: &str)
@@ -79,14 +79,15 @@ impl<
 
             let mut version = Version::new();
             let index_file = self.indexes.create_unwritten_empty_index_file_box();
-            // TODO [api]: `&mut *index_file` definitely leaves room for improvement.
             let hash = self.indexes.put_index_file(index_file)?;
             // TODO [api]: `&hash`, even though the hash is consumed by `set_index_id`. Either
             //  take a value only or decide whether AsRef is appropriate, or some other sugar.
             version.set_index_id(&hash);
-            self.state_file.get_state_ref()?.add_version(id, version)?;
+            let mut state_file = self.state_collection.get_state_file()?;
+            state_file.get_state_ref()?.add_version(id, version)?;
 
             // TODO: Saving state?
+            self.state_collection.put_state_file(state_file)?;
 
             Ok(self)
         }
@@ -105,7 +106,8 @@ impl<
             file_path: OsString,
             trackable_aspects: TrackableNonExistingAspects,
         ) -> FcResult<&'rpo mut Self> {
-            let mut version = self.state_file
+            let mut state_file  = self.state_collection.get_state_file()?;
+            let mut version = state_file
                 .get_state_ref()?
                 .get_version(version_id)?;
             let mut index_file = match version.get_index_id() {
@@ -121,9 +123,10 @@ impl<
             )?;
             let hash = self.indexes.put_index_file(index_file)?;
             version.set_index_id(&hash);
-            self.state_file.get_state_ref()?.put_version(version_id, version);
+            state_file.get_state_ref()?.put_version(version_id, version);
 
             // TODO: Saving state?
+            self.state_collection.put_state_file(state_file)?;
 
             Ok(self)
         }
@@ -177,8 +180,8 @@ impl<
             version_id: &str,
             file_list: &mut (dyn RepoExportedFileList)
         ) -> FcResult<&'rpo mut Self> {
-
-            let version = self.state_file
+            let mut state_file = self.state_collection.get_state_file()?;
+            let version = state_file
                 .get_state_ref()?
                 .get_version(version_id)?;
             let index_id = match version.get_index_id() {

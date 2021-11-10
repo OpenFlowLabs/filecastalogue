@@ -1,10 +1,18 @@
-use clap::{App, Arg, SubCommand, 
+use clap::{App, Arg, SubCommand,
     crate_authors, crate_description, crate_name, crate_version
 };
-use std::{env::current_dir, ffi::OsString, fs::File, io, path::PathBuf};
-use filecastalogue::{error::Error, files::{tracked_ordinary_blob_collection::MiscTrackedOrdinaryBlobFileCollection,
-index_collection::MiscIndexFileCollection, state::StateFile},
-journal::OptimisticDummyJournal, opaque_collection_handlers::LocalDir, repo::Repo};
+use std::{env::current_dir, ffi::OsString, io, path::PathBuf};
+use filecastalogue::{
+    error::Error, 
+    files::{
+        index_collection::MiscIndexFileCollection,
+        state_collection::MiscStateFileCollection,
+        tracked_ordinary_blob_collection::MiscTrackedOrdinaryBlobFileCollection
+    },
+    journal::OptimisticDummyJournal,
+    opaque_collection_handlers::LocalDir,
+    repo::Repo
+};
 
 const ABOUT_REPO: &str =
 "Path to the repo directory. Defaults to the current directory.";
@@ -18,7 +26,7 @@ fn create_local_repo
 (repo_path: PathBuf)
 -> Result<
     Repo<
-        StateFile,
+        MiscStateFileCollection<LocalDir>,
         MiscIndexFileCollection<LocalDir>,
         MiscTrackedOrdinaryBlobFileCollection<LocalDir>,
         OptimisticDummyJournal
@@ -29,12 +37,8 @@ fn create_local_repo
     let blob_dir_path = PathBuf::from(&repo_path).join(OsString::from("blobs"));
     // Indexes go into the same directory as blobs.
     let index_dir_path = PathBuf::from(&repo_path).join(OsString::from("blobs"));
-    let state_file_path = PathBuf::from(&repo_path).join(OsString::from("state.json"));
-    let state_file = StateFile::from_existing(
-        &mut File::open(&state_file_path)?
-    )?;
     Ok(Repo::new(
-        state_file,
+        MiscStateFileCollection::new(LocalDir::new(&repo_path), OsString::from("state.json")),
         MiscIndexFileCollection::new(LocalDir::new(&index_dir_path)),
         // TODO [prio:critical]: repo_path is actually wrong here,
         // it's just there to test the typing atm.
