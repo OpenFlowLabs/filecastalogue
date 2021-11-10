@@ -12,6 +12,6 @@
 /// that.
 
 /// The state file's name in fileoid repos.
-pub(crate) const STATE_FILE_NAME: &str = "state.son";
+pub(crate) const STATE_FILE_NAME: &str = "state.json";
 /// The name of the directory where the blobs are in fileoid repos.
 pub(crate) const BLOBS_DIR_NAME: &str = "blobs";
