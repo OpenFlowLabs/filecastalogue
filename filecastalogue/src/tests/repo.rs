@@ -5,7 +5,6 @@ use crate::{
     meta::{
         file_aspects::aspects::non_existing::TrackableNonExistingAspects,
         repo_exported_file_list::model::RepoExportedVecFileList,
-        version::model::Version
     },
     tests::test_fixtures::repo::NON_EXISTENT_VERSION_ID,
     tests::test_fixtures
@@ -22,7 +21,6 @@ fn has_version_returns_false_when_repo_does_not_have_version() -> FcResult<()> {
 #[test]
 fn add_version_succeeds() -> FcResult<()> {
     let version_id = "added_version";
-    let version = Version::new();
     
     let mut repo = test_fixtures::repo::create_minimal_repo_struct()?;
     repo.add_version(version_id)?;
@@ -35,7 +33,6 @@ fn add_version_succeeds() -> FcResult<()> {
 #[test]
 fn track_non_existing_succeeds() -> FcResult<()> {
     let version_id = "version_with_non_existing_file";
-    let version = Version::new();
     let file_path = OsString::from("/this/does/not/exist");
     let trackable_aspects = TrackableNonExistingAspects::new();
     
