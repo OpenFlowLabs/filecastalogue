@@ -1,14 +1,16 @@
 use std::ffi::OsString;
-
-use crate::{
-    error::FcResult,
-    meta::{
-        file_aspects::aspects::non_existing::TrackableNonExistingAspects,
-        repo_exported_file_list::model::RepoExportedVecFileList,
-    },
-    tests::test_fixtures::repo::NON_EXISTENT_VERSION_ID,
-    tests::test_fixtures
-};
+use crate::error::ErrorKind;
+use crate::error::FcResult;
+use crate::meta::file_aspects::aspects::non_existing::TrackableNonExistingAspects;
+use crate::meta::repo_exported_file_list::model::RepoExportedVecFileList;
+use crate::tests::TEST_CONF::MINIMAL_REPO_SITE;
+// Instead of importing all fixtures directly, we prefix
+// calls to fixtures with `test_fixtures`, to make things clearer.
+use crate::tests::test_fixtures;
+// For as long as constants aren't used regularly in the code being
+// tested, dropping the "prefix" idea for them is worth the shorter
+// statements.
+use crate::tests::test_fixtures::repo::NON_EXISTENT_VERSION_ID;
 
 #[test]
 fn has_version_returns_false_when_repo_does_not_have_version() -> FcResult<()> {
@@ -23,7 +25,20 @@ fn add_version_succeeds() -> FcResult<()> {
     let version_id = "added_version";
     
     let mut repo = test_fixtures::repo::create_minimal_repo_struct()?;
-    repo.add_version(version_id)?;
+    match repo.add_version(version_id) {
+        Ok(_) => Ok(()),
+        Err(error) => match error.kind {
+            ErrorKind::RepoFileOperationFailed => {
+                let mut error = error;
+                error.context = format!(
+                    "{} Directory path: {:?}",
+                    error.context,
+                    MINIMAL_REPO_SITE.get_repo_path()?);
+                Err(error)
+            },
+            _ => Err(error)
+        }
+    }?;
     
     assert_eq!(repo.has_version(version_id)?, true);
     Ok(())
