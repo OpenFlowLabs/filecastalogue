@@ -1,6 +1,4 @@
-use core::fmt;
-use std::error::Error;
-use crate::error::FcResult;
+use crate::error::{Error, ErrorKind, FcResult, KeyValuePayload, WrappedError};
 use super::{index::{IndexFile, RepoIndexFile}};
 use std::ffi::OsStr;
 use crate::opaque_collection_handlers::OpaqueCollectionHandler;
@@ -80,7 +78,14 @@ impl<
             OsStr::new(&hash))?;
         // TODO: This doesn't look right. ^^"
         let mut index_file = index_file;
-        index_file.save(&mut writeable)?;
-        Ok(hash)
+        match index_file.save(&mut writeable) {
+            Ok(_) => Ok(hash),
+            Err(error) => Err(error!(
+                ErrorKind::PuttingFileIntoCollectionFailed,
+                "Putting index file into collection.",
+                payload!("File name: ", Box::new(hash.clone())),
+                WrappedError::Fc(Box::new(error))
+            ))
+        }
     }
 }

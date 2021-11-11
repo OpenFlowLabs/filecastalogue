@@ -81,6 +81,7 @@ pub enum ErrorKind {
     DoubleDotFileName,
     PathDoesNotExistInCollection,
     TestSetupSafetyCheckFailed,
+    PuttingFileIntoCollectionFailed,
     Io,
     Serde
 }
@@ -95,6 +96,7 @@ impl ErrorKind {
             ErrorKind::UntrackedFile => "Path for which there is no file tracked encountered.",
             ErrorKind::DoubleDotFileName => "Double-dot (..) file name encountered.",
             ErrorKind::PathDoesNotExistInCollection => "Path doesn't exist in collection.",
+            ErrorKind::PuttingFileIntoCollectionFailed => "Putting file into collection failed.",
             ErrorKind::TestSetupSafetyCheckFailed => "Test setup safety check failed.",
             ErrorKind::Io => "Standard IO Error: std::io::Error.",
             ErrorKind::Serde => "Error with JSON (de)serialization: serde_json::Error.",
