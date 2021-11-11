@@ -1,5 +1,4 @@
 use std::ffi::OsString;
-use crate::error::ErrorKind;
 use crate::error::FcResult;
 use crate::meta::file_aspects::aspects::non_existing::TrackableNonExistingAspects;
 use crate::meta::repo_exported_file_list::model::RepoExportedVecFileList;
@@ -19,16 +18,20 @@ fn has_version_returns_false_when_repo_does_not_have_version() -> FcResult<()> {
     Ok(())
 }
 
+// TODO: Using `::create_minimal_repo_struct` and then `.get_blob_dir_path` is
+//  a test maintenance hazard. Perhaps `::create_minimal_repo_struct` should
+// return some additional info (e.g. a struct that has the repo and some meta
+// data), or `MINIMAL_REPO_SITE` should be what houses
+// `create_minimal_repo_struct` (that actually sounds preferable).
 /// Happy path testing of `Repo::add_version`.
 #[test]
 fn add_version_succeeds() -> FcResult<()> {
     let version_id = "added_version";
-    
     let mut repo = test_fixtures::repo::create_minimal_repo_struct()?;
     let add_version_result = repo.add_version(version_id);    
     assert_eq!(add_version_result.is_err(), false, "{}, {}. {}, {:?}.",
         "Error when trying to add version: ", add_version_result.err().unwrap(),
-        "Directory path: ", MINIMAL_REPO_SITE.get_repo_path()?
+        "Blob dir path: ", MINIMAL_REPO_SITE.get_blob_dir_path()?
     );
     
     assert_eq!(repo.has_version(version_id)?, true);
