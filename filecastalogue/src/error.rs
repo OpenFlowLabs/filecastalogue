@@ -281,9 +281,8 @@ impl Payload for &str {}
 #[macro_export] 
 macro_rules! payload {
     ($($key:expr, $value:expr),*) => {
-        let tmp_payload = KeyValuePayload {}
-        $(tmp_payload.store.insert($key, $value))*
-        tmp_payload
+        KeyValuePayload::new()
+        $(.add($key, $value))*
     }
 }
 
