@@ -25,20 +25,11 @@ fn add_version_succeeds() -> FcResult<()> {
     let version_id = "added_version";
     
     let mut repo = test_fixtures::repo::create_minimal_repo_struct()?;
-    match repo.add_version(version_id) {
-        Ok(_) => Ok(()),
-        Err(error) => match error.kind {
-            ErrorKind::RepoFileOperationFailed => {
-                let mut error = error;
-                error.context = format!(
-                    "{} Directory path: {:?}",
-                    error.context,
-                    MINIMAL_REPO_SITE.get_repo_path()?);
-                Err(error)
-            },
-            _ => Err(error)
-        }
-    }?;
+    let add_version_result = repo.add_version(version_id);    
+    assert_eq!(add_version_result.is_err(), false, "{}, {}. {}, {:?}.",
+        "Error when trying to add version: ", add_version_result.err().unwrap(),
+        "Directory path: ", MINIMAL_REPO_SITE.get_repo_path()?
+    );
     
     assert_eq!(repo.has_version(version_id)?, true);
     Ok(())
