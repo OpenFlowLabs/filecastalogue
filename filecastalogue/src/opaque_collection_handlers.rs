@@ -1,5 +1,4 @@
-use std::{ffi::{OsStr, OsString}, fmt::Display, fs::{File, create_dir},
-io::{Read, Write}, path::{Path, PathBuf}};
+use std::{ffi::{OsStr, OsString}, fmt::Display, fs::{File, OpenOptions, create_dir}, io::{Read, Write}, path::{Path, PathBuf}};
 use crate::{error::{Error, ErrorKind, ErrorPathBuf, FcResult, Payload}};
 
 #[derive(Debug)]
@@ -74,10 +73,11 @@ impl LocalDir {
         }
     }
 
-    fn get_file<NameRef: AsRef<OsStr>>(&self, name: NameRef) -> FcResult<File> {
+    fn get_file<NameRef: AsRef<OsStr>>(&self, name: NameRef, options: &mut OpenOptions) -> FcResult<File> {
         let path = self.get_file_path(name)?;
         match path.exists() {
-            true => Ok(File::open(path.to_owned())?),
+            true => Ok(options.open(path.to_owned())?
+            ),
             false => Err(error!(
                 ErrorKind::PathDoesNotExistInCollection,
                 "Getting a file from a LocalDir collection handler.",
@@ -161,12 +161,12 @@ impl OpaqueCollectionHandler for LocalDir
 
     fn get_file_readable(&self, name: &OsStr)
     -> FcResult<Box<(dyn Read)>> {
-        Ok(Box::new(self.get_file(name)?))
+        Ok(Box::new(self.get_file(name, OpenOptions::new().read(true))?))
     }
 
     fn get_file_writeable(&self, name: &OsStr)
     -> FcResult<Box<(dyn Write)>> {
-        Ok(Box::new(self.get_file(name)?))
+        Ok(Box::new(self.get_file(name, OpenOptions::new().write(true))?))
     }
 
     fn collection_exists(self: &mut Self) -> bool {
