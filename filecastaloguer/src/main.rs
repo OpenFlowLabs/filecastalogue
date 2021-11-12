@@ -67,7 +67,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     //let default_path: PathBuf = PathBuf::new();
 
-    //TODO cli autocompletion
+    //TODO [prio:candy]: cli autocompletion
 
     let matches = App::new(crate_name!())
         .version(crate_version!())
@@ -106,26 +106,30 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         //         .arg(Arg::with_name("id")),
         // )
         .subcommand(
-            SubCommand::with_name("new").subcommand(
-                SubCommand::with_name("repository").arg(
-                    Arg::with_name("path")
-                        //.short("p")
-                        .takes_value(true),
+            SubCommand::with_name("new")
+                // TODO [prio:v0.1]: Implement.
+                .subcommand(
+                    SubCommand::with_name("repository").arg(
+                        Arg::with_name("path")
+                            //.short("p")
+                            .takes_value(true),
+                    ),
                 ),
-            ), //start test area
-               // .subcommand(SubCommand::with_name("test")
-               //     .arg(Arg::with_name("path")
-               //         .short("p")
-               //         .takes_value(true)
-               //     )
-               //     .arg(Arg::with_name("test")
-               //         .short("t")
-               //     )
-               // )
-               //end test area
+                //start test area
+                // .subcommand(SubCommand::with_name("test")
+                //     .arg(Arg::with_name("path")
+                //         .short("p")
+                //         .takes_value(true)
+                //     )
+                //     .arg(Arg::with_name("test")
+                //         .short("t")
+                //     )
+                // )
+                //end test area
         )
         .subcommand(
             SubCommand::with_name("add")
+                // TODO [prio:v0.1]: Implement.
                 .subcommand(
                     SubCommand::with_name("version").arg(
                         //IMPORTANT major changes incoming with version stuff
@@ -134,6 +138,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                             .takes_value(true), //.required(true) //???
                     ),
                 )
+                // TODO [prio:v0.1]: Implement.
                 .subcommand(
                     SubCommand::with_name("file").arg(
                         Arg::with_name("path")
@@ -142,6 +147,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                             .required(true),
                     ),
                 )
+                // TODO [prio:v0.1]: Implement.
                 .subcommand(
                     SubCommand::with_name("directory").arg(
                         Arg::with_name("path")
@@ -151,6 +157,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                     ),
                 ),
         )
+        // TODO [prio:backlog]: Clarify and evaluate.
         .subcommand(
             SubCommand::with_name("update").subcommand(
                 SubCommand::with_name("version").arg(
@@ -164,6 +171,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         .subcommand(
             SubCommand::with_name("insert").subcommand(
                 SubCommand::with_name("version")
+                    // TODO [prio:v0.1]: Implement.
                     .subcommand(
                         SubCommand::with_name("before")
                             .arg(
@@ -177,6 +185,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                                     .required(true),
                             ),
                     )
+                    // TODO [prio:v0.1]: Implement.
                     .subcommand(
                         SubCommand::with_name("after")
                             .arg(
@@ -192,25 +201,36 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                     ),
             ),
         )
+        // TODO [prio:backlog]: Lay out requirements and implement.
         .subcommand(SubCommand::with_name("report"))
         .subcommand(
-            SubCommand::with_name("remove").subcommand(
-                SubCommand::with_name("version").arg(
-                    Arg::with_name("version_id")
-                        .takes_value(true)
-                        .required(true),
+            SubCommand::with_name("remove")
+                // TODO [prio:v0.1]: Implement.
+                .subcommand(
+                    SubCommand::with_name("version").arg(
+                        Arg::with_name("version_id")
+                            .takes_value(true)
+                            .required(true),
+                    ),
                 ),
-            ),
         )
+        // TODO [prio:v0.1]: Implement.
         .subcommand(SubCommand::with_name("apply"))
         .subcommand(
             SubCommand::with_name("list")
                 //.subcommand(SubCommand::with_name("versions"))
+                // TODO [prio:v0.1]: Clarify what exactly each of them
+                // is supposed to do and implement accordingly.
                 .subcommands(vec![
+                    // [aziroshin]: Maybe this could show just the versions?
                     SubCommand::with_name("versions"),
+                    // [aziroshin]: Whilst this could show the files grouped
+                    //              by versions? In that case, it could also
+                    //              just be made a flag for `list`, though.
                     SubCommand::with_name("files"),
                 ]),
         )
+        // TODO [prio:backlog]: Implement.
         .subcommand(
             SubCommand::with_name("dublicate").subcommand(
                 SubCommand::with_name("version")
@@ -227,7 +247,12 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             ),
         )
         .subcommand(
-            SubCommand::with_name("delete").subcommand(
+            SubCommand::with_name("delete")
+            // TODO [prio:backlog]: Implement.
+            //  The "backlog" prio reflects the notion that for v0.1,
+            //  it might be acceptable to just have to delete the
+            //  repo dir by hand.
+            .subcommand(
                 SubCommand::with_name("repository").arg(
                     Arg::with_name("path")
                         //.short("p")
