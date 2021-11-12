@@ -1,5 +1,5 @@
 use std::ffi::OsString;
-use crate::error::FcResult;
+use crate::error::{ErrorPathBuf, FcResult};
 use crate::meta::file_aspects::aspects::non_existing::TrackableNonExistingAspects;
 use crate::meta::repo_exported_file_list::model::RepoExportedVecFileList;
 use crate::tests::TEST_CONF::MINIMAL_REPO_SITE;
@@ -31,7 +31,11 @@ fn add_version_succeeds() -> FcResult<()> {
     let add_version_result = repo.add_version(version_id);    
     assert_eq!(add_version_result.is_err(), false, "{}, {}. {}, {:?}.",
         "Error when trying to add version: ", add_version_result.err().unwrap(),
-        "Blob dir path: ", MINIMAL_REPO_SITE.get_blob_dir_path()?
+        // Abusing ErrorPathBuf here to benefit from its detection and warning
+        // system when it encounters paths which aren't convertible by `.as_str`,
+        // and instead have to be converted lossily.
+        // NOTE: I feel this has not been sufficiently tested, so, beware.
+        "Blob dir path: ", ErrorPathBuf::from(MINIMAL_REPO_SITE.get_blob_dir_path()?)
     );
     
     assert_eq!(repo.has_version(version_id)?, true);
