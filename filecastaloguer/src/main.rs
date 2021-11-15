@@ -4,10 +4,10 @@ use clap::*;
 use filecastalogue::{
     error::Error,
     files::{
-        blobs::drivers::local::LocalBlobFileCollection,
-        indexes::drivers::local::LocalIndexFileCollection, state::drivers::local::StateFile,
+        index_collection::MiscIndexFileCollection,
+        state_collection::MiscStateFileCollection,
+        tracked_ordinary_blob_collection::MiscTrackedOrdinaryBlobFileCollection
     },
-    finite_stream_handlers::LocalFile,
     journal::OptimisticDummyJournal,
     opaque_collection_handlers::LocalDir,
     repo::Repo,
@@ -34,10 +34,10 @@ fn create_local_repo(
     repo_path: PathBuf,
 ) -> Result<
     Repo<
-        StateFile<LocalFile>,
-        LocalIndexFileCollection<LocalDir>,
-        LocalBlobFileCollection<LocalDir>,
-        OptimisticDummyJournal,
+        MiscStateFileCollection<LocalDir>,
+        MiscIndexFileCollection<LocalDir>,
+        MiscTrackedOrdinaryBlobFileCollection<LocalDir>,
+        OptimisticDummyJournal
     >,
     Error,
 > {
