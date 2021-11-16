@@ -61,14 +61,17 @@ fn track_non_existing_succeeds() -> FcResult<()> {
         TestIDs::RepoTrackNonExistingSucceeds.as_str()
     )?;
     repo.add_version(version_id)?;
-    repo.track_non_existing(version_id, file_path, trackable_aspects)?;
+    // TODO: Fix Some(Serde(Error("key must be a string"...
+    repo.track_non_existing(version_id, file_path.clone(), trackable_aspects)?;
 
     let mut file_list = RepoExportedVecFileList::new();
     repo.get_files(version_id, &mut file_list)?;
 
     // TODO: Implement checking `file_list` to see whether we're now tracking
     // the non-existing file.
-    todo!();
+    assert!(file_list.into_iter().any(
+        |tracked_file| -> bool { tracked_file.get_path() == file_path }
+    ));
 
     Ok(())
 }
