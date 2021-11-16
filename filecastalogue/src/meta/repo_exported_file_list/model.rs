@@ -57,12 +57,16 @@ impl RepoExportedVecFileList {
             vec: vec!()
         }
     }
+
+    fn consume_as_vec(self: Self) -> Vec<Box<dyn RepoExportedFile>> {
+        self.vec
+    }
 }
 
 impl RepoExportedFileList for RepoExportedVecFileList {
 
     fn consume_as_vec(self: Box<Self>) -> Vec<Box<dyn RepoExportedFile>> {
-        self.vec
+        Self::consume_as_vec(*self)
     }
 
     fn add_non_existing(
@@ -233,6 +237,17 @@ impl Iterator for IntoIter {
 
     fn next(&mut self) -> Option<Self::Item> {
         return self.files.next()
+    }
+}
+
+impl IntoIterator for RepoExportedVecFileList {
+    type Item = Box<dyn RepoExportedFile>;
+    type IntoIter = IntoIter;
+
+    fn into_iter(self) -> Self::IntoIter {
+        Self::IntoIter::new(
+            self.consume_as_vec()
+        )
     }
 }
 
