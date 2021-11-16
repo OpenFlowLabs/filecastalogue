@@ -1,4 +1,5 @@
 
+mod test_ids;
 #[allow(dead_code, non_snake_case)]
 mod TEST_CONF;
 #[allow(dead_code, non_snake_case)]

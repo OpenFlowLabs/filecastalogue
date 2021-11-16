@@ -1,5 +1,4 @@
-use std::{env::current_dir, fs::{File, create_dir_all}, io::Write,
-path::{Path, PathBuf}};
+use std::{env::current_dir, fs::{File, Metadata, create_dir_all, remove_dir_all}, io::Write, path::{Path, PathBuf}};
 use crate::error::{ErrorKind, Error, FcResult};
 
 /// A way to join paths so that the joined element won't overwrite the base.
@@ -76,29 +75,29 @@ impl<Base: BaseTestDir> RepoTestSite<Base> {
     /// This is basically like a ::new method, but not for an object,
     /// but the repo test site on the filesystem, which, if you so
     /// want, is our true state.
-    pub(crate) fn set_up(&self) -> FcResult<PathBuf> {
+    pub(crate) fn set_up(&self, test_id: &str) -> FcResult<PathBuf> {
+        self.base_dir.set_up(test_id)?;
 
-        let base_path = self.base_dir.get_path()?;
+        let base_path = self.base_dir.get_path(test_id)?;
         let repo_path = self.conf.get_repo_path(&base_path)?;
         
-        self.base_dir.set_up()?;
         create_dir_all(self.conf.get_repo_path(&base_path)?)?;
         create_dir_all(self.conf.get_blob_dir_path(&base_path)?)?;
-        self.set_up_state_file()?;
+        self.set_up_state_file(test_id)?;
         
         Ok(repo_path)
     }
 
-    pub(crate) fn get_state_file_path(&self) -> FcResult<PathBuf> {
-        self.conf.get_state_file_path(&self.base_dir.get_path()?)
+    pub(crate) fn get_state_file_path(&self, test_id: &str) -> FcResult<PathBuf> {
+        self.conf.get_state_file_path(&self.base_dir.get_path(test_id)?)
     }
 
-    pub(crate) fn get_repo_path(&self) -> FcResult<PathBuf> {
-        self.conf.get_repo_path(&self.base_dir.get_path()?)
+    pub(crate) fn get_repo_path(&self, test_id: &str) -> FcResult<PathBuf> {
+        self.conf.get_repo_path(&self.base_dir.get_path(test_id)?)
     }
 
-    pub(crate) fn get_blob_dir_path(&self) -> FcResult<PathBuf> {
-        self.conf.get_blob_dir_path(&self.base_dir.get_path()?)
+    pub(crate) fn get_blob_dir_path(&self, test_id: &str) -> FcResult<PathBuf> {
+        self.conf.get_blob_dir_path(&self.base_dir.get_path(test_id)?)
     }
 
     /// Get a Write for the state file for this RepoTestSite.
@@ -106,19 +105,19 @@ impl<Base: BaseTestDir> RepoTestSite<Base> {
     /// Calling this assumes that our .set_up method has already
     /// been called. Without that, the file might not exist and
     /// and and this will error out.
-    pub(crate) fn get_state_writeable(&self) -> FcResult<File> {
-        Ok(File::create(self.get_state_file_path()?)?)
+    pub(crate) fn get_state_writeable(&self, test_id: &str) -> FcResult<File> {
+        Ok(File::create(self.get_state_file_path(test_id)?)?)
     }
 
-    pub(crate) fn get_state_readable(&self) -> FcResult<File> {
-        Ok(File::open(self.get_state_file_path()?)?)
+    pub(crate) fn get_state_readable(&self, test_id: &str) -> FcResult<File> {
+        Ok(File::open(self.get_state_file_path(test_id)?)?)
     }
 
     /// Sets up our state.json with the configured contents.
     /// 
     /// This is intended to be called in our .set_up method.
-    pub(crate) fn set_up_state_file(&self) -> FcResult<()> {
-        self.get_state_writeable()?.write_all( self.state.as_bytes())?;
+    pub(crate) fn set_up_state_file(&self, test_id: &str) -> FcResult<()> {
+        self.get_state_writeable(test_id)?.write_all( self.state.as_bytes())?;
         Ok(())
     }
 }
@@ -130,8 +129,8 @@ impl<Base: BaseTestDir> RepoTestSite<Base> {
 pub(crate) struct TmpTestDir {}
 
 pub trait BaseTestDir {
-    fn get_path(&self) -> FcResult<PathBuf>;
-    fn set_up(&self) -> FcResult<PathBuf>;
+    fn get_path(&self, name: &str) -> FcResult<PathBuf>;
+    fn set_up(&self, name: &str) -> FcResult<PathBuf>;
 }
 
 impl TmpTestDir {
@@ -140,12 +139,35 @@ impl TmpTestDir {
     /// 
     /// Doesn't create the dir and performs no checks whatsoever.
     /// This is intended to be used by whatever does that.
-    fn get_path(&self) -> FcResult<PathBuf> {
-        Ok(get_tmp_dir_path()?.safe_join("test")?)
+    fn get_path(&self, name: &str) -> FcResult<PathBuf> {
+        Ok(get_tmp_dir_path()?
+            .safe_join("test")?
+            .safe_join(name)?
+        )
     }
 
-    fn set_up(&self) -> FcResult<PathBuf> {
-        let path = self.get_path()?;
+    fn set_up(&self, name: &str) -> FcResult<PathBuf> {
+        let path = self.get_path(name)?;
+        println!("{}, {:?}", "[DEBUG] Trying TearDown of: ", self.get_path(name)?);
+        self.tear_down(name)?;
+        if self.get_path(name)?.exists() {
+            println!("[DEBUG] TearDown failed.");
+            let dir_read_minimal_repo = std::fs::read_dir("/data/development/software/filecastalogue/filecastalogue/filecastalogue/.tmp/test/minimal_repo")?;
+            let dir_read_test = std::fs::read_dir("/data/development/software/filecastalogue/filecastalogue/filecastalogue/.tmp/test")?;
+            let dir_read_tmp = std::fs::read_dir("/data/development/software/filecastalogue/filecastalogue/filecastalogue/.tmp")?;
+            for item in dir_read_minimal_repo {
+                println!("Dir item found in ./tmp/test/minimal_repo: {:?}", item.unwrap().path())
+            }
+            for item in dir_read_test {
+                println!("Dir item found in ./tmp/test: {:?}", item.unwrap().path())
+            }
+            for item in dir_read_tmp {
+                println!("Dir item found in ./tmp: {:?}", item.unwrap().path())
+            }
+        }
+        if !self.get_path(name)?.exists() {
+            println!("[DEBUG] TearDown succeeded.");
+        }
         create_dir_all(&path)?;
         if path.is_dir() {
             Ok(path)
@@ -158,6 +180,28 @@ impl TmpTestDir {
             ))
         }
     }
+
+    /// Removes the dir and all its contents.
+    /// 
+    /// You don't normally have to call this, as `set_up` will do that anyway.
+    /// Only calling it from `set_up` has the advantage that it enables an
+    /// approach where each test gets its own dir, leaving its contents for
+    /// post-test analysis.
+    fn tear_down(&self, name: &str) -> FcResult<()> {
+        let path = self.get_path(name)?;
+        match remove_dir_all(path) {
+            Ok(_) => Ok(()),
+            Err(error) => match error.kind() {
+                // If it doesn't exist, that's fine. No need to fuss over it.
+                // If there ever is a need, refactor this function's name and
+                // break the dir-removal out into a `tear_down` down function
+                // that doesn't catch this, and then use that from here, with
+                // the catch.
+                std::io::ErrorKind::NotFound => Ok(()),
+                _ => Err(error.into())
+            },
+        }
+    }
 }
 
 impl BaseTestDir for TmpTestDir {
@@ -166,12 +210,12 @@ impl BaseTestDir for TmpTestDir {
     /// 
     /// Doesn't create the dir and performs no checks whatsoever.
     /// This is intended to be used by whatever does that.
-    fn get_path(&self) -> FcResult<PathBuf> {
-        self.get_path()
+    fn get_path(&self, name: &str) -> FcResult<PathBuf> {
+        self.get_path(name)
     }
 
-    fn set_up(&self) -> FcResult<PathBuf> {
-        self.set_up()
+    fn set_up(&self, name: &str) -> FcResult<PathBuf> {
+        self.set_up(name)
     }
 }
 
