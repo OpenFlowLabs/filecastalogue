@@ -148,26 +148,7 @@ impl TmpTestDir {
 
     fn set_up(&self, name: &str) -> FcResult<PathBuf> {
         let path = self.get_path(name)?;
-        println!("{}, {:?}", "[DEBUG] Trying TearDown of: ", self.get_path(name)?);
         self.tear_down(name)?;
-        if self.get_path(name)?.exists() {
-            println!("[DEBUG] TearDown failed.");
-            let dir_read_minimal_repo = std::fs::read_dir("/data/development/software/filecastalogue/filecastalogue/filecastalogue/.tmp/test/minimal_repo")?;
-            let dir_read_test = std::fs::read_dir("/data/development/software/filecastalogue/filecastalogue/filecastalogue/.tmp/test")?;
-            let dir_read_tmp = std::fs::read_dir("/data/development/software/filecastalogue/filecastalogue/filecastalogue/.tmp")?;
-            for item in dir_read_minimal_repo {
-                println!("Dir item found in ./tmp/test/minimal_repo: {:?}", item.unwrap().path())
-            }
-            for item in dir_read_test {
-                println!("Dir item found in ./tmp/test: {:?}", item.unwrap().path())
-            }
-            for item in dir_read_tmp {
-                println!("Dir item found in ./tmp: {:?}", item.unwrap().path())
-            }
-        }
-        if !self.get_path(name)?.exists() {
-            println!("[DEBUG] TearDown succeeded.");
-        }
         create_dir_all(&path)?;
         if path.is_dir() {
             Ok(path)
