@@ -13,25 +13,25 @@ use super::super::TEST_CONF;
 pub(crate) const NON_EXISTENT_VERSION_ID: &str = "0";
 pub(crate) const MINIMAL_REPO_PARENT_PATH: &str = ".";
 
-pub(in crate::tests) fn create_minimal_repo_struct()
+pub(in crate::tests) fn create_minimal_repo_struct(test_id: &str)
 -> FcResult<Repo<
     MiscStateFileCollection<LocalDir>,
     MiscIndexFileCollection<LocalDir>,
     MiscTrackedOrdinaryBlobFileCollection<LocalDir>,
     OptimisticDummyJournal
 >> {
-    TEST_CONF::MINIMAL_REPO_SITE.set_up()?;
+    TEST_CONF::MINIMAL_REPO_SITE.set_up(test_id)?;
     Ok(Repo::new(
         // TODO 1: Create mock state file.
         MiscStateFileCollection::new(LocalDir::new(
-            TEST_CONF::MINIMAL_REPO_SITE.get_repo_path()?), OsString::from(STATE_FILE_NAME)),
+            TEST_CONF::MINIMAL_REPO_SITE.get_repo_path(test_id)?), OsString::from(STATE_FILE_NAME)),
         // TODO 2: Create mock index collection.
         MiscIndexFileCollection::new(LocalDir::new(
-            TEST_CONF::MINIMAL_REPO_SITE.get_blob_dir_path()?)),
+            TEST_CONF::MINIMAL_REPO_SITE.get_blob_dir_path(test_id)?)),
         // TODO 3: Create mock blobs collection.
         MiscTrackedOrdinaryBlobFileCollection::new(
             LocalDir::new(
-                TEST_CONF::MINIMAL_REPO_SITE.get_blob_dir_path()?)),
+                TEST_CONF::MINIMAL_REPO_SITE.get_blob_dir_path(test_id)?)),
         OptimisticDummyJournal::new(),
     ))
 }
