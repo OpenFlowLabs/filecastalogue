@@ -1,7 +1,8 @@
 use std::collections::HashMap;
 use crate::error::{Error, ErrorKind};
-use crate::meta::state::model::{State, Version};
-use crate::meta::state::accessor::{
+use crate::meta::state::model::State;
+use crate::meta::version::model::Version;
+use crate::meta::state::error::{
     VersionEntryDoesNotExistErrorPayload,
     VersionEntryAlreadyExistsErrorPayload
 };
@@ -16,11 +17,9 @@ r#"{
         }
     }
 }"#;
-#[allow(dead_code)]
+
 pub(crate) const VERSION_ENTRY_ALREADY_EXISTS_ERROR_CONTEXT_DESCRIPTION: &str =
 "This is a mock of the error for the case when a version entry already exists.";
-
-#[allow(dead_code)]
 pub(crate) const VERSION_ENTRY_DOES_NOT_EXIST_ERROR_DESCRIPTION: &str = 
 "This is a mock of the error for the case where a version entry doesn't exist.";
 
@@ -28,38 +27,32 @@ pub(in crate::tests) fn create_minimal_state_struct() -> State {
     let mut mock_versions: HashMap<String, Version> = HashMap::new();
     mock_versions.insert(
         String::from(MINIMAL_STATE_VERSION_ID),
-        Version {
-            index: String::from("MOCKHASH")
-        }
+        Version::new_with_index("MOCKHASH")
     );
     State {
         versions: mock_versions
     }
 }
 
-#[allow(dead_code, non_snake_case)]
 pub(in crate::tests) fn create_minimal_state_VersionEntryAlreadyExistsError()
 -> Error {
     error!(
         ErrorKind::VersionEntryAlreadyExists,
         VERSION_ENTRY_ALREADY_EXISTS_ERROR_CONTEXT_DESCRIPTION,
-        payload => Some(Box::new(VersionEntryAlreadyExistsErrorPayload {
+        payload => VersionEntryAlreadyExistsErrorPayload {
             version_id: String::from(MINIMAL_STATE_VERSION_ID),
-            version_struct: Version {
-                index: String::from("MOCKHASH")
-            }
-        }))
+            version_struct: Version::new_with_index("MOCKHASH")
+        }
     )
 }
 
-#[allow(dead_code, non_snake_case)]
 pub(in crate::tests) fn create_minimal_state_VersionEntryDoesNotExistError() 
 -> Error {
     error!(
         ErrorKind::VersionEntryDoesNotExist,
         VERSION_ENTRY_DOES_NOT_EXIST_ERROR_DESCRIPTION,
-        payload => Some(Box::new(VersionEntryDoesNotExistErrorPayload {
+        payload => VersionEntryDoesNotExistErrorPayload {
                 version_id: String::from(MINIMAL_STATE_VERSION_ID),
-        }))
+        }
     )
 }

@@ -43,3 +43,86 @@ package System {
 
 @enduml
 ```
+
+
+# Entities
+
+```plantuml
+@startuml
+
+abstract Node {
+    .. Definition ..
+    A computer which has a configuration,
+    an Operating System and a filesystem.
+    
+    This name is used to define on whom
+    state operations are performed on.
+}
+
+class Repo {
+    .. Definition ..
+    This class encapsulates the place
+    where all the state and files
+    are located.
+}
+
+
+
+class StateFile {
+    .. Definition ..
+    This file defines the Datamodel 
+    used to save the indexes and version
+    of one Node
+}
+
+class State {
+    .. Definition ..
+    The state defines the state of a system
+    with all versions that can be applied to the Node
+}
+
+interface StateProvider
+
+
+class Index {
+    .. Definition ..
+    The Index is the list of files
+    and their aspects that describes
+    one version of the state
+}
+
+class IndexFile {
+    .. Definition ..
+    This describes the datamodel
+    Used to serialize the index as a blob
+    istself inside the Repo.
+    
+    This blob is linked inside the state datamodel
+}
+
+class LocalIndexFileCollection
+
+interface IndexFileCollection
+
+interface IndexProvider
+
+
+
+interface Journal
+
+class LocalJournal
+
+abstract Version
+
+abstract Blob {
+    .. Definition ..
+    A blob is a file saved inside the Repo 
+    and linked to a index
+}
+
+interface BlobFileCollection
+
+interface BlobFile
+
+@enduml
+```

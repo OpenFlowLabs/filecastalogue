@@ -1,0 +1,9 @@
+SCRIPT_VARS_DIR="$(dirname ${0})"
+
+# Defaults
+TOOLCHAIN=""
+
+# Your local vars (create the file if it doesn't exist)
+# This is useful for overrides, e.g. 
+# for something like this: CARGO="cargo +nightly"
+. "${SCRIPT_VARS_DIR}"/.local.vars
