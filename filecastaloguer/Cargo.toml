@@ -3,9 +3,18 @@ name = "filecastaloguer"
 version = "0.1.0"
 authors = ["Aziroshin <aziroshin@gmx.net>"]
 edition = "2018"
+default-run = "filecastaloguer"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-clap = "2.33.3"
+clap = "2.*"
+#clap-nested = "0.4.0"
+#clap_generate = "3.0.0-beta.4"
 filecastalogue = { path = "../filecastalogue" }
+
+[dev-dependencies]
+assert_cmd = "2.*"
+predicates = "2.*"
+tempfile = "3.*"
+tempdir = "0.*"

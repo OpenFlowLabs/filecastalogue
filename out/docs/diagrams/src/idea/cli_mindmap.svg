@@ -1,0 +1,388 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="1063.5417px" preserveAspectRatio="none" style="width:610px;height:1063px;background:#00000000;" version="1.1" viewBox="0 0 610 1063" width="610.4167px" zoomAndPan="magnify"><defs><linearGradient id="gnbsfqv4hoj7f0" x1="50%" x2="50%" y1="0%" y2="100%"><stop offset="0%" stop-color="#4DABF5"/><stop offset="100%" stop-color="#2196F3"/></linearGradient><filter height="300%" id="fnbsfqv4hoj7f" width="300%" x="-1" y="-1"><feGaussianBlur result="blurOut" stdDeviation="2.0833333333333335"/><feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/><feOffset dx="4.166666666666667" dy="4.166666666666667" in="blurOut2" result="blurOut3"/><feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/></filter></defs><g><rect fill="url(#gnbsfqv4hoj7f0)" filter="url(#fnbsfqv4hoj7f)" height="56.2174" rx="13.0208" ry="13.0208" style="stroke:#2196F3;stroke-width:1.5625;" width="55.2083" x="10.4167" y="503.0843"/><text fill="#FFFFFF" font-family="Verdana" font-size="12.5" lengthAdjust="spacing" textLength="13.5417" x="31.25" y="535.5204">cli</text><rect fill="url(#gnbsfqv4hoj7f0)" filter="url(#fnbsfqv4hoj7f)" height="56.2174" rx="13.0208" ry="13.0208" style="stroke:#2196F3;stroke-width:1.5625;" width="64.5833" x="117.7083" y="464.5589"/><text fill="#FFFFFF" font-family="Verdana" font-size="12.5" lengthAdjust="spacing" textLength="22.9167" x="138.5417" y="496.995">dev</text><rect fill="url(#gnbsfqv4hoj7f0)" filter="url(#fnbsfqv4hoj7f)" height="56.2174" rx="13.0208" ry="13.0208" style="stroke:#2196F3;stroke-width:1.5625;" width="67.7083" x="234.375" y="59.3587"/><text fill="#FFFFFF" font-family="Verdana" font-size="12.5" lengthAdjust="spacing" textLength="26.0417" x="255.2083" y="91.7948">new</text><rect fill="url(#gnbsfqv4hoj7f0)" filter="url(#fnbsfqv4hoj7f)" height="56.2174" rx="13.0208" ry="13.0208" style="stroke:#2196F3;stroke-width:1.5625;" width="135.4167" x="354.1667" y="20.8333"/><text fill="#FFFFFF" font-family="Verdana" font-size="12.5" lengthAdjust="spacing" textLength="93.75" x="375" y="53.2694">(optional)path</text><path d="M302.0833,87.4674 L312.5,87.4674 C328.125,87.4674 328.125,48.9421 343.75,48.9421 L354.1667,48.9421 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><rect fill="url(#gnbsfqv4hoj7f0)" filter="url(#fnbsfqv4hoj7f)" height="56.2174" rx="13.0208" ry="13.0208" style="stroke:#2196F3;stroke-width:1.5625;" width="107.2917" x="354.1667" y="97.8841"/><text fill="#FFFFFF" font-family="Verdana" font-size="12.5" lengthAdjust="spacing" textLength="65.625" x="375" y="130.3202">recursive?</text><path d="M302.0833,87.4674 L312.5,87.4674 C328.125,87.4674 328.125,125.9928 343.75,125.9928 L354.1667,125.9928 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><path d="M182.2917,492.6676 L192.7083,492.6676 C208.3333,492.6676 208.3333,87.4674 223.9583,87.4674 L234.375,87.4674 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><rect fill="url(#gnbsfqv4hoj7f0)" filter="url(#fnbsfqv4hoj7f)" height="56.2174" rx="13.0208" ry="13.0208" style="stroke:#2196F3;stroke-width:1.5625;" width="66.6667" x="234.375" y="251.9857"/><text fill="#FFFFFF" font-family="Verdana" font-size="12.5" lengthAdjust="spacing" textLength="25" x="255.2083" y="284.4218">add</text><rect fill="url(#gnbsfqv4hoj7f0)" filter="url(#fnbsfqv4hoj7f)" height="56.2174" rx="13.0208" ry="13.0208" style="stroke:#2196F3;stroke-width:1.5625;" width="88.5417" x="353.125" y="174.9349"/><text fill="#FFFFFF" font-family="Verdana" font-size="12.5" lengthAdjust="spacing" textLength="46.875" x="373.9583" y="207.371">version</text><path d="M301.0417,280.0944 L311.4583,280.0944 C327.0833,280.0944 327.0833,203.0436 342.7083,203.0436 L353.125,203.0436 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><rect fill="url(#gnbsfqv4hoj7f0)" filter="url(#fnbsfqv4hoj7f)" height="56.2174" rx="13.0208" ry="13.0208" style="stroke:#2196F3;stroke-width:1.5625;" width="123.9583" x="353.125" y="251.9857"/><text fill="#FFFFFF" font-family="Verdana" font-size="12.5" lengthAdjust="spacing" textLength="82.2917" x="373.9583" y="284.4218">file(ordinary)</text><path d="M301.0417,280.0944 L311.4583,280.0944 C327.0833,280.0944 327.0833,280.0944 342.7083,280.0944 L353.125,280.0944 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><rect fill="url(#gnbsfqv4hoj7f0)" filter="url(#fnbsfqv4hoj7f)" height="56.2174" rx="13.0208" ry="13.0208" style="stroke:#2196F3;stroke-width:1.5625;" width="58.3333" x="353.125" y="329.0365"/><text fill="#FFFFFF" font-family="Verdana" font-size="12.5" lengthAdjust="spacing" textLength="16.6667" x="373.9583" y="361.4726">dir</text><path d="M301.0417,280.0944 L311.4583,280.0944 C327.0833,280.0944 327.0833,357.1452 342.7083,357.1452 L353.125,357.1452 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><path d="M182.2917,492.6676 L192.7083,492.6676 C208.3333,492.6676 208.3333,280.0944 223.9583,280.0944 L234.375,280.0944 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><rect fill="url(#gnbsfqv4hoj7f0)" filter="url(#fnbsfqv4hoj7f)" height="56.2174" rx="13.0208" ry="13.0208" style="stroke:#2196F3;stroke-width:1.5625;" width="60.4167" x="234.375" y="444.6126"/><text fill="#FFFFFF" font-family="Verdana" font-size="12.5" lengthAdjust="spacing" textLength="18.75" x="255.2083" y="477.0487">list</text><rect fill="url(#gnbsfqv4hoj7f0)" filter="url(#fnbsfqv4hoj7f)" height="56.2174" rx="13.0208" ry="13.0208" style="stroke:#2196F3;stroke-width:1.5625;" width="67.7083" x="346.875" y="406.0872"/><text fill="#FFFFFF" font-family="Verdana" font-size="12.5" lengthAdjust="spacing" textLength="26.0417" x="367.7083" y="438.5234">files</text><path d="M294.7917,472.7214 L305.2083,472.7214 C320.8333,472.7214 320.8333,434.196 336.4583,434.196 L346.875,434.196 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><rect fill="url(#gnbsfqv4hoj7f0)" filter="url(#fnbsfqv4hoj7f)" height="56.2174" rx="13.0208" ry="13.0208" style="stroke:#2196F3;stroke-width:1.5625;" width="95.8333" x="346.875" y="483.138"/><text fill="#FFFFFF" font-family="Verdana" font-size="12.5" lengthAdjust="spacing" textLength="54.1667" x="367.7083" y="515.5741">versions</text><path d="M294.7917,472.7214 L305.2083,472.7214 C320.8333,472.7214 320.8333,511.2467 336.4583,511.2467 L346.875,511.2467 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><path d="M182.2917,492.6676 L192.7083,492.6676 C208.3333,492.6676 208.3333,472.7214 223.9583,472.7214 L234.375,472.7214 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><rect fill="url(#gnbsfqv4hoj7f0)" filter="url(#fnbsfqv4hoj7f)" height="56.2174" rx="13.0208" ry="13.0208" style="stroke:#2196F3;stroke-width:1.5625;" width="128.125" x="234.375" y="560.1888"/><text fill="#FFFFFF" font-family="Verdana" font-size="12.5" lengthAdjust="spacing" textLength="86.4583" x="255.2083" y="592.6249">status/report</text><text fill="#000000" font-family="sans-serif" font-size="14.5833" lengthAdjust="spacing" textLength="101.0417" x="428.125" y="593.3462">diff file version</text><path d="M362.5,588.2975 L372.9167,588.2975 C388.5417,588.2975 388.5417,588.2975 404.1667,588.2975 L414.5833,588.2975 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><path d="M182.2917,492.6676 L192.7083,492.6676 C208.3333,492.6676 208.3333,588.2975 223.9583,588.2975 L234.375,588.2975 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><rect fill="url(#gnbsfqv4hoj7f0)" filter="url(#fnbsfqv4hoj7f)" height="56.2174" rx="13.0208" ry="13.0208" style="stroke:#2196F3;stroke-width:1.5625;" width="135.4167" x="234.375" y="695.7113"/><text fill="#FFFFFF" font-family="Verdana" font-size="12.5" lengthAdjust="spacing" textLength="93.75" x="255.2083" y="728.1474">remove/delete</text><rect fill="url(#gnbsfqv4hoj7f0)" filter="url(#fnbsfqv4hoj7f)" height="56.2174" rx="13.0208" ry="13.0208" style="stroke:#2196F3;stroke-width:1.5625;" width="60.4167" x="421.875" y="618.6605"/><text fill="#FFFFFF" font-family="Verdana" font-size="12.5" lengthAdjust="spacing" textLength="18.75" x="442.7083" y="651.0966">file</text><path d="M369.7917,723.82 L380.2083,723.82 C395.8333,723.82 395.8333,646.7692 411.4583,646.7692 L421.875,646.7692 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><rect fill="url(#gnbsfqv4hoj7f0)" filter="url(#fnbsfqv4hoj7f)" height="56.2174" rx="13.0208" ry="13.0208" style="stroke:#2196F3;stroke-width:1.5625;" width="88.5417" x="421.875" y="695.7113"/><text fill="#FFFFFF" font-family="Verdana" font-size="12.5" lengthAdjust="spacing" textLength="46.875" x="442.7083" y="728.1474">version</text><path d="M369.7917,723.82 L380.2083,723.82 C395.8333,723.82 395.8333,723.82 411.4583,723.82 L421.875,723.82 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><rect fill="url(#gnbsfqv4hoj7f0)" filter="url(#fnbsfqv4hoj7f)" height="56.2174" rx="13.0208" ry="13.0208" style="stroke:#2196F3;stroke-width:1.5625;" width="107.2917" x="421.875" y="772.762"/><text fill="#FFFFFF" font-family="Verdana" font-size="12.5" lengthAdjust="spacing" textLength="65.625" x="442.7083" y="805.1982">repository</text><path d="M369.7917,723.82 L380.2083,723.82 C395.8333,723.82 395.8333,800.8708 411.4583,800.8708 L421.875,800.8708 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><path d="M182.2917,492.6676 L192.7083,492.6676 C208.3333,492.6676 208.3333,723.82 223.9583,723.82 L234.375,723.82 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><rect fill="url(#gnbsfqv4hoj7f0)" filter="url(#fnbsfqv4hoj7f)" height="56.2174" rx="13.0208" ry="13.0208" style="stroke:#2196F3;stroke-width:1.5625;" width="127.0833" x="234.375" y="831.2337"/><text fill="#FFFFFF" font-family="Verdana" font-size="12.5" lengthAdjust="spacing" textLength="85.4167" x="255.2083" y="863.6698">commit/apply</text><text fill="#000000" font-family="sans-serif" font-size="14.5833" lengthAdjust="spacing" textLength="160.4167" x="427.0833" y="864.3911">apply version changes</text><path d="M361.4583,859.3424 L371.875,859.3424 C387.5,859.3424 387.5,859.3424 403.125,859.3424 L413.5417,859.3424 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><path d="M182.2917,492.6676 L192.7083,492.6676 C208.3333,492.6676 208.3333,859.3424 223.9583,859.3424 L234.375,859.3424 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><rect fill="url(#gnbsfqv4hoj7f0)" filter="url(#fnbsfqv4hoj7f)" height="56.2174" rx="13.0208" ry="13.0208" style="stroke:#2196F3;stroke-width:1.5625;" width="88.5417" x="234.375" y="908.2845"/><text fill="#FFFFFF" font-family="Verdana" font-size="12.5" lengthAdjust="spacing" textLength="46.875" x="255.2083" y="940.7206">version</text><rect fill="url(#gnbsfqv4hoj7f0)" filter="url(#fnbsfqv4hoj7f)" height="56.2174" rx="13.0208" ry="13.0208" style="stroke:#2196F3;stroke-width:1.5625;" width="155.2083" x="375" y="908.2845"/><text fill="#FFFFFF" font-family="Verdana" font-size="12.5" lengthAdjust="spacing" textLength="113.5417" x="395.8333" y="940.7206">like git checkout?</text><path d="M322.9167,936.3932 L333.3333,936.3932 C348.9583,936.3932 348.9583,936.3932 364.5833,936.3932 L375,936.3932 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><path d="M182.2917,492.6676 L192.7083,492.6676 C208.3333,492.6676 208.3333,936.3932 223.9583,936.3932 L234.375,936.3932 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><path d="M65.625,531.193 L76.0417,531.193 C91.6667,531.193 91.6667,492.6676 107.2917,492.6676 L117.7083,492.6676 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><rect fill="url(#gnbsfqv4hoj7f0)" filter="url(#fnbsfqv4hoj7f)" height="56.2174" rx="13.0208" ry="13.0208" style="stroke:#2196F3;stroke-width:1.5625;" width="81.25" x="117.7083" y="985.3353"/><text fill="#FFFFFF" font-family="Verdana" font-size="12.5" lengthAdjust="spacing" textLength="39.5833" x="138.5417" y="1017.7714">admin</text><rect fill="url(#gnbsfqv4hoj7f0)" filter="url(#fnbsfqv4hoj7f)" height="56.2174" rx="13.0208" ry="13.0208" style="stroke:#2196F3;stroke-width:1.5625;" width="154.1667" x="251.0417" y="985.3353"/><text fill="#FFFFFF" font-family="Verdana" font-size="12.5" lengthAdjust="spacing" textLength="112.5" x="271.875" y="1017.7714">use configfiles???</text><path d="M198.9583,1013.444 L209.375,1013.444 C225,1013.444 225,1013.444 240.625,1013.444 L251.0417,1013.444 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><path d="M65.625,531.193 L76.0417,531.193 C91.6667,531.193 91.6667,1013.444 107.2917,1013.444 L117.7083,1013.444 " fill="none" style="stroke:#A80036;stroke-width:1.0416666666666667;"/><!--MD5=[cc232a102bf409f47b0b59a587835bf0]
+@startmindmap cli_mindmap
+!theme materia
+
+* cli
+** dev
+*** new
+**** (optional)path
+**** recursive?
+*** add
+**** version
+**** file(ordinary)
+**** dir
+*** list
+**** files
+**** versions
+*** status/report
+****_ diff file version
+*** remove/delete
+**** file
+**** version
+**** repository
+*** commit/apply
+****_ apply version changes
+*** version
+**** like git checkout?
+** admin
+*** use configfiles???
+
+@endmindmap
+
+@startmindmap cli_mindmap
+
+
+
+skinparam backgroundColor transparent
+skinparam useBetaStyle false
+
+
+
+
+
+
+
+skinparam defaultFontName       "Verdana"
+skinparam defaultFontSize       12
+skinparam dpi                   100
+skinparam shadowing             true
+skinparam roundcorner           8
+skinparam ParticipantPadding    40
+skinparam BoxPadding            40
+skinparam Padding               10
+skinparam ArrowColor            #666
+skinparam stereotype {
+    CBackgroundColor #fff
+    CBorderColor #cccccc
+    ABackgroundColor #70bf73
+    ABorderColor #3D8C40
+    IBackgroundColor #B7161C
+    IBorderColor #b7161c
+    EBackgroundColor #ffad33
+    EBorderColor #CC7A00
+    NBackgroundColor #b052c0
+    NBorderColor #7D1F8D
+}
+skinparam title {
+	FontColor	                 #2196F3
+	BorderColor	                 #cccccc
+	FontSize	    	         20
+	BorderRoundCorner            8
+	BorderThickness 	         1
+	BackgroundColor              #fff-#fff
+}
+
+skinparam legend {
+	BackgroundColor #fff
+	BorderColor #cccccc
+	FontColor #222
+}
+
+skinparam swimlane {
+	BorderColor #9C27B0
+	BorderThickness 2
+	TitleBackgroundColor  #fff-#fff
+	TitleFontColor #2196F3
+}
+
+
+skinparam activity {
+		FontColor #FFF
+	BorderColor #2196F3
+	BackgroundColor #4dabf5-#2196F3
+	BarColor #4CAF50
+	StartColor #9C27B0
+	EndColor #9C27B0
+	DiamondBackgroundColor #FFF-#fff
+  	DiamondBorderColor #cccccc
+	DiamondFontColor #222
+}
+
+
+skinparam participant {
+		FontColor #FFF
+	BorderColor #2196F3
+	BackgroundColor #4dabf5-#2196F3
+	ParticipantBorderThickness 2
+}
+
+
+skinparam actor {
+		FontColor #FFF
+	BorderColor #2196F3
+	BackgroundColor #4dabf5-#2196F3
+	FontColor #222
+}
+
+
+skinparam arrow {
+	Thickness 3
+	Color #2196F3
+	FontColor #222
+}
+
+
+skinparam sequence {
+	BorderColor #2196F3
+	TitleFontColor #2196F3
+	BackgroundColor transparent
+	StartColor #2196F3
+	EndColor #2196F3
+	BoxBackgroundColor #fff
+	BoxBorderColor #666
+	BoxFontColor #222
+	LifeLineBorderColor #cccccc
+	LifeLineBorderThickness 2
+	LifeLineBackgroundColor #fff
+	GroupBorderColor #666
+	GroupFontColor #222
+	GroupHeaderFontColor #9C27B0
+	DividerBackgroundColor #FFF-#fff
+    DividerBorderColor #666
+    DividerBorderThickness 2
+    DividerFontColor #222
+	ReferenceBackgroundColor transparent
+	ReferenceBorderColor #666
+	ReferenceFontColor #222
+	ReferenceHeaderFontColor #9C27B0
+}
+
+
+skinparam partition {
+	BorderColor #2196F3
+	FontColor #2196F3
+	BackgroundColor transparent
+}
+
+
+skinparam collections {
+		FontColor #FFF
+	BorderColor #2196F3
+	BackgroundColor #4dabf5-#2196F3
+}
+
+
+skinparam control {
+		FontColor #FFF
+	BorderColor #2196F3
+	BackgroundColor #4dabf5-#2196F3
+	FontColor #222
+}
+
+
+skinparam entity {
+		FontColor #FFF
+	BorderColor #2196F3
+	BackgroundColor #4dabf5-#2196F3
+	FontColor #222
+}
+
+
+skinparam boundary {
+		FontColor #FFF
+	BorderColor #2196F3
+	BackgroundColor #4dabf5-#2196F3
+	FontColor #222
+}
+
+
+skinparam agent {
+	BackgroundColor #orange
+	BorderColor #999999
+	FontColor #333333
+}
+
+
+skinparam note {
+	BorderThickness 1
+	BackgroundColor #b052c0-#9C27B0
+	BorderColor #9C27B0
+	FontColor #FFF
+}
+
+
+skinparam artifact {
+	BackgroundColor #FFF-#fff
+	BorderColor #666
+	FontColor #666
+}
+
+
+skinparam component {
+		FontColor #FFF
+	BorderColor #2196F3
+	BackgroundColor #4dabf5-#2196F3
+}
+
+
+skinparam interface {
+	BackgroundColor  #B7161C
+	BorderColor  #e51c23
+	FontColor #222
+}
+
+
+skinparam storage {
+	BackgroundColor #ffad33-#ff9800
+  	BorderColor #ff9800
+	FontColor #FFF
+}
+
+
+skinparam node {
+	BackgroundColor #fff-#fff
+	BorderColor #222
+	FontColor #222
+}
+
+
+skinparam cloud {
+	BackgroundColor #F2FCFE-#eeeeee
+	BorderColor #F2FCFE
+	FontColor #222
+}
+
+
+skinparam database {
+		FontColor #FFF
+	BorderColor #2196F3
+	BackgroundColor #4dabf5-#2196F3
+	FontColor #222
+}
+
+
+skinparam class {
+		FontColor #FFF
+	BorderColor #2196F3
+	BackgroundColor #4dabf5-#2196F3
+	HeaderBackgroundColor #2196F3-#1a78c2
+	StereotypeFontColor #222
+	BorderThickness 1
+	AttributeFontColor #fff
+	AttributeFontSize 11
+}
+
+
+skinparam object {
+		FontColor #FFF
+	BorderColor #2196F3
+	BackgroundColor #4dabf5-#2196F3
+	StereotypeFontColor #222
+	BorderThickness 1
+	AttributeFontColor #222
+	AttributeFontSize 11
+}
+
+
+skinparam usecase {
+		FontColor #FFF
+	BorderColor #2196F3
+	BackgroundColor #4dabf5-#2196F3
+	BorderThickness 2
+	StereotypeFontColor #2196F3
+}
+
+
+skinparam rectangle {
+	FontColor #2196F3
+	BackgroundColor #fff-#fff
+	BorderThickness 2
+	StereotypeFontColor #2196F3
+}
+
+
+skinparam package {
+		FontColor #FFF
+	BorderColor #2196F3
+	BackgroundColor #4dabf5-#2196F3
+	BackgroundColor #fff-#fff
+	BorderThickness 2
+}
+
+
+skinparam folder {
+	BackgroundColor #FFF-#fff
+  	BorderColor #ff9800
+	FontColor #ff9800
+	BorderThickness 2
+}
+
+
+skinparam frame {
+	BackgroundColor #FFF-#fff
+  	BorderColor #9C27B0
+	FontColor #9C27B0
+	BorderThickness 2
+}
+
+
+skinparam state {
+		FontColor #FFF
+	BorderColor #2196F3
+	BackgroundColor #4dabf5-#2196F3
+	BorderColor #1a78c2
+	StartColor #9C27B0
+	EndColor #9C27B0
+	AttributeFontColor #222
+	AttributeFontSize 11
+}
+
+
+skinparam queue {
+		FontColor #FFF
+	BorderColor #2196F3
+	BackgroundColor #4dabf5-#2196F3
+}
+
+
+skinparam card {
+	BackgroundColor #b052c0-#9C27B0
+	BorderColor #9C27B0
+	FontColor #FFF
+}
+
+
+skinparam file {
+	BackgroundColor #fff-#fff
+	BorderColor #666
+	FontColor #666
+
+}
+
+
+
+* cli
+** dev
+*** new
+**** (optional)path
+**** recursive?
+*** add
+**** version
+**** file(ordinary)
+**** dir
+*** list
+**** files
+**** versions
+*** status/report
+****_ diff file version
+*** remove/delete
+**** file
+**** version
+**** repository
+*** commit/apply
+****_ apply version changes
+*** version
+**** like git checkout?
+** admin
+*** use configfiles???
+
+@endmindmap
+
+PlantUML version 1.2021.7(Sun May 23 14:40:07 CEST 2021)
+(GPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Default Encoding: UTF-8
+Language: en
+Country: US
+--></g></svg>
