@@ -1,4 +1,11 @@
-use std::{collections::HashMap, error::Error as StdError, fmt::{Debug, Display}, io, path::PathBuf};
+use std::{
+    collections::HashMap,
+    error::Error as StdError,
+    fmt::{Debug, Display},
+    io,
+    path::PathBuf,
+    backtrace::Backtrace
+};
 
 pub trait Payload: Debug + Display {}
 
@@ -168,6 +175,7 @@ pub struct Error {
     pub context: String,
     pub payload: Option<Box<dyn Payload>>,
     pub wrapped: Option<WrappedError>,
+    pub backtrace: Backtrace,
 }
 
 impl Error {
@@ -181,7 +189,8 @@ impl Error {
             kind: kind,
             context: context.as_ref().to_owned(),
             payload: payload,
-            wrapped: wrapped
+            wrapped: wrapped,
+            backtrace: Backtrace::capture()
         }
     }
 }

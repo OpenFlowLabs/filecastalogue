@@ -1,3 +1,5 @@
+#![feature(backtrace)]
+
 pub mod globals;
 #[macro_use]
 pub mod error;
