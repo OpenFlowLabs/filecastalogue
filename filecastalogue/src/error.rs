@@ -18,12 +18,12 @@ impl ConversionWasLossy {
             ConversionWasLossy::Yes => concat!(
                 "[WARNING: The path might be rendered incorrectly in this ",
                 "error message, as lossless conversion to unicode wasn't ",
-                "possible.] "
+                "possible.] " // <- trailing space.
             ),
             // Since we want to be able to drop this enum directly into
-            // error messages, the lossless case should behave as closely,
-            // as possible to not existing while still being a str.
-            // Hence the "".
+            // error messages, the lossless case should behave as closely
+            // as possible to not existing while still being a str,
+            // hence the "".
             ConversionWasLossy::No => "",
         }
     }
