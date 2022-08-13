@@ -185,13 +185,17 @@ impl Error {
         payload: Option<Box<dyn Payload>>,
         wrapped: Option<WrappedError>
     ) -> Self {
-        Self {
+        // TODO: Look into pretty-printing errors the `?` (has to
+        // work in tests).
+        let error = Self {
             kind: kind,
             context: context.as_ref().to_owned(),
             payload: payload,
             wrapped: wrapped,
             backtrace: Backtrace::capture()
-        }
+        };
+        println!("{:#?}", &error);
+        return error
     }
 }
 
