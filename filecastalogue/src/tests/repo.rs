@@ -1,5 +1,5 @@
 use std::ffi::OsString;
-use crate::error::{ErrorPathBuf, FcResult};
+use crate::error::{ErrorPathBuf, FcTestResult};
 use crate::meta::file_aspects::aspects::non_existing::TrackableNonExistingAspects;
 use crate::meta::repo_exported_file_list::model::RepoExportedVecFileList;
 use crate::tests::TEST_CONF::MINIMAL_REPO_SITE;
@@ -14,12 +14,12 @@ use crate::tests::test_ids::TestIDs;
 use std::backtrace::Backtrace;
 
 #[test]
-fn has_version_returns_false_when_repo_does_not_have_version() -> FcResult<()> {
+fn has_version_returns_false_when_repo_does_not_have_version() -> FcTestResult<()> {
     let mut repo = test_fixtures::repo::create_minimal_repo_struct(
         TestIDs::RepoHasVersionReturnsFalseWhenRepoDoesNotHaveVersion.as_str()
     )?;
     assert_eq!(repo.has_version(NON_EXISTENT_VERSION_ID)?, false);
-    Ok(())
+    Ok(()).into()
 }
 
 /* TODO: Using `::create_minimal_repo_struct` and then `.get_blob_dir_path` is
@@ -30,7 +30,7 @@ fn has_version_returns_false_when_repo_does_not_have_version() -> FcResult<()> {
 */
 /// Happy path testing of `Repo::add_version`.
 #[test]
-fn add_version_succeeds() -> FcResult<()> {
+fn add_version_succeeds() -> FcTestResult<()> {
     let mut repo = test_fixtures::repo::create_minimal_repo_struct(
         TestIDs::RepoAddVersionSucceeds.as_str()
     )?;
@@ -48,12 +48,12 @@ fn add_version_succeeds() -> FcResult<()> {
     );
     
     assert_eq!(repo.has_version(version_id)?, true);
-    Ok(())
+    Ok(()).into()
 }
 
 /// Comprehensive happy path testing of `Repo::track_non_existing`.
 #[test]
-fn track_non_existing_succeeds() -> FcResult<()> {
+fn track_non_existing_succeeds() -> FcTestResult<()> {
     let version_id = "version_with_non_existing_file";
     let file_path = OsString::from("/this/does/not/exist");
     let trackable_aspects = TrackableNonExistingAspects::new();
@@ -74,5 +74,5 @@ fn track_non_existing_succeeds() -> FcResult<()> {
         |tracked_file| -> bool { tracked_file.get_path() == file_path }
     ));
 
-    Ok(())
+    Ok(()).into()
 }

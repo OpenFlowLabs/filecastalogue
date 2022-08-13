@@ -1,15 +1,66 @@
-use std::{
-    collections::HashMap,
-    error::Error as StdError,
-    fmt::{Debug, Display},
-    io,
-    path::PathBuf,
-    backtrace::Backtrace
-};
+
+use std::collections::HashMap;
+use std::error::Error as StdError;
+use std::fmt::{Debug, Display};
+use std::io;
+use std::path::PathBuf;
+use std::backtrace::Backtrace;
+use std::process::Termination;
+use std::ops::FromResidual;
+use std::convert::Infallible;
+
 
 pub trait Payload: Debug + Display {}
 
 pub type FcResult<T> = std::result::Result<T, Error>;
+
+pub struct FcTestResult<T> {
+    result: FcResult<T>
+}
+
+impl<T> FcTestResult<T> {
+    fn new(result: FcResult<T>) -> Self {
+        Self {
+            result
+        }
+    }
+
+    fn print(&self) -> () {
+        let error_message = match &self.result {
+            Ok(_) => (),
+            Err(error) => println!("{:#?}", error)
+        };
+    }
+
+    fn new_and_print(result: FcResult<T>) -> Self {
+        let this = Self {
+            result
+        };
+        this.print();
+        this
+    }
+}
+
+impl<T> From<FcResult<T>> for FcTestResult<T> {
+    fn from(result: FcResult<T>) -> Self {
+        println!("FROM RESULT TO FCTESTRESULT");
+        FcTestResult::new_and_print(result)
+    }
+}
+
+impl<T: Termination> Termination for FcTestResult<T> {
+    fn report(self) -> std::process::ExitCode {
+        self.print();
+        self.result.report()
+    }
+}
+
+impl<T, E> FromResidual<Result<Infallible, E>> for FcTestResult<T>
+where Error: From<E> {
+    fn from_residual(residual: Result<Infallible, E>) -> Self {
+        FcTestResult::new(FcResult::from_residual(residual))
+    }
+}
 
 #[derive(Debug)]
 enum ConversionWasLossy {
@@ -194,7 +245,7 @@ impl Error {
             wrapped: wrapped,
             backtrace: Backtrace::capture()
         };
-        println!("{:#?}", &error);
+        // println!("{:#?}", &error);
         return error
     }
 }

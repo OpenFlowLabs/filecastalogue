@@ -1,4 +1,5 @@
 #![feature(backtrace)]
+#![feature(try_trait_v2)]
 
 pub mod globals;
 #[macro_use]
