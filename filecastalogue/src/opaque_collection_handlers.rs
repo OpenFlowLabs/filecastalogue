@@ -142,6 +142,20 @@ pub trait OpaqueCollectionHandler {
     fn collection_exists(self: &mut Self) -> bool;
     fn create_collection(self: &mut Self) -> FcResult<()>;
     fn create_collection_ignore_exists(self: &mut Self) -> FcResult<()>;
+
+    /// Returns a string containing info about the file the collection
+    /// associates with the specified name.
+    /// 
+    /// This is intended to be used by error code on call sites that wouldn't
+    /// normally have access to collection internals, in order to assemble
+    /// more useful debug messages.
+    /// 
+    /// WARNING: This might not be secure for user facing errors. Particularly
+    /// in distributed setups, carrying this output outside of the shell of the
+    /// process where it was generated could, for example, leak URL embedded
+    /// tokens used with network implementations of collections if they made
+    /// that info available for debugging using this method.
+    fn get_debug_info_for_file<NameRef: AsRef<OsStr>>(&self, name: NameRef) -> String;
 }
 
 impl OpaqueCollectionHandler for LocalDir
@@ -181,5 +195,12 @@ impl OpaqueCollectionHandler for LocalDir
     fn create_collection_ignore_exists(self: &mut Self) -> FcResult<()> {
         self.create_ignore_exists()?;
         Ok(())
+    }
+
+    /// Returns a string containing the Debug representation of the path of
+    /// the file corresponding to the specified name. If there's an error
+    /// retrieving the path, it will contain the error instead.
+    fn get_debug_info_for_file<NameRef: AsRef<OsStr>>(&self, name: NameRef) -> String {
+        format!("path: {:#?}", self.get_file_path(name))
     }
 }
