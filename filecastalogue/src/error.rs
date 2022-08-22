@@ -26,7 +26,7 @@ impl<T> FcTestResult<T> {
     }
 
     fn print(&self) -> () {
-        let error_message = match &self.result {
+        match &self.result {
             Ok(_) => (),
             Err(error) => println!("{:#?}", error)
         };
