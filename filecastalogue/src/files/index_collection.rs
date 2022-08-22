@@ -45,7 +45,6 @@ impl<
     }
 
     fn create_unwritten_empty_index_file_box(&self)
-    // This returning "IndexFileCollection" doesn't look quite right.. :p
     -> Box<(dyn RepoIndexFile)> {
         Box::new(IndexFile::new())
     }
