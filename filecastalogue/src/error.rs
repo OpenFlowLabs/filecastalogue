@@ -366,6 +366,13 @@ macro_rules! error {
             Error::new($kind, $context, Some(Box::new($payload)), Some($wrapped))
     };
     (
+        kind => $kind:expr,
+        context => $context:expr,
+        payload => $payload:expr,
+        wrapped => $wrapped:expr) => {
+            Error::new($kind, $context, Some(Box::new($payload)), Some($wrapped))
+    };
+    (
         $kind:expr,
         $context:expr) => {
             Error::new($kind, $context, None, None)
