@@ -48,7 +48,6 @@ impl<T> FcTestResult<T> {
 
 impl<T> From<FcResult<T>> for FcTestResult<T> {
     fn from(result: FcResult<T>) -> Self {
-        println!("FROM RESULT TO FCTESTRESULT");
         FcTestResult::new_and_print(result)
     }
 }
