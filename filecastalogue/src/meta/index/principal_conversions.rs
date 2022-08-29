@@ -1,5 +1,5 @@
 use std::{convert::{TryFrom, TryInto}, io::Read};
-use crate::{error::{Error}, meta::blob::model::Blob};
+use crate::{error::{Error, ErrorKind, WrappedError}, meta::blob::model::Blob};
 use super::model::Index;
 
 /// Principal conversions between Index and various other forms.
@@ -52,6 +52,16 @@ impl TryFrom<Index> for Blob {
     /// This is the one way which should be used to obtain a Blob from
     /// an Index.
     fn try_from(index: Index) -> Result<Self, Self::Error> {
-        Ok(serde_json::to_vec_pretty(&index)?.into())
+        match serde_json::to_vec_pretty(&index) {
+            Ok(index) => Ok(index.into()),
+            Err(e) => Err(error!(
+                kind => ErrorKind::RepoFileOperationFailed,
+                context => "Trying to convert Index to Blob.",
+                // NOTE [security]: This contains file paths, which are
+                //  potentially sensitive data.
+                payload => format!("{:?}", index.clone()),
+                wrapped => WrappedError::Serde(e)
+            )),
+        }
     }
 }
