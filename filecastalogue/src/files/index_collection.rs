@@ -59,7 +59,7 @@ impl<
             Ok(index_file) => Ok(Box::new(index_file)),
             Err(e) => Err(Error::new(
                 ErrorKind::RepoFileOperationFailed,
-                "Reading and deserializing the contents of\
+                "Reading and deserializing the contents of \
                 an index file from an index file collection.",
                 Some(Box::new(self.handler.get_debug_info_for_file(hash))),
                 Some(WrappedError::Fc(Box::new(e)))
