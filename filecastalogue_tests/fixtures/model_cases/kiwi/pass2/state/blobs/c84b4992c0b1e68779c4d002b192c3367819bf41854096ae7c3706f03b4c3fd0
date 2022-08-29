@@ -20,4 +20,5 @@
     },
     "/etc/resolv.conf": {
         "doesnt_exist": {}
+    }
 }
