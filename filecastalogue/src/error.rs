@@ -18,6 +18,11 @@ pub struct FcTestResult<T> {
     result: FcResult<T>
 }
 
+/// Return type for tests which enables the printing of errors with linebreaks.
+/// Use `.into` for the `Result` returned by the test to make this work,
+/// unless it's returned by `?`.
+/// A `From` implementation needs to exist for errors returned by `?`. For
+/// `FcResult` such an implementation is already provided.
 impl<T> FcTestResult<T> {
     fn new(result: FcResult<T>) -> Self {
         Self {
