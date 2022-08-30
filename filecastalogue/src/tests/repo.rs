@@ -42,6 +42,9 @@ fn add_version_succeeds() -> FcTestResult<()> {
         // system when it encounters paths which aren't convertible by `.as_str`,
         // and instead have to be converted lossily.
         // NOTE: I feel this has not been sufficiently tested, so, beware.
+        // NOTE: Filecastalogue doesn't intend to support non-unicode repo or
+        //  repo file paths (not to be confused with tracked paths), so this
+        //  level of vigilance isn't strictly required here.
         "Blob dir path: ", ErrorPathBuf::from(MINIMAL_REPO_SITE.get_blob_dir_path(
             TestIDs::RepoAddVersionSucceeds.as_str()
         )?)
