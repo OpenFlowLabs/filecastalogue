@@ -12,7 +12,6 @@ use crate::tests::test_fixtures;
 // category.
 use crate::tests::test_fixtures::repo::NON_EXISTENT_VERSION_ID;
 use crate::tests::test_ids::TestIDs;
-use std::backtrace::Backtrace;
 
 #[test]
 fn has_version_returns_false_when_repo_does_not_have_version() -> FcTestResult<()> {
