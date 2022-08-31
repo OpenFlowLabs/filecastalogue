@@ -8,7 +8,8 @@ use crate::tests::TEST_CONF::MINIMAL_REPO_SITE;
 use crate::tests::test_fixtures;
 // For as long as constants aren't used regularly in the code being
 // tested, dropping the "prefix" idea for them is worth the shorter
-// statements.
+// statements. Refactor once this gets confusing for a particular
+// category.
 use crate::tests::test_fixtures::repo::NON_EXISTENT_VERSION_ID;
 use crate::tests::test_ids::TestIDs;
 use std::backtrace::Backtrace;
