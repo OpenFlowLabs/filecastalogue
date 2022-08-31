@@ -1,10 +1,30 @@
 use std::{collections::HashMap, ffi::{OsString, OsStr}};
-use serde::{Deserialize, Serializer, Serialize, ser::SerializeMap};
+use serde::{Deserialize, Serialize};
+
 use super::super::file_aspects::enums::TrackedFileAspects;
 
-#[derive(Deserialize, Debug, Eq, PartialEq, Clone)]
+#[derive(Debug, Eq, PartialEq, Clone)]
 pub struct Index {
     pub files: HashMap<OsString, TrackedFileAspects>
+}
+
+/// The serializable version of `Index`, with `String` keys instead
+/// of `OsString`.
+/// 
+/// This deviates from the <path, aspects> top level map JSON model
+/// of the Index insofar as the map is held in the `files` attribute,
+/// which doesn't exist in the (flattened) serialized representation.
+/// 
+/// This struct is intended for (de)serialization and not any other uses.
+#[derive(Serialize, Deserialize, Debug, Eq, PartialEq, Clone)]
+pub struct UnicodePathIndex {
+    // `files` is just an attribute-shaped representation of the top level
+    // "dict" the JSON representation of the Index actually is, which is
+    // why we're using `flatten` here. That way we don't get a `files`
+    // attribute in JSON, but everything in `files` is popped right into
+    // the JSON's top level instead.
+    #[serde(flatten)]
+    pub files: HashMap<String, TrackedFileAspects>
 }
 
 impl Index {
@@ -28,28 +48,8 @@ impl Index {
     }
 }
 
-impl Serialize for Index {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
-    where
-        S: Serializer {
-        let mut serialized = serializer.serialize_map(Some(self.files.len()))?;
+
+
         
-        // Naming philosophy:
-        //   `k_` for key and `v_` for value as prefixes, followed
-        //   by a descriptive name. This seems useful, since the
-        //   struct we're implementing something for (`Index`)
-        //   is non-generic in nature and is tightly wound around very
-        //   specific domain items (a "path" key and a certain business
-        //   logic related data structure).
-        for (k_path, v_aspects) in &self.files {
-            // TODO: Investigate `serialize_entry`'s behaviour for
-            // non-unicode OsString keys. This is also a good point
-            // to look into non-unicode related improvements and
-            // error handling (at least as far as serialization is 
-            // concerned). Right now, this comes with a high potential
-            // for confusing malfunctions.
-            serialized.serialize_entry(&k_path, &v_aspects)?;
-        }
-        serialized.end()
-    }
-}
+
+//         // TODO: Write proper conversion to error::Error, so unwrap can be replaced
