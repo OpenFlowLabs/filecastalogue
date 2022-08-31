@@ -65,7 +65,6 @@ fn track_non_existing_succeeds() -> FcTestResult<()> {
         TestIDs::RepoTrackNonExistingSucceeds.as_str()
     )?;
     repo.add_version(version_id)?;
-    // TODO: Fix Some(Serde(Error("key must be a string"...
     repo.track_non_existing(version_id, file_path.clone(), trackable_aspects)?;
 
     let mut file_list = RepoExportedVecFileList::new();

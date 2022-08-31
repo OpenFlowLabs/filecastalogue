@@ -63,18 +63,18 @@ impl TryFrom<&mut (dyn Read)> for Index {
     /// or this will fail.
     fn try_from(readable: &mut (dyn Read)) -> Result<Self, Self::Error> {
         let blob: Blob = readable.try_into()?;
-        let index = blob.try_into()?;
-        Ok(index)
+        let unicode_path_index: UnicodePathIndex = blob.try_into()?;
+        Ok(unicode_path_index.into())
     }
 }
 
-impl TryFrom<Blob> for Index {
+impl TryFrom<Blob> for UnicodePathIndex {
     type Error = Error;
 
     /// Principal conversion from Blob to Index.
     /// 
     /// This is the one way which should be used to obtain a deserialized
-    /// Index from a Blob.
+    /// UnicodePathIndex from a Blob.
     /// 
     /// The Blob must be serde_json deserializable or this will fail.
     fn try_from(blob: Blob) -> Result<Self, Self::Error> {
@@ -89,15 +89,19 @@ impl TryFrom<Index> for Blob {
     /// 
     /// This is the one way which should be used to obtain a Blob from
     /// an Index.
+    /// 
+    /// This converts the paths of the Index to their unicode representation
+    /// and uses `serde_json::to_vec_pretty` to create the blob.
     fn try_from(index: Index) -> Result<Self, Self::Error> {
-        match serde_json::to_vec_pretty(&index) {
+        let unicode_path_index: UnicodePathIndex = index.into();
+        match serde_json::to_vec_pretty(&unicode_path_index) {
             Ok(index) => Ok(index.into()),
             Err(e) => Err(error!(
                 kind => ErrorKind::RepoFileOperationFailed,
                 context => "Trying to convert Index to Blob.",
                 // NOTE [security]: This contains file paths, which are
                 //  potentially sensitive data.
-                payload => format!("{:?}", index.clone()),
+                payload => format!("{:?}", unicode_path_index),
                 wrapped => WrappedError::Serde(e)
             )),
         }
