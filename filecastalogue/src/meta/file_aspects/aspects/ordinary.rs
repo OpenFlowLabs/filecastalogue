@@ -109,15 +109,15 @@ impl TrackedOrdinaryAspects {
 impl RepoExportedOrdinaryAspects {
 
     pub fn new(
-        repo_blob_hash: &str,
+        repo_blob_hash: String,
         attributes: Attributes,
         blob_provider: Box<dyn RepoExportedOrdinaryBlobProvider>
-    )-> Self {
-        Self::new(
+    ) -> Self {
+        Self {
             repo_blob_hash,
             attributes,
             blob_provider
-        )
+        }
     }
 
     pub fn from_tracked(
@@ -125,7 +125,7 @@ impl RepoExportedOrdinaryAspects {
         blob_provider: Box<dyn RepoExportedOrdinaryBlobProvider>
     ) -> Self {
         Self::new(
-            &tracked_aspects.hash,
+            tracked_aspects.hash,
             tracked_aspects.attributes,
             blob_provider
         )
