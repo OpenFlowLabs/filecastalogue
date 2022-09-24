@@ -43,7 +43,7 @@ impl Index {
 
     #[cfg(feature = "os_string_path")]
     pub fn string_from_os_string(os_string: &OsStr) -> String {
-        // TODO ]dummy-cleanup]: Proper implementation.
+        // TODO [dummy-cleanup]: Proper implementation.
         String::new()
     }
 }
