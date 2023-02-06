@@ -1,24 +1,26 @@
-use std::{ffi::{OsStr, OsString}, fmt::Display, fs::{File, OpenOptions, create_dir}, io::{Read, Write}, path::{Path, PathBuf}};
-use crate::{error::{Error, ErrorKind, ErrorPathBuf, FcResult, Payload}};
+use std::ffi::OsStr;
+use std::ffi::OsString;
+use std::io::Write;
+use std::fmt::Display;
+use std::fs::File;
+use std::fs::OpenOptions;
+use std::fs::create_dir;
+use std::io::Read;
+use std::path::Path;
+use std::path::PathBuf;
+use crate::error::ErrorKind;
+use crate::error::ErrorPathBuf;
+use crate::error::FcResult;
+use crate::error::Payload;
+use crate::error::Error;
+use crate::opaque_collection_handler::OpaqueCollectionHandler;
+use crate::opaque_collection_handler::PathDoesNotExistInCollectionPayload;
 
-#[derive(Debug)]
-pub struct PathDoesNotExistInCollectionPayload {
-    pub collection_path: PathBuf,
-    pub file_name: PathBuf
+
+
+pub struct LocalDir {
+    path: PathBuf
 }
-impl Display for PathDoesNotExistInCollectionPayload {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(
-            f, 
-            concat!(
-                "Collection path: {}, file name: {}.",
-            ),
-            ErrorPathBuf::from(self.collection_path.to_owned()),
-            ErrorPathBuf::from(self.file_name.to_owned())
-        )
-    }
-}
-impl Payload for PathDoesNotExistInCollectionPayload {}
 
 #[derive(Debug)]
 pub struct DoubleDotFileName {
@@ -34,10 +36,6 @@ impl Display for DoubleDotFileName {
     }
 }
 impl Payload for DoubleDotFileName {}
-
-pub struct LocalDir {
-    path: PathBuf
-}
 
 impl LocalDir {
     pub fn new<PathRef: AsRef<Path>>(path: PathRef) -> Self {
@@ -128,22 +126,6 @@ impl LocalDir {
     // }
 }
 
-// A collection of files of which we know nothing except that
-// it holds an unknown number (incl. 0) of files of a certain kind.
-pub trait OpaqueCollectionHandler {
-    fn has_file<NameRef: AsRef<OsStr>>(self: &mut Self, name: NameRef)
-    -> FcResult<bool>;
-    fn create_file<NameRef: AsRef<OsStr>>(&self,name: NameRef)
-    -> FcResult<()>;
-    fn get_file_readable(&self, name: &OsStr)
-    -> FcResult<Box<(dyn Read)>>;
-    fn get_file_writeable(&self, name: &OsStr)
-    -> FcResult<Box<(dyn Write)>>;
-    fn collection_exists(self: &mut Self) -> bool;
-    fn create_collection(self: &mut Self) -> FcResult<()>;
-    fn create_collection_ignore_exists(self: &mut Self) -> FcResult<()>;
-}
-
 impl OpaqueCollectionHandler for LocalDir
 {
     fn has_file<NameRef: AsRef<OsStr>>(self: &mut Self, name: NameRef)
@@ -181,5 +163,12 @@ impl OpaqueCollectionHandler for LocalDir
     fn create_collection_ignore_exists(self: &mut Self) -> FcResult<()> {
         self.create_ignore_exists()?;
         Ok(())
+    }
+
+    /// Returns a string containing the Debug representation of the path of
+    /// the file corresponding to the specified name. If there's an error
+    /// retrieving the path, it will contain the error instead.
+    fn get_debug_info_for_file<NameRef: AsRef<OsStr>>(&self, name: NameRef) -> String {
+        format!("path: {:#?}", self.get_file_path(name))
     }
 }

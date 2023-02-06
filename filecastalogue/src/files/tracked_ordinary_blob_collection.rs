@@ -1,6 +1,6 @@
 use std::ffi::{OsStr, OsString};
 use crate::{error::FcResult,
-    opaque_collection_handlers::OpaqueCollectionHandler};
+    opaque_collection_handler::OpaqueCollectionHandler};
 use super::tracked_ordinary_blob::{RepoTrackedOrdinaryBlobFile, TrackedOrdinaryBlobFile};
 
 pub trait TrackedOrdinaryBlobFileCollection {

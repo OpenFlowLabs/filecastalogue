@@ -18,6 +18,11 @@ pub struct FcTestResult<T> {
     result: FcResult<T>
 }
 
+/// Return type for tests which enables the printing of errors with linebreaks.
+/// Use `.into` for the `Result` returned by the test to make this work,
+/// unless it's returned by `?`.
+/// A `From` implementation needs to exist for errors returned by `?`. For
+/// `FcResult` such an implementation is already provided.
 impl<T> FcTestResult<T> {
     fn new(result: FcResult<T>) -> Self {
         Self {
@@ -26,7 +31,7 @@ impl<T> FcTestResult<T> {
     }
 
     fn print(&self) -> () {
-        let error_message = match &self.result {
+        match &self.result {
             Ok(_) => (),
             Err(error) => println!("{:#?}", error)
         };
@@ -43,7 +48,6 @@ impl<T> FcTestResult<T> {
 
 impl<T> From<FcResult<T>> for FcTestResult<T> {
     fn from(result: FcResult<T>) -> Self {
-        println!("FROM RESULT TO FCTESTRESULT");
         FcTestResult::new_and_print(result)
     }
 }
@@ -359,6 +363,13 @@ macro_rules! error {
         $context:expr,
         $payload:expr,
         $wrapped:expr) => {
+            Error::new($kind, $context, Some(Box::new($payload)), Some($wrapped))
+    };
+    (
+        kind => $kind:expr,
+        context => $context:expr,
+        payload => $payload:expr,
+        wrapped => $wrapped:expr) => {
             Error::new($kind, $context, Some(Box::new($payload)), Some($wrapped))
     };
     (

@@ -1,2 +1,2 @@
 #!/bin/bash
-cargo test 2>/dev/null "${@}"
+cargo test --features os_string_paths 2>/dev/null "${@}"

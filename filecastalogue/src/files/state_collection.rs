@@ -1,6 +1,6 @@
 use std::ffi::{OsStr, OsString};
 use crate::error::FcResult;
-use crate::opaque_collection_handlers::OpaqueCollectionHandler;
+use crate::opaque_collection_handler::OpaqueCollectionHandler;
 use super::state::{RepoStateFile, StateFile};
 
 pub trait StateFileCollection {

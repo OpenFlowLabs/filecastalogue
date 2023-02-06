@@ -8,10 +8,10 @@ use crate::tests::TEST_CONF::MINIMAL_REPO_SITE;
 use crate::tests::test_fixtures;
 // For as long as constants aren't used regularly in the code being
 // tested, dropping the "prefix" idea for them is worth the shorter
-// statements.
+// statements. Refactor once this gets confusing for a particular
+// category.
 use crate::tests::test_fixtures::repo::NON_EXISTENT_VERSION_ID;
 use crate::tests::test_ids::TestIDs;
-use std::backtrace::Backtrace;
 
 #[test]
 fn has_version_returns_false_when_repo_does_not_have_version() -> FcTestResult<()> {
@@ -42,6 +42,9 @@ fn add_version_succeeds() -> FcTestResult<()> {
         // system when it encounters paths which aren't convertible by `.as_str`,
         // and instead have to be converted lossily.
         // NOTE: I feel this has not been sufficiently tested, so, beware.
+        // NOTE: Filecastalogue doesn't intend to support non-unicode repo or
+        //  repo file paths (not to be confused with tracked paths), so this
+        //  level of vigilance isn't strictly required here.
         "Blob dir path: ", ErrorPathBuf::from(MINIMAL_REPO_SITE.get_blob_dir_path(
             TestIDs::RepoAddVersionSucceeds.as_str()
         )?)
@@ -62,14 +65,11 @@ fn track_non_existing_succeeds() -> FcTestResult<()> {
         TestIDs::RepoTrackNonExistingSucceeds.as_str()
     )?;
     repo.add_version(version_id)?;
-    // TODO: Fix Some(Serde(Error("key must be a string"...
     repo.track_non_existing(version_id, file_path.clone(), trackable_aspects)?;
 
     let mut file_list = RepoExportedVecFileList::new();
     repo.get_files(version_id, &mut file_list)?;
 
-    // TODO: Implement checking `file_list` to see whether we're now tracking
-    // the non-existing file.
     assert!(file_list.into_iter().any(
         |tracked_file| -> bool { tracked_file.get_path() == file_path }
     ));

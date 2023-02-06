@@ -1,7 +1,8 @@
 use crate::error::{Error, ErrorKind, FcResult, KeyValuePayload, WrappedError};
 use super::{index::{IndexFile, RepoIndexFile}};
 use std::ffi::OsStr;
-use crate::opaque_collection_handlers::OpaqueCollectionHandler;
+use crate::opaque_collection_handler::OpaqueCollectionHandler;
+
 
 pub trait IndexFileCollection {
     fn has_index(self: &mut Self, index: &str) -> FcResult<bool>;
@@ -45,7 +46,6 @@ impl<
     }
 
     fn create_unwritten_empty_index_file_box(&self)
-    // This returning "IndexFileCollection" doesn't look quite right.. :p
     -> Box<(dyn RepoIndexFile)> {
         Box::new(IndexFile::new())
     }
@@ -56,12 +56,16 @@ impl<
         let mut reader = self.handler.get_file_readable(
             OsStr::new(hash)
         )?;
-        let index_file: Box<(dyn RepoIndexFile)> = Box::new(
-            IndexFile::from_existing(
-                &mut reader
-            )?
-        );
-        Ok(index_file)
+        match IndexFile::from_existing(&mut reader) {
+            Ok(index_file) => Ok(Box::new(index_file)),
+            Err(e) => Err(Error::new(
+                ErrorKind::RepoFileOperationFailed,
+                "Reading and deserializing the contents of \
+                an index file from an index file collection.",
+                Some(Box::new(self.handler.get_debug_info_for_file(hash))),
+                Some(WrappedError::Fc(Box::new(e)))
+            )),
+        }
     }
 
     /// Save an index file to the collection.

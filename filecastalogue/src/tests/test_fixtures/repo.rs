@@ -5,7 +5,7 @@ use crate::files::state_collection::MiscStateFileCollection;
 use crate::files::tracked_ordinary_blob_collection::MiscTrackedOrdinaryBlobFileCollection;
 use crate::globals::STATE_FILE_NAME;
 use crate::journal::OptimisticDummyJournal;
-use crate::opaque_collection_handlers::LocalDir;
+use crate::opaque_collection_handler::drivers::local::LocalDir;
 use crate::repo::Repo;
 
 use super::super::TEST_CONF;

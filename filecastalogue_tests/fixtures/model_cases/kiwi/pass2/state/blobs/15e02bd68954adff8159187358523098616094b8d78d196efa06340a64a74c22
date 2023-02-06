@@ -17,13 +17,13 @@
                 "posix_mode": "0644"
         	}
         }
-    }
+    },
     "/etc/resolv.conf": {
         "exists": {
             "hash": "blake3:1153f9b2f29b9547bb19743a601c52b11bf3ebf575755b4a862187a5865a094e",
             "attributes": {
                 "posix_user": "nginx",
-                "posix_group": "nginx",
+                "posix_group": "nginx"
         	}
         }
     }
