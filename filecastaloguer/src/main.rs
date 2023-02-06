@@ -9,7 +9,7 @@ use filecastalogue::{
         tracked_ordinary_blob_collection::MiscTrackedOrdinaryBlobFileCollection
     },
     journal::OptimisticDummyJournal,
-    opaque_collection_handlers::LocalDir,
+    opaque_collection_handler::drivers::local::LocalDir,
     repo::Repo,
 };
 use std::env::args;

@@ -1,7 +1,8 @@
 use crate::error::{Error, ErrorKind, FcResult, KeyValuePayload, WrappedError};
 use super::{index::{IndexFile, RepoIndexFile}};
 use std::ffi::OsStr;
-use crate::opaque_collection_handlers::OpaqueCollectionHandler;
+use crate::opaque_collection_handler::OpaqueCollectionHandler;
+
 
 pub trait IndexFileCollection {
     fn has_index(self: &mut Self, index: &str) -> FcResult<bool>;
