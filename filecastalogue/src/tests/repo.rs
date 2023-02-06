@@ -70,8 +70,6 @@ fn track_non_existing_succeeds() -> FcTestResult<()> {
     let mut file_list = RepoExportedVecFileList::new();
     repo.get_files(version_id, &mut file_list)?;
 
-    // TODO: Implement checking `file_list` to see whether we're now tracking
-    // the non-existing file.
     assert!(file_list.into_iter().any(
         |tracked_file| -> bool { tracked_file.get_path() == file_path }
     ));
