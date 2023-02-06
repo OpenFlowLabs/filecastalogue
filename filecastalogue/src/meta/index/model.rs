@@ -1,7 +1,13 @@
 use std::{collections::HashMap, ffi::{OsString, OsStr}};
 use serde::{Deserialize, Serialize};
-
+use crate::error::FcResult;
 use super::super::file_aspects::enums::TrackedFileAspects;
+
+pub enum Conversion {
+    LossyGraphemes,
+    NonLossyBytes,
+    // NonLossyGraphemesWithEscapedBytes - maybe?
+}
 
 #[derive(Debug, Eq, PartialEq, Clone)]
 pub struct Index {
@@ -34,22 +40,56 @@ impl Index {
         }
     }
 
-    #[cfg(not(feature = "os_string_path"))]
-    pub fn string_from_os_string(os_string: &OsStr) -> String {
-        // Just testing. Using a lossy conversion would
-        // defeat the entire purpose of using OsString paths.
-        os_string.to_string_lossy().to_string()
-    }
-
-    #[cfg(feature = "os_string_path")]
-    pub fn string_from_os_string(os_string: &OsStr) -> String {
-        // TODO [dummy-cleanup]: Proper implementation.
-        String::new()
+    pub fn from_unicode_path_index(
+        unicode_path_index: UnicodePathIndex,
+        conversion_type: Conversion
+    ) -> FcResult<Self> {
+        let mut index = Index::new();
+        match conversion_type {
+            Conversion::LossyGraphemes => {
+                for (k_path, v_aspects) in unicode_path_index.files {
+                    index.files.insert(OsString::from(k_path), v_aspects);
+                }
+                Ok(index)
+            },
+            Conversion::NonLossyBytes => {
+                for (k_path, v_aspects) in unicode_path_index.files {
+                    index.files.insert(serde_json::from_str(&k_path)?, v_aspects);
+                }
+                Ok(index)
+            }
+        }
     }
 }
 
-
-
-        
-
-//         // TODO: Write proper conversion to error::Error, so unwrap can be replaced
+impl UnicodePathIndex {
+    pub fn from_index(
+        index: Index, 
+        conversion_type: Conversion
+    ) -> FcResult<Self> {
+        let mut unicode_path_index = Self {
+            files: HashMap::new()
+        };
+        match conversion_type {
+            Conversion::LossyGraphemes => {
+                for (k_path, v_aspects) in index.files {
+                    unicode_path_index.files.insert(k_path.to_string_lossy().to_string(), v_aspects);
+                };
+                Ok(unicode_path_index)
+            },
+            Conversion::NonLossyBytes => {
+                for (k_path, v_aspects) in index.files {
+                    // NOTE [caveat]: When processing path input in some way that might
+                    //  have been serialized on another platform, take into account
+                    //  that what might intuitively seem like it would have to be the
+                    //  same string might still differ in the world of OsString, even
+                    //  if it's just the "Unix" and "Windows" prefixes in their
+                    //  serialized counterparts, which would e.g. make comparisons
+                    //  between them fail.
+                    unicode_path_index.files.insert(serde_json::to_string(&k_path)?, v_aspects);
+                };
+                Ok(unicode_path_index)
+            },
+        }
+    }
+}

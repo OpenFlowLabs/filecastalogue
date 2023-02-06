@@ -1,9 +1,7 @@
 use std::io::Read;
 use std::convert::{TryFrom, TryInto};
-use std::collections::HashMap;
-use std::ffi::OsString;
 use crate::{error::{Error, ErrorKind, WrappedError}, meta::blob::model::Blob};
-use super::model::{Index, UnicodePathIndex};
+use super::model::{Index, UnicodePathIndex, Conversion};
 
 /// Principal conversions between Index and various other forms.
 /// 
@@ -13,48 +11,6 @@ use super::model::{Index, UnicodePathIndex};
 /// only one way to, say, obtain a Blob from an Index, which helps
 /// with the maintainability of code that depends on that, such as
 /// hashing related code.
-
-impl TryFrom<Index> for UnicodePathIndex {
-    type Error = Error;
-
-    /// Principal Conversion from Index to UnicodePathIndex.
-    /// 
-    /// This is the one way which should be used to obtain a
-    /// UnicodePathIndex from an Index.
-    /// 
-    /// At the moment, this converts OsStrings to Strings by
-    /// the means of `.to_string_lossy`.
-    fn try_from(index: Index) -> Result<Self, Self::Error> {
-        let mut unicode_path_index = UnicodePathIndex {
-            files: HashMap::new()
-        };
-        for (k_path, v_aspects) in index.files {
-            // NOTE [caveat]: When processing path input in some way that might
-            //  have been serialized on another platform, take into account
-            //  that what might intuitively seem like it would have to be the
-            //  same string might still differ in the world of OsString, even
-            //  if it's just the "Unix" and "Windows" prefixes in their
-            //  serialized counterparts, which would e.g. make comparisons
-            //  between them fail.
-            unicode_path_index.files.insert(serde_json::to_string(&k_path)?, v_aspects);
-        };
-        Ok(unicode_path_index)
-    }
-}
-
-impl TryFrom<UnicodePathIndex> for Index {
-    type Error = Error;
-
-    fn try_from(unicode_path_index: UnicodePathIndex) -> Result<Self, Self::Error> {
-        let mut index = Index::new();
-        for (k_path, v_aspects) in unicode_path_index.files {
-            // TODO: Switch between non-unicode-support and unicode-only
-            //  feature (maybe).
-            index.files.insert(serde_json::from_str(&k_path)?, v_aspects);
-        }
-        Ok(index)
-    }
-}
 
 impl TryFrom<&mut (dyn Read)> for Index {
     type Error = Error;
@@ -71,7 +27,10 @@ impl TryFrom<&mut (dyn Read)> for Index {
     fn try_from(readable: &mut (dyn Read)) -> Result<Self, Self::Error> {
         let blob: Blob = readable.try_into()?;
         let unicode_path_index: UnicodePathIndex = blob.try_into()?;
-        Ok(unicode_path_index.try_into()?)
+        Ok(Index::from_unicode_path_index(
+            unicode_path_index, 
+            Conversion::NonLossyBytes
+        )?)
     }
 }
 
@@ -100,7 +59,10 @@ impl TryFrom<Index> for Blob {
     /// This converts the paths of the Index to their unicode representation
     /// and uses `serde_json::to_vec_pretty` to create the blob.
     fn try_from(index: Index) -> Result<Self, Self::Error> {
-        let unicode_path_index: UnicodePathIndex = index.try_into()?;
+        let unicode_path_index: UnicodePathIndex = UnicodePathIndex::from_index(
+            index,
+            Conversion::NonLossyBytes
+        )?;
         match serde_json::to_vec_pretty(&unicode_path_index) {
             Ok(index) => Ok(index.into()),
             Err(e) => Err(error!(
