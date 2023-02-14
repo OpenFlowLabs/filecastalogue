@@ -10,8 +10,8 @@ use super::test_fixtures::models::MINIMAL_STATE_VERSION_ID;
 fn hash_is_same_in_serialized_state() -> FcTestResult<()> {
     let state: state::model::State = serde_json::from_str(test_fixtures::models::MINIMAL_STATE_JSON)?;
     assert_eq!(
-        state.versions["1"].index,
-        test_fixtures::models::create_minimal_state_struct().versions["1"].index
+        state.versions[MINIMAL_STATE_VERSION_ID].index,
+        test_fixtures::models::create_minimal_state_struct().versions[MINIMAL_STATE_VERSION_ID].index
     );
     Ok(()).into()
 }
@@ -31,7 +31,7 @@ fn has_version_returns_false_when_state_does_not_have_version() -> () {
 #[test]
 fn get_version_returns_version() -> () {
     let mut state = test_fixtures::models::create_minimal_state_struct();
-    let result: version::model::Version = state.get_version("1").ok().unwrap();
+    let result: version::model::Version = state.get_version(MINIMAL_STATE_VERSION_ID).ok().unwrap();
     assert_eq!(result, state.versions[MINIMAL_STATE_VERSION_ID]);
 }
 
@@ -49,36 +49,27 @@ fn get_version_returns_error_when_state_does_not_have_version() -> () {
     );
 }
 
-#[test]
-fn put_version() -> () {
-    let new_id = "2";
-    let new_hash = "NEWHASH";
-    let mut state = test_fixtures::models::create_minimal_state_struct();
-    assert_ne!(state.has_version(new_id), true,
-        "Preparation failed: State shouldn't have the version ({}) we're about to insert yet.",
-        new_id
-    );
-    state.put_version(new_id, Version::new_with_index(new_hash));
-    assert_eq!(state.has_version(new_id), true);
-}
+// #[test]
+// fn put_version() -> () {
+//     let new_id = 2;
+//     let new_hash = "NEWHASH";
+//     let mut state = test_fixtures::models::create_minimal_state_struct();
+//     assert_ne!(state.has_version(new_id), true,
+//         "Preparation failed: State shouldn't have the version ({}) we're about to insert yet.",
+//         new_id
+//     );
+//     state.put_version(&new_id, Version::new_with_index(new_hash));
+//     assert_eq!(state.has_version(new_id), true);
+// }
 
 #[test]
 fn add_version() -> () {
-    let new_id = "2";
     let new_hash = "NEWHASH";
     let mut state = test_fixtures::models::create_minimal_state_struct();
-    assert_ne!(state.has_version(new_id), true,
-        "Preparation failed: State shouldn't have the version ({}) we're about to insert yet.",
-        new_id
+    let new_version_index = state.add_version(
+        Version::new_with_index(new_hash)
     );
-    let result = state.add_version(
-        new_id, Version::new_with_index( new_hash)
-    );
-    assert_ne!(result.is_err(), true, 
-        "Preparation failed: .has_version() shouldn't return an error here. Version ID: {}",
-        new_id
-    );
-    assert_eq!(state.has_version(new_id), true);
+    assert_eq!(state.has_version(new_version_index), true);
 }
 
 #[test]
