@@ -1,19 +1,16 @@
 use std::ffi::OsString;
-use crate::error::{ErrorPathBuf, FcTestResult};
+use crate::error::FcTestResult;
 use crate::meta::file_aspects::aspects::non_existing::TrackableNonExistingAspects;
 use crate::meta::repo_exported_file_list::model::RepoExportedVecFileList;
-use crate::tests::TEST_CONF::MINIMAL_REPO_SITE;
 // Instead of importing all fixtures directly, we prefix
 // calls to fixtures with `test_fixtures`, to make things clearer.
 use crate::tests::test_fixtures;
 // For as long as constants aren't used regularly in the code being
 // tested, dropping the "prefix" idea for them is worth the shorter
 // statements. Refactor once this gets confusing for a particular
-// // category.
+// category.
 use crate::tests::test_fixtures::repo::NON_EXISTING_VERSION_INDEX;
-use crate::tests::test_fixtures::repo::ADDED_VERSION_INDEX;
 use crate::tests::test_ids::TestIDs;
-use std::backtrace::Backtrace;
 
 #[test]
 fn has_version_returns_false_when_repo_does_not_have_version() -> FcTestResult<()> {
