@@ -10,7 +10,8 @@ use crate::repo::Repo;
 
 use super::super::TEST_CONF;
 
-pub(crate) const NON_EXISTENT_VERSION_ID: &str = "0";
+pub(crate) const NON_EXISTING_VERSION_INDEX: usize = 1;
+pub(crate) const ADDED_VERSION_INDEX: usize = 100;
 pub(crate) const MINIMAL_REPO_PARENT_PATH: &str = ".";
 
 pub(in crate::tests) fn create_minimal_repo_struct(test_id: &str)

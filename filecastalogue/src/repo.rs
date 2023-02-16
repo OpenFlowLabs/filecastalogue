@@ -64,13 +64,13 @@ impl<
                 journal: journal
             }
         }
-        pub fn has_version(self: &'rpo mut Self, id: &str) -> FcResult<bool> {
+        pub fn has_version(self: &'rpo mut Self, version_index: usize) -> FcResult<bool> {
             let mut state_file = self.state_collection.get_state_file()?;
-            Ok(state_file.get_state_ref()?.clone().has_version(id))
+            Ok(state_file.get_state_ref()?.clone().has_version(version_index))
         }
 
-        pub fn add_version(self: &'rpo mut Self, id: &str)
-        -> FcResult<&'rpo mut Self> {
+        pub fn add_version(self: &'rpo mut Self)
+        -> FcResult<usize> {
             /*
                 Has to do these things:
                     - Add new version to state file.
@@ -84,12 +84,12 @@ impl<
             //  take a value only or decide whether AsRef is appropriate, or some other sugar.
             version.set_index_id(&hash);
             let mut state_file = self.state_collection.get_state_file()?;
-            state_file.get_state_ref()?.add_version(id, version)?;
+            let version_index = state_file.get_state_ref()?.add_version(version);
 
             // TODO: Saving state?
             self.state_collection.put_state_file(state_file)?;
 
-            Ok(self)
+            Ok(version_index)
         }
 
         /// Track a file that doesn't exist.
@@ -102,14 +102,14 @@ impl<
         /// the path where nothing is supposed to exist on the target system.
         pub fn track_non_existing(
             &'rpo mut self,
-            version_id: &str,
+            version_index: usize,
             file_path: OsString,
             trackable_aspects: TrackableNonExistingAspects,
         ) -> FcResult<&'rpo mut Self> {
             let mut state_file  = self.state_collection.get_state_file()?;
             let mut version = state_file
                 .get_state_ref()?
-                .get_version(version_id)?;
+                .get_version(version_index)?;
             let mut index_file = match version.get_index_id() {
                 Some(index_id) => self.indexes.get_index_file(&index_id)?,
                 None => self.indexes.create_unwritten_empty_index_file_box()
@@ -123,7 +123,7 @@ impl<
             )?;
             let hash = self.indexes.put_index_file(index_file)?;
             version.set_index_id(&hash);
-            state_file.get_state_ref()?.put_version(version_id, version);
+            state_file.get_state_ref()?.put_version(&version_index, version);
 
             // TODO: Saving state?
             self.state_collection.put_state_file(state_file)?;
@@ -177,13 +177,13 @@ impl<
         
         pub fn get_files(
             &'rpo mut self,
-            version_id: &str,
+            version_index: usize,
             file_list: &mut (dyn RepoExportedFileList)
         ) -> FcResult<&'rpo mut Self> {
             let mut state_file = self.state_collection.get_state_file()?;
             let version = state_file
                 .get_state_ref()?
-                .get_version(version_id)?;
+                .get_version(version_index)?;
             let index_id = match version.get_index_id() {
                 Some(index_id) => index_id,
                 // No index, no files to add to the file list.

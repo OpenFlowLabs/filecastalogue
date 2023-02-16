@@ -3,7 +3,7 @@ use crate::error::Payload;
 use super::super::version::model::Version;
 
 pub struct VersionEntryAlreadyExistsErrorPayload {
-    pub version_id: String,
+    pub version_index: usize,
     pub version_struct: Version,
 }
 
@@ -12,7 +12,7 @@ impl<'err> fmt::Debug for VersionEntryAlreadyExistsErrorPayload {
         write!(
             f,
             "An entry for version \"{}\" already exists and contains: {:?}.",
-            self.version_id,
+            self.version_index,
             self.version_struct,
         )
     }
@@ -23,7 +23,7 @@ impl<'err> fmt::Display for VersionEntryAlreadyExistsErrorPayload {
         write!(
             f,
             "An entry for version \"{}\" already exists.",
-            self.version_id,
+            self.version_index,
         )
     }
 }
@@ -31,7 +31,7 @@ impl<'err> fmt::Display for VersionEntryAlreadyExistsErrorPayload {
 impl Payload for VersionEntryAlreadyExistsErrorPayload {}
 
 pub struct VersionEntryDoesNotExistErrorPayload {
-    pub version_id: String,
+    pub version_index: usize,
 }
 
 impl fmt::Debug for VersionEntryDoesNotExistErrorPayload {
@@ -39,7 +39,7 @@ impl fmt::Debug for VersionEntryDoesNotExistErrorPayload {
         write!(
             f,
             "Error: There's no entry for version \"{}\".",
-            self.version_id,
+            self.version_index,
         )
     }
 }
@@ -49,7 +49,7 @@ impl fmt::Display for VersionEntryDoesNotExistErrorPayload {
         write!(
             f,
             "Error: There's no entry for version \"{}\".",
-            self.version_id
+            self.version_index
         )
     }
 }
