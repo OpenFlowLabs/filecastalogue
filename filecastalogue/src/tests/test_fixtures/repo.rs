@@ -1,5 +1,5 @@
 use std::ffi::OsString;
-use crate::error::{FcResult};
+use crate::error::FcResult;
 use crate::files::index_collection::MiscIndexFileCollection;
 use crate::files::state_collection::MiscStateFileCollection;
 use crate::files::tracked_ordinary_blob_collection::MiscTrackedOrdinaryBlobFileCollection;

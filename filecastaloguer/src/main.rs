@@ -14,7 +14,7 @@ use filecastalogue::{
 };
 use std::env::args;
 use std::result::Result;
-use std::{env::current_dir, ffi::OsString, io, path::PathBuf};
+use std::{env::current_dir, ffi::OsString, path::PathBuf};
 
 const ABOUT_REPO: &str = "Path to the repo directory. Defaults to the current directory.";
 const ABOUT_VERSION: &str = "Manage state versions.";

@@ -18,7 +18,6 @@ impl TrackableNonExistingAspects {
     pub fn new() -> Self {
         Self {}
     }
-
 }
 
 impl TrackedNonExistingAspects {

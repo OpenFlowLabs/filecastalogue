@@ -1,6 +1,6 @@
 use crate::{error::FcTestResult, meta::state, meta::{state::accessor::StateAccessor, version::model::Version}, meta::version, tests::test_fixtures::{
         self,
-        models::{NON_EXISTENT_VERSION_ID}
+        models::NON_EXISTENT_VERSION_ID
     }};
 use super::test_fixtures::models::MINIMAL_STATE_VERSION_ID;
 

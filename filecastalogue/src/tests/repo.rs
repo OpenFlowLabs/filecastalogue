@@ -54,7 +54,6 @@ fn track_non_existing_succeeds() -> FcTestResult<()> {
         "Running `repo.add_version()` returned an error: {:?}", maybe_new_version_index.unwrap_err());
     let new_version_index = maybe_new_version_index.unwrap();
 
-    // TODO: Fix Some(Serde(Error("key must be a string"...
     repo.track_non_existing(new_version_index, file_path.clone(), trackable_aspects)?;
 
     let mut file_list = RepoExportedVecFileList::new();
