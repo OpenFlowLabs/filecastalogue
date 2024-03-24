@@ -1,6 +1,8 @@
 use std::ffi::OsString;
 use crate::error::FcTestResult;
+use crate::meta::file_aspects::aspects::directory::TrackableDirectoryAspects;
 use crate::meta::file_aspects::aspects::non_existing::TrackableNonExistingAspects;
+use crate::meta::file_aspects::attributes::Attributes;
 use crate::meta::repo_exported_file_list::model::RepoExportedVecFileList;
 // Instead of importing all fixtures directly, we prefix
 // calls to fixtures with `test_fixtures`, to make things clearer.
@@ -61,6 +63,41 @@ fn track_non_existing_succeeds() -> FcTestResult<()> {
 
     assert!(file_list.into_iter().any(
         |tracked_file| -> bool { tracked_file.get_path() == file_path }
+    ));
+
+    Ok(()).into()
+}
+
+/// Comprehensive happy path testing of `Repo::track_directory`.
+#[test]
+fn track_directory_succeeds() -> FcTestResult<()> {
+    const USER_NAME: &str = "test_user";
+    const GROUP_NAME: &str = "test_group";
+    let dir_path = OsString::from("/this/dir/does/not_exist");
+    let trackable_aspects: TrackableDirectoryAspects = TrackableDirectoryAspects::new(
+        // The `Attribute` struct will actually need some looking-at.
+        Attributes {
+            posix_user: String::from(USER_NAME),
+            posix_group: String::from(GROUP_NAME)
+        }
+    );
+
+    let mut repo = test_fixtures::repo::create_minimal_repo_struct(
+        TestIDs::RepoTrackDirectorySucceeds.as_str()
+    )?;
+
+    let maybe_new_version_index = repo.add_version();
+    assert_eq!(maybe_new_version_index.is_err(), false,
+        "Running `repo.add_version()` returned an error: {:?}", maybe_new_version_index.unwrap_err());
+    let new_version_index = maybe_new_version_index.unwrap();
+
+    repo.track_directory(new_version_index, dir_path.clone(), trackable_aspects)?;
+
+    let mut file_list = RepoExportedVecFileList::new();
+    repo.get_files(new_version_index, &mut file_list)?;
+
+    assert!(file_list.into_iter().any(
+        |tracked_file| -> bool { tracked_file.get_path() == dir_path }
     ));
 
     Ok(()).into()

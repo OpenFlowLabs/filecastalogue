@@ -12,6 +12,7 @@ pub enum TestIDs {
     RepoHasVersionReturnsFalseWhenRepoDoesNotHaveVersion,
     RepoAddVersionSucceeds,
     RepoTrackNonExistingSucceeds,
+    RepoTrackDirectorySucceeds
 }
 
 impl TestIDs {
@@ -21,6 +22,7 @@ impl TestIDs {
                 => "repo_has_version_returns_false_when_repo_does_not_have_version",
             TestIDs::RepoAddVersionSucceeds => "repo_add_version_succeeds",
             TestIDs::RepoTrackNonExistingSucceeds => "repo_track_non_existing_succeeds",
+            TestIDs::RepoTrackDirectorySucceeds => "repo_track_directory_succeeds"
         }
     }
 }
