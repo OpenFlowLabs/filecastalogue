@@ -138,8 +138,8 @@ impl<
         /// describing the aspects it should have there.
         pub fn track_directory(
             &'rpo mut self,
-            version_id: &str,
-            file_path: &OsStr,
+            version_index: usize,
+            file_path: OsString,
             trackable_aspects: TrackableDirectoryAspects,
         ) -> FcResult<&'rpo mut Self> {
             todo!();
@@ -153,8 +153,8 @@ impl<
         /// its blob.
         pub fn track_ordinary(
             &'rpo mut self,
-            version_id: &str,
-            file_path: &OsStr,
+            version_index: usize,
+            file_path: OsString,
             trackable_aspects: TrackableOrdinaryAspects,
             blob_readable: &(dyn Read)
         ) -> FcResult<&'rpo mut Self> {
@@ -168,8 +168,8 @@ impl<
         /// describing the aspects it (should) have there.
         pub fn track_symlink(
             &'rpo mut self,
-            version_id: &str,
-            file_path: &OsStr,
+            version_index: usize,
+            file_path: OsString,
             trackable_aspects: TrackableSymlinkAspects,
         ) -> FcResult<&'rpo mut Self> {
             todo!();
